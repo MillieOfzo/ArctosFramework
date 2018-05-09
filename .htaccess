@@ -1,0 +1,29 @@
+
+
+## Error page redirect
+ErrorDocument 403 /arctos/src/views/errors/page_403.view.php
+ErrorDocument 404 /arctos/src/views/errors/page_404.view.php
+ErrorDocument 500 /arctos/src/views/errors/page_500.view.php
+
+RewriteEngine On
+
+## Prevent access to following folders
+RewriteRule ^(app|config|routes|storage|vendor)(/.*|)$ - [NC,F]
+
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+## Redirect all requests too public/index.php
+RewriteRule ^(.+)$ public/index.php/$1 [L]
+
+## Prevent access to .htaccesss
+<Files .htaccess>
+	order allow,deny
+	deny from all
+</Files>
+
+## No directory listing
+Options -Indexes
+DirectoryIndex public/index.php
+
+
