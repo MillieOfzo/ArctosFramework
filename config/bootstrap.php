@@ -2,6 +2,32 @@
 	require '../vendor/autoload.php';
 	require '../routes/routes.php';
 
+	use App\Classes\ErrorManager as Em;
+	use App\Classes\Csrf as Csrf;
+	use App\Classes\SessionManager as Session;
+	use App\Models\LoginModel as Login;
+
+	// Setup ErrorManager
+    $errormanager = new Em;
+	
+	Em::SetLogLevel(E_ALL); 
+	Em::SetDebug(\Config::DEBUG);	
+	Em::SetLogFile(\Config::ROOT_PATH . '/Storage/Logs/'.date("Y").'/Errors/'.date("Y-m-d").'_error.log');
+
+	$errormanager->catchError(); 	
+	$errormanager->catchFatalError(); 	
+
+	// Generate secure session
+	Session::sessionStart('ses');	
+
+	//Update Lastaccess in users table
+	if(isset($_SESSION[\Config::SES_NAME]))
+	{
+		$id = $_SESSION[\Config::SES_NAME]['user_id'];
+		$login = new Login;
+		$login->updateUserLastAccess($id);		
+	}
+
 	// Fetch method and URI from somewhere
 	$httpMethod = $_SERVER['REQUEST_METHOD'];
 	$uri = $_SERVER['REQUEST_URI'];

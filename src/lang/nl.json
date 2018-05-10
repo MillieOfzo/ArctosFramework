@@ -1,23 +1,35 @@
 {
-  "placeholders": {
-    "select": "Selecteer...",
-    "input": "Vul in..."
-  },
-  "layout":{
-    "topnav":{
-      "placeholder":"Zoek naar locatie",
-      "logout":"Uitloggen"
-    },
-    "sidebar":{
-      "title":{
-        "1":"Home",
-        "2":"Tickets",
-        "3":"Tools",
-        "4":"Gebruiker",
-        "5":"Gebruikers",
-        "6":"Logging",
-        "7":"Instellingen"
-      }
-    }
-  }
+	"placeholders": {
+		"select": "Selecteer...",
+		"input": "Vul in..."
+	},
+	"layout":{
+		"topnav":{
+			"placeholder":"Zoek naar locatie",
+			"logout":"Uitloggen"
+		},
+		"sidebar":{
+			"title":{
+			"1":"Home",
+			"2":"Tickets",
+			"3":"Tools",
+			"4":"Gebruiker",
+			"5":"Gebruikers",
+			"6":"Logging",
+			"7":"Instellingen"
+			}
+		}
+	},
+	"loginscreen":{
+		"welcome": "Welkom bij",
+		"text": "Een lichtgewicht framework applicatie.",
+		"subtext": "Log in om het in actie te zien.",
+		"login": "Log in",
+		"placeholder": {
+			"email":"email",
+			"password":"wachtwoord"
+		},		
+		"request": "Request",
+		"forget": "Wachtwoord vergeten"	
+	}
 }

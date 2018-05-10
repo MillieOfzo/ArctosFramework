@@ -9,4 +9,7 @@
 			return strtoupper($string);
 		}
 
+		public static function redirect($url){
+			header("location: {$url}");
+		}
 	}

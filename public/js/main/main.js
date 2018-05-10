@@ -6,6 +6,17 @@
 
 $(document).ready(function () {
 
+	$('.showform').click(function() {
+		$('#signinForm').animate({
+			height: "toggle",
+			opacity: "toggle"
+		}, "slow");
+		$("#show_form").animate({
+			height: "toggle",
+			opacity: "toggle"
+		}, "slow");
+	}); 
+
 	var url = window.location;
 	// Will only work if string in href matches with location
 	$('ul.nav a[href="'+ url +'"]').parent().addClass('active');

@@ -14,9 +14,9 @@
                     ARC
                 </div>
             </li>
-            <li><a href="<?= Config::APP_ROOT.'/';?>" data-toggle="tooltip" data-placement="right" data-i18n="[title]layout.sidebar.title.1"><i class="fa fa-th-large fa-fw"></i> <span class="nav-label"></span></a></li>
-            <li><a href="<?= Config::APP_ROOT.'/about';?>" data-toggle="tooltip" data-placement="right" data-i18n="[title]layout.sidebar.title.3"><i class="fa fa-question fa-fw"></i> <span class="nav-label"></span></a></li>
-			<li><a href="<?= Config::APP_ROOT.'/user';?>" data-toggle="tooltip" data-placement="right" data-i18n="[title]layout.sidebar.title.4"><i class="fa fa-user fa-fw"></i> <span class="nav-label"></span></a></li>
+            <li><a href="/" data-toggle="tooltip" data-placement="right" data-i18n="[title]layout.sidebar.title.1"><i class="fa fa-th-large fa-fw"></i> <span class="nav-label"></span></a></li>
+            <li><a href="/about" data-toggle="tooltip" data-placement="right" data-i18n="[title]layout.sidebar.title.3"><i class="fa fa-question fa-fw"></i> <span class="nav-label"></span></a></li>
+			<li><a href="/user" data-toggle="tooltip" data-placement="right" data-i18n="[title]layout.sidebar.title.4"><i class="fa fa-user fa-fw"></i> <span class="nav-label"></span></a></li>
 
 			<li><br></li>
 			<!--
