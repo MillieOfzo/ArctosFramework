@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
 
+use \SafeMySQL;
 use App\Classes\Logger;
-use App\Classes\SafeMySQL;
 
 class UserModel
 {

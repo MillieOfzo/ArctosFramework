@@ -7,9 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
 {
     public static $files = array (
+        '7b4ea634fa5bd1ccea7e5ca039562961' => __DIR__ . '/..' . '/colshrapnel/safemysql/safemysql.class.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
-        'da1bc933f80f6d30e50c077c9d079068' => __DIR__ . '/../..' . '/config/config.class.php',
+        '0c47e25c6ef959642967624e54443faf' => __DIR__ . '/../..' . '/config/config.class.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -79,7 +80,6 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
         'App\\Classes\\Package' => __DIR__ . '/../..' . '/app/classes/package.class.php',
         'App\\Classes\\Router' => __DIR__ . '/../..' . '/app/classes/router.class.php',
         'App\\Classes\\SSP' => __DIR__ . '/../..' . '/app/classes/datatable.ssp.class.php',
-        'App\\Classes\\SafeMySQL' => __DIR__ . '/../..' . '/app/classes/safemysql.class.php',
         'App\\Classes\\SessionManager' => __DIR__ . '/../..' . '/app/classes/session.class.php',
         'App\\Controllers\\AboutController' => __DIR__ . '/../..' . '/app/controllers/about.controller.php',
         'App\\Controllers\\IndexController' => __DIR__ . '/../..' . '/app/controllers/index.controller.php',

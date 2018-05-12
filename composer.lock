@@ -4,8 +4,50 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb7c12a803aaec7b2756e817cb4b6148",
+    "content-hash": "cb6f212a95cc65c924d66395d218968e",
     "packages": [
+        {
+            "name": "colshrapnel/safemysql",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/colshrapnel/safemysql.git",
+                "reference": "9360eabc1cff7729bec004c5944ae1cccdd1e35c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/colshrapnel/safemysql/zipball/9360eabc1cff7729bec004c5944ae1cccdd1e35c",
+                "reference": "9360eabc1cff7729bec004c5944ae1cccdd1e35c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "safemysql.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Colonel Shrapnel",
+                    "email": "col.shrapnel@gmail.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "A real safe and convenient way to handle MySQL queries.",
+            "homepage": "https://github.com/colshrapnel/safemysql",
+            "keywords": [
+                "db",
+                "mysql"
+            ],
+            "time": "2015-05-08T05:59:39+00:00"
+        },
         {
             "name": "ezyang/htmlpurifier",
             "version": "v4.10.0",

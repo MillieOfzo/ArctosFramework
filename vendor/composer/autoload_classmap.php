@@ -17,7 +17,6 @@ return array(
     'App\\Classes\\Package' => $baseDir . '/app/classes/package.class.php',
     'App\\Classes\\Router' => $baseDir . '/app/classes/router.class.php',
     'App\\Classes\\SSP' => $baseDir . '/app/classes/datatable.ssp.class.php',
-    'App\\Classes\\SafeMySQL' => $baseDir . '/app/classes/safemysql.class.php',
     'App\\Classes\\SessionManager' => $baseDir . '/app/classes/session.class.php',
     'App\\Controllers\\AboutController' => $baseDir . '/app/controllers/about.controller.php',
     'App\\Controllers\\IndexController' => $baseDir . '/app/controllers/index.controller.php',

@@ -2,6 +2,7 @@
 namespace App\Classes;
 
 use \Config;
+use \SafeMySQL;
 
 class Auth
 {
