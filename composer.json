@@ -2,7 +2,7 @@
     "name": "millieofzo/arctosframework",
 	"type": "framework",
 	"framework":"ARCTOS",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "env": "OTAP",
     "copyright": "ASB Security",
     "description": "Lightweight MVC framework",
