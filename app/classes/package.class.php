@@ -9,7 +9,7 @@ class Package
             '/public/css/bootstrap/bootstrap.min.css',
             '/public/css/fonts/font-awesome/css/font-awesome.css',
             '/public/css/main/animate.css',
-            '/public/css/main/style.css',
+            '/public/css/main/style_'.\Config::APP_THEME.'.css',
             '/public/css/formvalidation/dist/css/formValidation.min.css',
             '/public/css/sweetalert/sweetalert.css',
             '/public/css/select2/dist/css/select2.min.css'

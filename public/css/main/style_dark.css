@@ -4289,7 +4289,7 @@ table.table-mail tr td {
   right: 0;
 }
 /* BACKGROUNDS */
-.gray-bg,
+.light-bg,
 .bg-muted {
   background-color: #f3f3f4;
 }
@@ -4323,6 +4323,9 @@ table.table-mail tr td {
 }
 .black-bg {
   background-color: #262626;
+}
+body.dark-bg {
+	background-color:#24262d;
 }
 .dark-bg {
   font-family: 'Roboto', sans-serif, "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;	
@@ -5647,7 +5650,7 @@ dd.project-people {
 .client-detail .vertical-timeline-content p {
   margin: 0;
 }
-.client-detail .vertical-timeline-icon.gray-bg {
+.client-detail .vertical-timeline-icon.light-bg {
   color: #a7aaab;
 }
 .clients-list .nav-tabs > li.active > a,
