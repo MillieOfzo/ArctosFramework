@@ -15,7 +15,8 @@ class Config
     const APP_EMAIL = '';
     const APP_VER = '0.0.1';
     const APP_ENV = 'OTAP';
-    const LOGO_NAME = 'logo.png';
+    const APP_THEME = 'light';
+    const LOGO_NAME = 'logo_light.png';
     const FAVICON_NAME = 'favicon.png';
     const ROOT_PATH = ''; // e.g 'C:/xampp/htdocs/arctos'
     const SES_NAME = 'arc_user';
