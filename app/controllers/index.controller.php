@@ -1,24 +1,22 @@
 <?php
+namespace App\Controllers;
 
-	namespace App\Controllers;
-	
-	use App\Models\IndexModel as Index;
-	use App\Classes\Helper as Helper;
+use App\Models\IndexModel as Index;
+use App\Classes\Helper as Helper;
 
-    class IndexController
+class IndexController
+{
+    private $model;
+
+    function __construct()
     {
-        private $model;
+        $this->model = new Index;
+    }
 
-        function __construct()
-        {
-            $this->model = new Index;
-        }
-
-        public function Welcome()
-        {
-			$this->model->setMessage('Welcome to the '.\Config::APP_TITLE);
-            return Helper::shout($this->model->getMessage());
-        }
-
+    public function index()
+    {
 
     }
+
+}
+

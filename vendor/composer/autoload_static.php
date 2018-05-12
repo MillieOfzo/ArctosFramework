@@ -9,7 +9,7 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
     public static $files = array (
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
-        '17482cee3bd6bfac460d41119375d7b9' => __DIR__ . '/../..' . '/config/config.class.php',
+        'da1bc933f80f6d30e50c077c9d079068' => __DIR__ . '/../..' . '/config/config.class.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -23,6 +23,7 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
         ),
         'A' => 
         array (
+            'App\\Routes\\' => 11,
             'App\\Models\\' => 11,
             'App\\Controllers\\' => 16,
             'App\\Classes\\' => 12,
@@ -37,6 +38,10 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
         'FastRoute\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
+        ),
+        'App\\Routes\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/routes',
         ),
         'App\\Models\\' => 
         array (
@@ -65,11 +70,14 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
     public static $classMap = array (
         'App\\Classes\\Auth' => __DIR__ . '/../..' . '/app/classes/auth.class.php',
         'App\\Classes\\Csrf' => __DIR__ . '/../..' . '/app/classes/csrf.class.php',
+        'App\\Classes\\DB' => __DIR__ . '/../..' . '/app/classes/database.class.php',
         'App\\Classes\\ErrorManager' => __DIR__ . '/../..' . '/app/classes/errormanager.class.php',
         'App\\Classes\\Helper' => __DIR__ . '/../..' . '/app/classes/helper.class.php',
+        'App\\Classes\\Language' => __DIR__ . '/../..' . '/app/classes/language.class.php',
         'App\\Classes\\Logger' => __DIR__ . '/../..' . '/app/classes/logger.class.php',
         'App\\Classes\\Mailer' => __DIR__ . '/../..' . '/app/classes/mail.class.php',
         'App\\Classes\\Package' => __DIR__ . '/../..' . '/app/classes/package.class.php',
+        'App\\Classes\\Router' => __DIR__ . '/../..' . '/app/classes/router.class.php',
         'App\\Classes\\SSP' => __DIR__ . '/../..' . '/app/classes/datatable.ssp.class.php',
         'App\\Classes\\SafeMySQL' => __DIR__ . '/../..' . '/app/classes/safemysql.class.php',
         'App\\Classes\\SessionManager' => __DIR__ . '/../..' . '/app/classes/session.class.php',
@@ -81,6 +89,7 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
         'App\\Models\\IndexModel' => __DIR__ . '/../..' . '/app/models/index.model.php',
         'App\\Models\\LoginModel' => __DIR__ . '/../..' . '/app/models/login.model.php',
         'App\\Models\\UserModel' => __DIR__ . '/../..' . '/app/models/user.model.php',
+        'App\\Routes\\Routes' => __DIR__ . '/../..' . '/routes/routes.php',
         'FastRoute\\BadRouteException' => __DIR__ . '/..' . '/nikic/fast-route/src/BadRouteException.php',
         'FastRoute\\DataGenerator' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator.php',
         'FastRoute\\DataGenerator\\CharCountBased' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator/CharCountBased.php',

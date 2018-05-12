@@ -1,21 +1,21 @@
 <?php
-    
-	namespace App\Controllers;
+namespace App\Controllers;
 
-	use App\Models\AboutModel as About;
-    use App\Classes\Helper as Helper;
-	
-    class AboutController
+use App\Models\AboutModel as About;
+use App\Classes\Helper as Helper;
+
+class AboutController
+{
+    private $model;
+
+    function __construct()
     {
-        private $model;
+        $this->model = new About;
+    }
 
-        function __construct()
-        {
-			$this->model = new About;
-        }
+    public function index()
+    {
 
-        public function getView()
-        {
-            return Helper::shout($this->message = 'My about Page');
-        }
-     }
+    }
+}
+

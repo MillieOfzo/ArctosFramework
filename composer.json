@@ -1,6 +1,6 @@
 {
-    "name": "ARCTOS framework",
-    "version": "0.0.1",
+    "name": "ARCTOS",
+    "version": "0.2.1",
     "env": "OTAP",
     "copyright": "ASB Security",
     "description": "Lightweight MVC framework",
@@ -21,7 +21,8 @@
 	    "psr-4": {
 			"App\\Classes\\":"app/classes",
 			"App\\Controllers\\":"app/controllers",
-			"App\\Models\\":"app/models"
+			"App\\Models\\":"app/models",
+			"App\\Routes\\":"routes"
 		},
         "files": ["config/config.class.php"]
     }	

@@ -14,11 +14,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel='shortcut icon' type='image/x-icon' href="/public/img/<?= Config::FAVICON_NAME;?>" />
+	<link rel="shortcut icon" type="image/x-icon" href="/public/img/<?= Config::FAVICON_NAME;?>" />
 
     <!-- Mainly CSS -->
     <?php
-        foreach(\App\Classes\Package::cssPackage() as $css){
+        foreach($arr_css as $css){
             echo '<link href="'.$css.'" rel="stylesheet">';
         }
     ?>
@@ -41,14 +41,14 @@ if (\App\Classes\Auth::checkAuth()){
 				include '../src/views/layout/topnav.layout.php';
 	
 				// View content
-				if(file_exists($content)){
-					include $content;
+				if(file_exists($obj['view'])){
+					include $obj['view'];
 				} else {
 					http_response_code(404);
 					include '../src/views/errors/page_404.php';
 					die();
 				}
-	
+								
 				// Footer
 				include '../src/views/layout/footer.layout.php';
 				?>
@@ -70,7 +70,7 @@ if (\App\Classes\Auth::checkAuth()){
 					<h3 ><span data-i18n="[html]loginscreen.welcome">Welcome to</span> <?= \Config::APP_TITLE;?> </h3>
 					<p data-i18n="[html]loginscreen.text">An improved experience for managing RMS and SCS.</p>
 					<p data-i18n="[html]loginscreen.subtext">Login in. To see it in action.</p>
-	
+				<?= $obj['response'];?>
 				
 				<form class="m-t" id="signinForm" action="/login" method="post">
 					<div class="form-group">
@@ -98,7 +98,7 @@ if (\App\Classes\Auth::checkAuth()){
 					</form>
 				</div>	
 	
-				<p class="m-t"> <small><?= date("D d-m-Y"). "<font color='#0092D0'> | </font>". date("H:i:s")."<font color='#0092D0'> | </font> ". \Config::GetEnv() . " " . \Config::getVersion(); ?></small> </p>
+				<p class="m-t"> <small><?= \Config::getFrameWorkName() . ' ' . \Config::getFrameWorkVersion();?><font color='#0092D0'> | </font><?= date("D d-m-Y")?><font color='#0092D0'> | </font><?= date("H:i:s");?><font color='#0092D0'> | </font> <?= \Config::APP_ENV . " " . \Config::APP_VER; ?></small> </p>
 				
 			</div>
 		</div>		
@@ -109,9 +109,14 @@ if (\App\Classes\Auth::checkAuth()){
 		
     <!-- Mainly scripts -->
     <?php
-        foreach(\App\Classes\Package::jsPackage() as $js){
+        foreach($arr_js as $js){
             echo '<script src="'.$js.'"></script>';
         }
+		
+		if(isset($_SESSION[\Config::SES_NAME]['user_new']) && htmlentities($_SESSION[\Config::SES_NAME]['user_new'], ENT_QUOTES, 'UTF-8') == 1) {
+			include '../src/views/modals/new_user.modal.php';
+			echo "<script>$('#myModal').modal('show');</script>";
+		}		
     ?>
 </html>
 	

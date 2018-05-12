@@ -3,7 +3,7 @@
 						<table border="0" cellpadding="0" cellspacing="0" width="100%">
 							<tr>
 								<td style="color: #000; font-family: Arial, sans-serif; font-size: 14px;">
-									&copy; ASB Security, <?= date('D d.m.Y H:i:s');?><br/>
+									&copy; ASB Security, {{footer_date}}<br/>
 									<!--<a href="#" style="color: #ffffff;"><font color="#ffffff">Unsubscribe</font></a> to this newsletter instantly-->
 								</td>
 								<td align="right">

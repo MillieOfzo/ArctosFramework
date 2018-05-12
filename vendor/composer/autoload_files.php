@@ -8,5 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     '2cffec82183ee1cea088009cef9a6fc3' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
     '253c157292f75eb38082b5acb06f3f01' => $vendorDir . '/nikic/fast-route/src/functions.php',
-    '17482cee3bd6bfac460d41119375d7b9' => $baseDir . '/config/config.class.php',
+    'da1bc933f80f6d30e50c077c9d079068' => $baseDir . '/config/config.class.php',
 );

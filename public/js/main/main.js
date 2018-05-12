@@ -30,7 +30,7 @@ $(document).ready(function () {
 	var lang_code = $('html').attr('lang');
 
 	$.i18n.init({
-		resGetPath: 'src/lang/__lng__.json',
+		resGetPath: '/src/lang/__lng__.json',
 		load: 'unspecific',
 		fallbackLng: false,
 		lng: lang_code

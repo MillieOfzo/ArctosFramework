@@ -1,9 +1,8 @@
 <div class="wrapper-content animated fadeInRight text-center">
-	<img src="public/img/<?= Config::LOGO_NAME;?>" />
+    <img class="img-responsive center-block" src="public/img/<?= Config::LOGO_NAME;?>" />
+	
+    <h2><?= $obj['response'];?></h2>
 
-    <h1><?= $obj;?></h1>
 
-	<p><a href="/arctos/about">About</a></p> 
-	<p><a href="/arctos">Home</a></p> 
 </div>
 

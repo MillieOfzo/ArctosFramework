@@ -1,23 +1,23 @@
 <?php
+namespace App\Models;
 
-	namespace App\Models;
+class IndexModel
+{
+    private $message;
 
-    class IndexModel
+    function __construct()
     {
-        private $message;
 
-        function __construct()
-        {
-
-        }
-
-		public function setMessage($msg)
-		{
-			$this->message = $msg;
-		}
-		
-		public function getMessage()
-		{
-			return $this->message;
-		}
     }
+
+    public function setMessage($msg)
+    {
+        $this->message = $msg;
+    }
+
+    public function getMessage()
+    {
+        return $this->message;
+    }
+}
+
