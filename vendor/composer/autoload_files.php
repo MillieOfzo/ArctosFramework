@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    '7b4ea634fa5bd1ccea7e5ca039562961' => $vendorDir . '/colshrapnel/safemysql/safemysql.class.php',
+    '2cffec82183ee1cea088009cef9a6fc3' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
     '253c157292f75eb38082b5acb06f3f01' => $vendorDir . '/nikic/fast-route/src/functions.php',
-    '17482cee3bd6bfac460d41119375d7b9' => $baseDir . '/config/config.class.php',
+    '0c47e25c6ef959642967624e54443faf' => $baseDir . '/config/config.class.php',
 );

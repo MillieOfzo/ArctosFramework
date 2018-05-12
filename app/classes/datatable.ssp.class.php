@@ -14,6 +14,8 @@
  * @license MIT - http://datatables.net/license_mit
  */
 
+namespace App\Classes; 
+ 
 class SSP {
 	/**
 	 * Create the data output array for the DataTables rows

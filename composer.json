@@ -1,6 +1,8 @@
 {
-    "name": "ARCTOS framework",
-    "version": "0.0.1",
+    "name": "millieofzo/arctosframework",
+	"type": "framework",
+	"framework":"ARCTOS",
+    "version": "0.2.1",
     "env": "OTAP",
     "copyright": "ASB Security",
     "description": "Lightweight MVC framework",
@@ -13,13 +15,17 @@
     ],	
     "require": {
 		"php": ">=7.0.0",
-        "nikic/fast-route": "^1.3"
+        "nikic/fast-route": "^1.3",
+        "ezyang/htmlpurifier": "^4.10",
+        "phpmailer/phpmailer": "^6.0",
+        "colshrapnel/safemysql": "^1.0"
     },
     "autoload": {
 	    "psr-4": {
 			"App\\Classes\\":"app/classes",
 			"App\\Controllers\\":"app/controllers",
-			"App\\Models\\":"app/models"
+			"App\\Models\\":"app/models",
+			"App\\Routes\\":"routes"
 		},
         "files": ["config/config.class.php"]
     }	

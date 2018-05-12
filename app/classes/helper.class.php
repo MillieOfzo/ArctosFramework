@@ -1,12 +1,18 @@
 <?php
+namespace App\Classes;
 
-	namespace App\Classes;
-	
-	class Helper
-	{
-		public static function shout($string)
-		{
-			return strtoupper($string);
-		}
+class Helper
+{
+    public static function jsonArr($response_array)
+    {
+        header('Content-type: application/json; charset=UTF-8');
+        echo json_encode($response_array);
+        exit();
+    }
 
-	}
+    public static function redirect($url)
+    {
+        header("location: {$url}");
+    }
+}
+

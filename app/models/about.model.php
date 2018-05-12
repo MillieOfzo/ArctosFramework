@@ -1,24 +1,24 @@
 <?php
+namespace App\Models;
 
-	namespace App\Models;
+class AboutModel
+{
 
-    class AboutModel
+    private $message;
+
+    function __construct()
     {
 
-        private $message;
-
-        function __construct()
-        {
-            
-        }
-
-        public function setMessage($msg)
-        {
-            $this->message = $msg;
-        }
-
-        public function getMessage()
-        {
-            return $this->message;
-        }
     }
+
+    public function setMessage($msg)
+    {
+        $this->message = $msg;
+    }
+
+    public function getMessage()
+    {
+        return $this->message;
+    }
+}
+

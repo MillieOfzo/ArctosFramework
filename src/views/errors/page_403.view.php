@@ -6,15 +6,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="public/img/" />
+	<link rel="shortcut icon" type="image/x-icon" href="/public/img/<?= \Config::FAVICON_NAME;?>" />
 
-    <title> 404 Error</title>
+    <title> 403 Error</title>
 
     <!-- Mainly CSS -->
-    <link rel="stylesheet" href="../public/css/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../public/fonts/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="../public/css/main/animate.css">
-    <link rel="stylesheet" href="../public/css/main/style.css">
+    <?php
+        foreach(\App\Classes\Package::cssPackage() as $css){
+            echo '<link href="'.$css.'" rel="stylesheet">';
+        }
+    ?>
 
 </head>
 
@@ -29,18 +30,16 @@
            <p data-i18n="[html]error_page.403.msg">
 			Admin rechten zijn verplicht voor toegang. Neem contact op met de admins.
             </p>
-			<a href="../" class='btn btn-primary' data-i18n="[html]error_page.return_btn">Return to safety</a>
+			<a href="/" class='btn btn-primary' data-i18n="[html]error_page.return_btn">Return to safety</a>
         </div>
     </div>
 
     <!-- Mainly scripts -->
-    <script src="../public/js/jquery/jquery-3.1.1.min.js"></script>
-    <script src="../public/js/bootstrap/bootstrap.min.js"></script>
-    <script src="../public/js/metisMenu/jquery.metisMenu.js"></script>
-    <script src="../public/js/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="../public/js/main/main.js"></script>
-    <script src="../public/js/pace/pace.min.js"></script>
-    <script src="../public/js/i18next/i18next.min.js"></script>
+    <?php
+        foreach(\App\Classes\Package::jsPackage()  as $js){
+            echo '<script src="'.$js.'"></script>';
+        }	
+    ?>
 
 </body>
 

@@ -1,23 +1,178 @@
 {
-  "placeholders": {
-    "select": "Selecteer...",
-    "input": "Vul in..."
-  },
-  "layout":{
-    "topnav":{
-      "placeholder":"Zoek naar locatie",
-      "logout":"Uitloggen"
-    },
-    "sidebar":{
-      "title":{
-        "1":"Home",
-        "2":"Tickets",
-        "3":"Tools",
-        "4":"Gebruiker",
-        "5":"Gebruikers",
-        "6":"Logging",
-        "7":"Instellingen"
-      }
-    }
-  }
+	"placeholders": {
+		"select": "Selecteer...",
+		"input": "Vul in..."
+	},
+	"layout":{
+		"topnav":{
+			"placeholder":"Zoek naar locatie",
+			"logout":"Uitloggen"
+		},
+		"sidebar":{
+			"title":{
+			"1":"Home",
+			"2":"Tickets",
+			"3":"Tools",
+			"4":"Gebruiker",
+			"5":"Gebruikers",
+			"6":"Logging",
+			"7":"Instellingen"
+			}
+		}
+	},
+	"error_page":{
+		"return_btn":"Ga terug",
+		"403":{
+			"label":"Toegang geweigerd",
+			"msg":"Admin rechten zijn verplicht voor toegang. Neem contact op met de admins. Doeidoei!"			
+		},
+		"404":{
+			"label":"Pagina niet gevonden",
+			"msg":"Sorry, maar de pagina die je zoekt kan niet gevonden worden. Controleer de URL op errors, refresh de pagina"			
+		},
+		"500":{
+			"label":"Interne server error",
+			"msg":"De server heeft iets onverwachts aangetroffen waardoor het verzoek niet kon worden voltooid. Wij verontschuldigen ons. U kunt teruggaan naar de hoofdpagina:"			
+		},
+		"denied":{
+			"label":"Toegang geweigerd",
+			"msg":"Admin rechten zijn verplicht voor toegang. Neem contact op met de admins. Doeidoei!"			
+		},
+		"maintenance":{
+			"label":"Maintenance bezig",
+			"msg":"Wacht uit of vraag status na bij de admins"			
+		}		
+	},	
+	"loginscreen":{
+		"welcome": "Welkom bij",
+		"text": "Een lichtgewicht framework applicatie.",
+		"subtext": "Log in om het in actie te zien.",
+		"login": "Log in",
+		"placeholder": {
+			"email":"email",
+			"password":"wachtwoord"
+		},		
+		"request": "Request",
+		"forget": "Wachtwoord vergeten"
+	},
+	"password_modal":{
+		"welcome": "Welkom bij",
+		"first_time_text": "Dit is de eerste keer dat u inlogd.",
+		"first_time_subtext": "U dient uw wachtwoord te wijzigen naar een zelf gekozen wachtwoord. Dit om de veiligheid van uw account te kunnen waarborgen.",
+		"form":{
+			"placeholder":{
+				"password":"wachtwoord"
+			},
+			"close_btn":"Sluiten",
+			"submit_btn":"Update",
+			"password":"Wijzig wachtwoord",
+			"confirm_password":"Bevestig wachtwoord"
+		}
+	},
+	"send_mail":{
+		"recover_token":{
+			"subject":" password reset (1/2)"
+		},
+		"new_password":{
+			"subject":" password reset (2/2)"
+		}		
+	},
+	"loginmsg":{
+		"csrf":{
+			"label":"CSRF token niet geldig",
+			"msg":"Refresh de pagina en probeer opnieuw"
+		},	
+		"lck":{
+			"label":"Verificatie mislukt",
+			"msg":"Account geblokkeerd voor 2 uur."
+		},
+		"id":{
+			"label":"Verificatie mislukt",
+			"msg":"Controleer uw initialen of wachtwoord."
+		},
+		"dev":{
+			"label":"Error",
+			"msg":"Geen DEV account."
+		},
+		"blc":{
+			"label":"Error",
+			"msg":"User account is geblokkeerd. Neem contact op met de administrator."
+		},
+		"uknw":{
+			"label":"Error",
+			"msg":"Gebruiker bestaat niet."
+		},
+		"tok":{
+			"suc":{
+				"label":"Succesvol",
+				"msg":"Reset token aangevraagd."
+			},
+			"mul":{
+				"label":"Token aanvraag mislukt",
+				"msg":"Kan niet meerdere tokens aanvragen."
+			},			
+			"err":{
+				"label":"Reset token aanvraag mislukt",
+				"msg":"Refresh de pagina en probeer opnieuw"
+			},
+			"inv":{
+				"label":"Token is ongeldig",
+				"msg":"Refresh de pagina en vraag een nieuw token aan"
+			},
+			"uknw":{
+				"label":"Token niet gevonden",
+				"msg":"Gebruiker bestaat niet."
+			},
+			"exp":{
+				"label":"Token vervallen",
+				"msg":"Deze is niet meer bruikbaar. Refresh de pagina en vraag een nieuw token aan"
+			}
+		},
+		"res":{
+			"suc":{
+				"label":"Succesvol",
+				"msg":"Nieuw wachtwoord verzonden"
+			},
+			"err":{
+				"label":"Wachtwoord update mislukt",
+				"msg":"Refresh de pagina en vraag een nieuw token aan"
+			},
+			"notsend":{
+				"label":"Er is een probleem met het verzenden van de email",
+				"msg":"Refresh de pagina en vraag een nieuw token aan"
+			}			
+		}		
+	},
+	"user":{
+		"title":"Gebruiker",
+		"edit":{
+			"title":"Edit gebruiker",
+			"button":"Update",
+			"input":{
+				"1":"Gebruikersnaam",
+				"2":"Gebruiker achternaam",
+				"3":"Gebruiker email"
+			}
+		},		
+		"acc_update":{
+			"msg":{	
+				"err_email":{
+					"label": "Er ging iets mis",
+					"text": "Dit is geen juist email adres"
+				},
+				"err_email_in_use":{
+					"label": "Er ging iets mis",
+					"text": "Dit email adres is al in gebruik"
+				},				
+				"suc":{
+					"label": "Succes",
+					"text": "User account is geupdatet"
+				},
+				"err":{
+					"label": "Er ging iets mis",
+					"text": "Refresh de pagina en probeer opnieuw"
+				}				
+			}		
+		}
+	}	
 }
