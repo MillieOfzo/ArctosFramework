@@ -1382,19 +1382,19 @@ button.dim:active:before {
 }
 /* TOOLTIPS */
 .tooltip-inner {
-  background-color: #2F4050;
+  background-color: #f6a821;
 }
 .tooltip.top .tooltip-arrow {
-  border-top-color: #2F4050;
+  border-top-color: #f6a821;
 }
 .tooltip.right .tooltip-arrow {
-  border-right-color: #2F4050;
+  border-right-color: #f6a821;
 }
 .tooltip.bottom .tooltip-arrow {
-  border-bottom-color: #2F4050;
+  border-bottom-color: #f6a821;
 }
 .tooltip.left .tooltip-arrow {
-  border-left-color: #2F4050;
+  border-left-color: #f6a821;
 }
 /* EASY PIE CHART*/
 .easypiechart {

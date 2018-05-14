@@ -1,4 +1,5 @@
 <?php
+ 
 namespace App\Controllers;
 
 use \Config;
@@ -9,8 +10,7 @@ use App\Classes\Helper;
 use App\Classes\Auth;
 use App\Classes\Mailer;
 use App\Classes\Language;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
+
 
 class LoginController
 {
@@ -18,7 +18,16 @@ class LoginController
     private $auth;
     private $lang;
     private $purifier;
-
+	
+	/**
+	 * Token expiration time
+	 * 1 day = 60 seconds * 60 minutes * 24 hours = 86400 sec
+     * 10 min = 60 seconds * 10 = 600 sec
+	 *
+	 * @var int
+	 */
+    private $token_expiration = 600;
+	
     function __construct()
     {
         $this->model = new LoginModel;
@@ -170,16 +179,28 @@ class LoginController
 
         if (!empty($_POST['request']) && Auth::checkCsrfToken($_POST['csrf']))
         {
-            // If there already has been requested a token don't do it again
-            if ($this->model->checkRecoverTokenExsists() > 0)
-            {
-                return '<div class="alert alert-danger"><font color="red"><b>' . $this->lang->loginmsg->tok->mul->label . '</b></font><br><span >' . $this->lang->loginmsg->tok->mul->msg . '</span></div>';
-            }
             // Get current user row
             $row = $this->user->getUserRow($cleaned_email);
 
             if ($row)
             {
+				// If there already has been requested a token don't request again but check if the token is expired
+				if ($this->model->checkRecoverTokenExsists() > 0)
+				{
+					$row_token = $this->model->getRecoverToken($row['user_id']);
+					
+					if ($_SERVER["REQUEST_TIME"] - $row_token['user_token_date_time'] > $this->token_expiration)
+					{
+						// If token expired remove record
+						$this->model->deleteRecoverToken($row_token['user_id']);
+					}
+					else
+					{
+						return '<div class="alert alert-danger"><font color="red"><b>' . $this->lang->loginmsg->tok->mul->label . '</b></font><br><span >' . $this->lang->loginmsg->tok->mul->msg . '</span></div>';					
+					}
+					
+				}
+				
                 // Generate random token
                 $token = openssl_random_pseudo_bytes(32);
                 $token = bin2hex($token);
@@ -193,64 +214,43 @@ class LoginController
                     $token_hash = hash('sha256', $token_hash . $salt);
                 }
 
-                $query_params = array(
-                    'user_id' => $row['user_id'],
-                    'user_token_date_time' => time() ,
-                    'user_token_date_request' => date("Y-m-d H:i:s") ,
-                    'user_token_hash' => $token_hash,
-                    'user_token_salt' => $salt
-                );
 
-                $this->model->saveRecoverToken($query_params);
-
-                // Enkel voor testing
-                //die(header("Location: ../token.php?rec=".$token."&id=".$row['Initialen']));
                 $email_values = array(
                     'user_name' => $row['user_name'] . " " . $row['user_last_name'],
-                    'recover_link' => '<a class="link" href="' . $_SERVER['HTTP_HOST'] . '/login/gentoken/' . $token . '/' . $_SESSION['_token'] . '/' . $row['user_id'] . '">Recover token</a>'
+                    'recover_link' => '<a class="link" href="http://' . $_SERVER['HTTP_HOST'] . '/login/gentoken/' . $token . '/' . $_SESSION['_token'] . '/' . $row['user_id'] . '">Recover token</a>'
                 );
 
                 $mail_body = Mailer::build('gen_token', $email_values);
+				$send_mail = Mailer::send(Config::APP_TITLE . ' ' . $this->lang->send_mail->recover_token->subject, $mail_body, array($row['user_email']));
 
-                $mail = new PHPMailer(true);
-                try
-                {
-                    //Server settings
-                    //$mail->SMTPDebug = 2;
-                    $mail->isSMTP();
-                    $mail->SMTPAutoTLS = false;
-                    $mail->Host = Config::SMTP_HOST;
-                    $mail->Port = Config::SMTP_PORT;
+                if($send_mail)
+				{
 
-                    //Recipients
-                    $mail->SetFrom(Config::APP_EMAIL);
-                    $mail->AddAddress($cleaned_email);
+					$query_params = array(
+						'user_id' => $row['user_id'],
+						'user_token_date_time' => time() ,
+						'user_token_date_request' => date("Y-m-d H:i:s") ,
+						'user_token_hash' => $token_hash,
+						'user_token_salt' => $salt
+					);
+	
+					$this->model->saveRecoverToken($query_params);	
+					
+					Logger::logToFile(__FILE__, 0, "Token request successful user: " . $row['user_email']);
 
-                    //Content
-                    $mail->isHTML(true);
-                    $mail->Subject = Config::APP_TITLE . ' ' . $this->lang->send_mail->recover_token->subject;
-                    $mail->Body = $mail_body;
-                    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-                    $mail->send();
-
-                    Logger::logToFile(__FILE__, 0, "Token request successful user: " . $row['user_email']);
-
-                    return '<div class="alert alert-success" ><font color="green"><b>' . $this->lang->loginmsg->tok->suc->label . '</b></font><br><span>' . $this->lang->loginmsg->tok->suc->msg . '</span></div>';
-
-                }
-                catch(Exception $e)
-                {
-
-                    Logger::logToFile(__FILE__, 0, 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo);
-
-                    return '<div class="alert alert-danger"><font color="red"><b>' . $this->lang->loginmsg->tok->err->label . '</b></font><br><span>' . $this->lang->loginmsg->tok->err->msg . '</span></div>';
-                }
+					return '<div class="alert alert-success" ><font color="green"><b>' . $this->lang->loginmsg->tok->suc->label . '</b></font><br><span>' . $this->lang->loginmsg->tok->suc->msg . '</span></div>';						
+				}
+				else 
+				{
+					Logger::logToFile(__FILE__, 0, 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo);
+					$this->model->deleteRecoverToken($row['user_id']);
+					return '<div class="alert alert-danger"><font color="red"><b>' . $this->lang->loginmsg->tok->err->label . '</b></font><br><span>' . $this->lang->loginmsg->tok->err->msg . '</span></div>';
+				}
 
             }
             else
             {
-                return '<div class="alert alert-danger" ><font color="red"><b>' . $this->lang->loginmsg->tok->uknw->label . '</b></font><br><span>' . $this->lang->loginmsg->tok->uknw->msg . '</span></div>';
+                return '<div class="alert alert-danger" ><font color="red"><b>' . $this->lang->loginmsg->uknw->label . '</b></font><br><span>' . $this->lang->loginmsg->uknw->msg . '</span></div>';
             }
         }
         else
@@ -274,30 +274,25 @@ class LoginController
 
             if ($row_token)
             {
-                // 1 dag beschikbaar = 60 seconds * 60 minutes * 24 hours
-                // 10 min = 60 seconds * 10
-                $delta = 600;
-                // Als server tijd min timestamp uit database groter is dan $delta
-                // dan is de token vervallen.
-                if ($_SERVER["REQUEST_TIME"] - $row_token['user_token_date_time'] > $delta)
+                if ($_SERVER["REQUEST_TIME"] - $row_token['user_token_date_time'] > $this->token_expiration)
                 {
 
                     Logger::logToFile(__FILE__, 0, "Token expired user " . $row_token['user_id']);
 
-                    // Indien token vervallen is verwijder uit database
+                    // If token expired remove record
                     $this->model->deleteRecoverToken($cleaned_user_id);
 
                     return '<div class="alert alert-danger" ><font color="red"><b>' . $this->lang->loginmsg->tok->exp->label . '</b></font><br><span>' . $this->lang->loginmsg->tok->exp->msg . '</span></div>';
                 }
                 else
                 {
-                    // Anders hash de token
+                    // Re-hash token
                     $check_token_hash = hash('sha256', $token . $row_token['user_token_salt']);
                     for ($round = 0;$round < 65536;$round++)
                     {
                         $check_token_hash = hash('sha256', $check_token_hash . $row_token['user_token_salt']);
                     }
-                    // Komt de gehashde token overeen met de hash in de database dan is auth ok
+					// Compare hash with token hash from table
                     if (hash_equals($check_token_hash, $row_token['user_token_hash']))
                     {
                         $token_auth = true;
@@ -306,12 +301,12 @@ class LoginController
             }
             else
             {
-                return '<div class="alert alert-danger" ><font color="red"><b>' . $this->lang->loginmsg->tok->inv->label . '</b></font><br><span>' . $this->lang->loginmsg->tok->inv->msg . '</span></div>';
+                return '<div class="alert alert-danger" ><font color="red"><b>' . $this->lang->loginmsg->tok->uknw->label . '</b></font><br><span>' . $this->lang->loginmsg->tok->uknw->msg . '</span></div>';
             }
 
             if ($token_auth)
             {
-                // Generate random password
+                // Generate random password seed
                 $gen_password = Auth::genPassSeed(2);
                 $hash = password_hash($gen_password, PASSWORD_ARGON2I);
 
@@ -322,64 +317,40 @@ class LoginController
                     'user_new' => 1
                 );
 
-                if ($this->user->updateUserPassword($query_params, $cleaned_user_id))
-                {
-                    $email_values = array(
-                        'user_name' => $row['user_name'] . " " . $row['user_last_name'],
-                        'link' => '<a class="link" href="' . $_SERVER['HTTP_HOST'] . '?ini=' . $cleaned_user_id . '">DB+</a>',
-                        'gen_password' => $gen_password,
-                    );
-
-                    $mail_body = Mailer::build('password_reset', $email_values);
-
-                    $mail = new PHPMailer(true);
-                    try
-                    {
-                        //Server settings
-                        //$mail->SMTPDebug = 2;
-                        $mail->isSMTP();
-                        $mail->SMTPAutoTLS = false;
-                        $mail->Host = Config::SMTP_HOST;
-                        $mail->Port = Config::SMTP_PORT;
-
-                        //Recipients
-                        $mail->SetFrom(Config::APP_EMAIL);
-                        $mail->AddAddress($row['user_email']);
-
-                        //Content
-                        $mail->isHTML(true);
-                        $mail->Subject = Config::APP_TITLE . ' ' . $this->lang->send_mail->new_password->subject;
-                        $mail->Body = $mail_body;
-                        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-                        $mail->send();
-
-                        Logger::logToFile(__FILE__, 0, "Password reset. Mail send to user: " . $row['user_email']);
-
-                        $this->model->deleteRecoverToken($cleaned_user_id);
-
-                        return '<div class="alert alert-success" ><font color="green"><b >' . $this->lang->loginmsg->res->suc->label . '</b></font><br><span>' . $this->lang->loginmsg->res->suc->msg . '</span></div>';
-
-                    }
-                    catch(Exception $e)
-                    {
-
-                        Logger::logToFile(__FILE__, 0, 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo);
-
-                        return '<div class="alert alert-danger"><font color="red"><b>' . $this->lang->loginmsg->res->notsend->label . '</b></font><br><span>' . $this->lang->loginmsg->res->notsend->msg . '</span></div>';
-
-                    }
-                }
-                else
-                {
-                    Logger::logToFile(__FILE__, 0, "Password not updated for user: " . $row['user_email']);
-                    return '<div class="alert alert-danger"><font color="red"><b>' . $this->lang->loginmsg->res->err->label . '</b></font><br><span>' . $this->lang->loginmsg->res->err->msg . '</span></div>';
-                }
-
+                $email_values = array(
+                    'user_name' => $row['user_name'] . " " . $row['user_last_name'],
+                    'link' => '<a class="link" href="http://' . $_SERVER['HTTP_HOST'] . '">'.Config::APP_TITLE.'</a>',
+                    'gen_password' => $gen_password,
+                );
+                
+                $mail_body = Mailer::build('password_reset', $email_values);
+				$send_mail = Mailer::send(Config::APP_TITLE . ' ' . $this->lang->send_mail->new_password->subject, $mail_body, array($row['user_email']));
+                
+				if($send_mail)
+				{
+					if ($this->user->updateUserPassword($query_params, $cleaned_user_id))
+					{	
+						Logger::logToFile(__FILE__, 0, "Password reset. Mail send to user: " . $row['user_email']);
+		        
+						$this->model->deleteRecoverToken($cleaned_user_id);
+		        
+						return '<div class="alert alert-success" ><font color="green"><b >' . $this->lang->loginmsg->res->suc->label . '</b></font><br><span>' . $this->lang->loginmsg->res->suc->msg . '</span></div>';
+					}
+					else
+					{
+						Logger::logToFile(__FILE__, 0, "Password not updated for user: " . $row['user_email']);
+						return '<div class="alert alert-danger"><font color="red"><b>' . $this->lang->loginmsg->res->err->label . '</b></font><br><span>' . $this->lang->loginmsg->res->err->msg . '</span></div>';
+					}						
+				}
+				else 
+				{
+					Logger::logToFile(__FILE__, 0, 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo);
+					return '<div class="alert alert-danger"><font color="red"><b>' . $this->lang->loginmsg->res->notsend->label . '</b></font><br><span>' . $this->lang->loginmsg->res->notsend->msg . '</span></div>';
+				}
             }
             else
             {
-                return '<div class="alert alert-danger" data-i18n="[html]login.res.err"><font color="red"><b>' . $this->lang->loginmsg->tok->inv->label . '</b></font><br><span>' . $this->lang->loginmsg->tok->inv->msg . '</span></div>';
+                return '<div class="alert alert-danger" ><font color="red"><b>' . $this->lang->loginmsg->tok->inv->label . '</b></font><br><span>' . $this->lang->loginmsg->tok->inv->msg . '</span></div>';
 
             }
         }

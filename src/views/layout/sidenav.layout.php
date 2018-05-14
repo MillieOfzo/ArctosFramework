@@ -4,7 +4,7 @@
             <li class="nav-header">
 
                 <div class="logo-element">
-                    ARC
+					<?= substr(\Config::APP_TITLE,0,3);?>
                 </div>
             </li>
             <li><a href="/" data-toggle="tooltip" data-placement="right" data-i18n="[title]layout.sidebar.title.1"><i class="fa fa-th-large fa-fw"></i> <span class="nav-label"></span></a></li>

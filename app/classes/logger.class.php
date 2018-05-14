@@ -1,4 +1,8 @@
 <?php
+/**
+ * ARCTOS - Lightweight framework.
+ */
+ 
 namespace App\Classes;
 
 use \Config as Config;
@@ -7,8 +11,14 @@ class Logger
 {
     /**
      * Custom log to file function
-     * @param integer $level
-     * @param string $msg
+	 *
+     * @param sting $file The file the method is called on
+	 * @param integer $level 
+	 *    the following integers are accepted
+	 *     1 - CRITICAL
+	 *     2 - WARNING
+	 *     Default - NOTICE 
+     * @param string $msg The message to be logged
      */
     public static function logToFile($file, $level, $msg)
     {

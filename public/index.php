@@ -34,7 +34,7 @@ if (\App\Classes\Auth::checkAuth()){
 	
 			<?php include '../src/views/layout/sidenav.layout.php';?>
 	
-			<div id="page-wrapper" class="<?= \Config::APP_THEME;?>-bg">
+			<div id="page-wrapper" class="<?= strtolower(\Config::APP_THEME);?>-bg">
 	
 				<?php
 				// Top menu bar
@@ -59,7 +59,7 @@ if (\App\Classes\Auth::checkAuth()){
 	
 	</body>
 <?php } else { ?>
-	<body class="<?= \Config::APP_THEME;?>-bg" id="i18container">
+	<body class="<?= strtolower(\Config::APP_THEME);?>-bg" id="i18container">
 	
 		<div class="middle-box text-center loginscreen animated fadeInDown ">
 			<div class="wrapper wrapper-content">

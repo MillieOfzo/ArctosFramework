@@ -49,9 +49,9 @@ class UserController
 
                 try
                 {
-                    if ($row = $this->model->updateUserPassword($query_params, $cleaned_user_id))
+                    if ($this->model->updateUserPassword($query_params, $cleaned_user_id))
                     {
-                        Logger::logToFile(__FILE__, 0, "Password user: " . $row['user_email'] . " gewijzigd");
+                        Logger::logToFile(__FILE__, 0, "Password user: " . $row['user_email'] . " changed");
 
                         $res['label'] = $this->lang->user->acc_update->msg->suc->label;
                         $res['text'] = $this->lang->user->acc_update->msg->suc->msg;
@@ -67,8 +67,8 @@ class UserController
                 {
                     Logger::logToFile(__FILE__, 1, 'Regel: ' . $ex->getLine() . ' Bestand: ' . $ex->getFile() . ' Error: ' . $ex->getMessage());
 
-                    $res['label'] = $this->lang->user->acc_update->msg->err - label;
-                    $res['text'] = $this->lang->user->acc_update->msg->err - msg;
+                    $res['label'] = $this->lang->user->acc_update->msg->err->label;
+                    $res['text'] = $this->lang->user->acc_update->msg->err->msg;
                     $res['type'] = 'error';
 
                     Helper::jsonArr($res);
@@ -78,8 +78,8 @@ class UserController
         }
         else
         {
-            $res['label'] = $this->lang->user->acc_update->msg->err - label;
-            $res['text'] = $this->lang->user->acc_update->msg->err - msg;
+            $res['label'] = $this->lang->user->acc_update->msg->err->label;
+            $res['text'] = $this->lang->user->acc_update->msg->err->msg;
             $res['type'] = 'error';
 
             Helper::jsonArr($res);

@@ -1,4 +1,13 @@
 <?php
+/**
+ * ARCTOS - Lightweight framework.
+ *
+ * Session manager class
+ *
+ * Creates secure sessions. 
+ * Regenerates sessions, if sessions is no longer valid the file is marked as obsolete and ready to be cleaned up by the garbage collector
+ */
+ 
 namespace App\Classes;
 
 class SessionManager

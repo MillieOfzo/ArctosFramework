@@ -346,6 +346,7 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
         'PHPMailer\\PHPMailer\\PHPMailer' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/PHPMailer.php',
         'PHPMailer\\PHPMailer\\POP3' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/POP3.php',
         'PHPMailer\\PHPMailer\\SMTP' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/SMTP.php',
+        'PHPMailer\\PHPMailer\\phpmailerException' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/PHPMailer.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
