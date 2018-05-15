@@ -26,10 +26,10 @@ class Logger
         $env = Config::APP_ENV;
 
         $date = date("Y-m-d");
-        $path = Config::ROOT_PATH;
+        $path = $_SERVER['DOCUMENT_ROOT'];
         $path .= '/Storage/Logs/' . date("Y") . '/';
-        //$path .= "/Src/Logs/".$year."/";
-        // Bestaat de folder niet maak deze dan aan
+
+        // If path doesnt exist create folder
         if (!file_exists($path))
         {
             mkdir($path);

@@ -19,12 +19,12 @@ class Package
             '/public/css/bootstrap/bootstrap.min.css',
             '/public/css/fonts/font-awesome/css/font-awesome.css',
             '/public/css/main/animate.css',
-            '/public/css/main/style_'.strtolower(Config::APP_THEME).'.css',
             '/public/css/formvalidation/dist/css/formValidation.min.css',
             '/public/css/dataTables/datatables.min.css',
             '/public/css/dataTables/datatables_responsive.min.css',
             '/public/css/sweetalert/sweetalert.css',
-            '/public/css/select2/dist/css/select2.min.css'
+            '/public/css/select2/dist/css/select2.min.css',
+            '/public/css/main/style_'.strtolower(Config::APP_THEME).'.css',
         );
 
         return $cssArr;

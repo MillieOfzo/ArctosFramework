@@ -1,9 +1,7 @@
 /*@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,300,500,700");*/
 /*
- *
- *   INSPINIA - Responsive Admin Theme
- *   version 2.7
+ *   ARCTOS - Dark theme
  *
 */
 h1,
@@ -73,7 +71,7 @@ h2 small {
 pre {
   color: white;
   background-color: #24262d5c;
-  
+
 }
 
 .c-accent {
@@ -853,9 +851,9 @@ fieldset[disabled] .btn-info.active {
   border-color: #26d7d9;
 }
 .btn-default {
-  color: inherit;
-  background: white;
-  border: 1px solid #e7eaec;
+  color: #949ba2;
+  background-color: transparent;
+  border-color: #616779;
 }
 .btn-default:hover,
 .btn-default:focus,
@@ -866,8 +864,9 @@ fieldset[disabled] .btn-info.active {
 .btn-default:active:hover,
 .btn-default.active:hover,
 .btn-default.active:focus {
-  color: inherit;
-  border: 1px solid #d2d2d2;
+  color: #ffffff;
+  background-color: #484a53;
+  border-color: #616779;
 }
 .btn-default:active,
 .btn-default.active,
@@ -1175,7 +1174,7 @@ button.dim:active:before {
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  border-radius: .25rem;		
+  border-radius: .25rem;
 }
 .label-primary,
 .badge-primary {
@@ -1355,10 +1354,10 @@ button.dim:active:before {
 .pagination > .disabled > span:hover,
 .pagination > .disabled > a:focus,
 .pagination > .disabled > span:focus {
-    color: #777;
-    cursor: not-allowed;
-    background-color: #f6a82145;
-    border-color: #f6a821;
+  color: #777;
+  cursor: not-allowed;
+  background-color: #f6a82145;
+  border-color: #f6a821;
 }
 .pagination > li > a,
 .pagination > li > span {
@@ -1376,9 +1375,9 @@ button.dim:active:before {
 .pagination > li > span:hover,
 .pagination > li > a:focus,
 .pagination > li > span:focus {
-    color: white;
-    background-color: #f6a82145;
-    border-color: #f6a821;	
+  color: white;
+  background-color: #f6a82145;
+  border-color: #f6a821;
 }
 /* TOOLTIPS */
 .tooltip-inner {
@@ -2003,7 +2002,7 @@ div.dt-button-info {
   transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
   width: 100%;
   font-size: 14px;
- 
+
 }
 .form-control:focus,
 .single-line:focus {
@@ -2997,7 +2996,7 @@ a.forum-item-title:hover {
 /* Tabs */
 .tabs-container .panel-body {
   background: #fff;
-  border: 1px solid #e7eaec;
+  /*border: 1px solid #e7eaec;*/
   border-radius: 2px;
   padding: 20px;
   position: relative;
@@ -3006,7 +3005,7 @@ a.forum-item-title:hover {
 .tabs-container .nav-tabs > li.active > a:hover,
 .tabs-container .nav-tabs > li.active > a:focus {
   border: 1px solid #e7eaec;
-  border-bottom-color: transparent;
+  /*border-bottom-color: transparent;*/
   background-color: #fff;
 }
 .tabs-container .nav-tabs > li {
@@ -3019,14 +3018,17 @@ a.forum-item-title:hover {
 .tabs-container .nav-tabs > li.active > a,
 .tabs-container .nav-tabs > li.active > a:hover,
 .tabs-container .nav-tabs > li.active > a:focus {
-  border: 1px solid #e7eaec;
-  border-bottom-color: transparent;
+  background-color: rgba(68, 70, 79, 0.5);
+  color: #ffffff;
+  border-width: 0 0 1px 0;
 }
 .tabs-container .nav-tabs {
-  border-bottom: 1px solid #e7eaec;
+  border-bottom: 0px solid #e7eaec;
 }
 .tabs-container .tab-pane .panel-body {
   border-top: none;
+  background-color: rgba(68, 70, 79, 0.5);
+  margin-bottom: 20px;
 }
 .tabs-container .tabs-left .tab-pane .panel-body,
 .tabs-container .tabs-right .tab-pane .panel-body {
@@ -3276,28 +3278,62 @@ a.forum-item-title:hover {
   font-size: 26px;
 }
 /* Select2 custom styles */
+.select2-container .select2-selection--single {
+  height: 35px;
+}
 .select2-container--default .select2-selection--single,
 .select2-container--default .select2-selection--multiple {
-  border-color: #e7eaec;
+  color: #949ba2;
+  border-color: #3d404c;
+  background-color: #494b54;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #949ba2;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #494b54;
+  border-color: #616779;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice:hover {
+  background-color: #52555f;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+  color: #ffffff;
+}
+.select2-container .select2-selection--single .select2-selection__rendered {
+  padding-top: 2px;
+  padding-left: 10px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 35px;
 }
 .select2-container--default.select2-container--focus .select2-selection--single,
 .select2-container--default.select2-container--focus .select2-selection--multiple {
-  border-color: #1ab394;
+  border-color: #f6a821;
 }
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
-  background-color: #1ab394;
+  background-color: #f6a821;
 }
 .select2-container--default .select2-search--dropdown .select2-search__field {
-  border-color: #e7eaec;
+  border-color: #3d404c;
+  background-color: #34363d;
+}
+.select2-container--default .select2-results__option[aria-selected=true] {
+  background-color: #606370;
+  color: white;
 }
 .select2-dropdown {
-  border-color: #e7eaec;
+  border-color: #3d404c;
+  background-color: #494b54;
 }
 .select2-dropdown input:focus {
   outline: none;
 }
 .select2-selection {
   outline: none;
+}
+.select2-container--default .select2-results > .select2-results__options {
+  color: #939aa1;
 }
 .ui-select-container.ui-select-bootstrap .ui-select-choices-row.active > a {
   background-color: #1ab394;
@@ -3624,7 +3660,7 @@ body.boxed-layout #wrapper {
 }
 a {
   color: #f6a821;
-  text-decoration: none;	
+  text-decoration: none;
   cursor: pointer;
 }
 a:hover,
@@ -4325,10 +4361,10 @@ table.table-mail tr td {
   background-color: #262626;
 }
 body.dark-bg {
-	background-color:#24262d;
+  background-color:#24262d;
 }
 .dark-bg {
-  font-family: 'Roboto', sans-serif, "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;	
+  font-family: 'Roboto', sans-serif, "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: rgba(68, 70, 79, 0.5);
   color: #949ba2;
 }
