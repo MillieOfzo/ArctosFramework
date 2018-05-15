@@ -1,11 +1,27 @@
 <?php
+/**
+ * ARCTOS - Lightweight framework.
+ *
+ * Session manager class
+ *
+ * Creates secure sessions. 
+ * Regenerates sessions, if sessions is no longer valid the file is marked as obsolete and ready to be cleaned up by the garbage collector
+ */
+ 
 namespace App\Classes;
 
 class SessionManager
 {
     /**
      * Needs to call the regenerateSession function on new requests and periodically after that, as well as destroy the session if it is invalid. Here is the complete SessionStart function.
-     */
+	 * This function starts, validates and secures a session.
+	 *
+	 * @param string $name The name of the session.
+	 * @param int $limit Expiration date of the session cookie, 0 for session only
+	 * @param string $path Used to restrict where the browser sends the cookie
+	 * @param string $domain Used to allow subdomains access to the cookie
+	 * @param bool $secure If true the browser only sends the cookie over https
+	 */
     public static function sessionStart($name, $limit = 0, $path = '/', $domain = null, $secure = null)
     {
         // Set the cookie name
@@ -43,19 +59,31 @@ class SessionManager
             $_SESSION = array();
             session_destroy();
             session_start();
+			// Add csrf token to session
+			Csrf::genCsrfToken();
         }
     }
-
+	
+	/**
+	 * This function checks to make sure a session exists and is coming from the proper host. On new visits and hacking
+	 * attempts this function will return false.
+	 *
+	 * @return bool
+	 */
     protected static function preventHijacking()
     {
-        if (!isset($_SESSION['IPaddress']) || !isset($_SESSION['userAgent'])) return false;
+        if (!isset($_SESSION['IPaddress']) || !isset($_SESSION['userAgent'])) 
+			return false;
 
-        if ($_SESSION['IPaddress'] != $_SERVER['REMOTE_ADDR']) return false;
+        if ($_SESSION['IPaddress'] != $_SERVER['REMOTE_ADDR']) 
+			return false;
 
-        if ($_SESSION['userAgent'] != $_SERVER['HTTP_USER_AGENT']) return false;
+        if ($_SESSION['userAgent'] != $_SERVER['HTTP_USER_AGENT']) 
+			return false;
 
         return true;
     }
+	
     /**
      * If an application creates a lot of quick connections to the server some interesting things can happen.
      * PHP, and many other languages, restricts access to the session data to one running script at a time,
@@ -87,7 +115,7 @@ class SessionManager
             }
             return;
         }
-
+		// Add new csrf token to regenerated session
         Csrf::genCsrfToken();
         // Set current session to expire in 10 seconds
         $_SESSION['OBSOLETE'] = true;
@@ -111,12 +139,16 @@ class SessionManager
 
     /**
      * We need to add another function to check for the obsolete flag and to see if the session has expired.
+	 *
+	 * @return bool
      */
     protected static function validateSession()
     {
-        if (isset($_SESSION['OBSOLETE']) && !isset($_SESSION['EXPIRES'])) return false;
+        if (isset($_SESSION['OBSOLETE']) && !isset($_SESSION['EXPIRES'])) 
+			return false;
 
-        if (isset($_SESSION['EXPIRES']) && $_SESSION['EXPIRES'] < time()) return false;
+        if (isset($_SESSION['EXPIRES']) && $_SESSION['EXPIRES'] < time()) 
+			return false;
 
         return true;
     }

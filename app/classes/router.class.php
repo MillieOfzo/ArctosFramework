@@ -1,4 +1,12 @@
 <?php
+/**
+ * ARCTOS - Lightweight framework.
+ *
+ * FastRoute implementation
+ * Documentation:
+ * @see https://github.com/nikic/FastRoute
+ */
+
 namespace App\Classes;
 
 use \Config;
@@ -8,9 +16,27 @@ use FastRoute\Dispatcher;
 
 class Router
 {
+    /**
+     * Current cache location
+	 *
+     * @param string
+     */	
     private static $cachePath = '../storage/framework/route.cache';
+	
+    /**
+     * Disable or enable the caching of routes. Which improves performance
+	 *
+     * @param bool
+     */	
     private static $cacheDisabled = Config::DISABLE_ROUTING_CACHE;
 
+    /**
+     * Route the request to the registered class and method
+	 *
+     * @param string $httpMethod The requested httpmethod. Eg POST, GET, DELETE etc
+     * @param string $uri The raw url from which the request originated
+	 * @return array Array containing the object response and the view to be shown
+     */	
     public static function route($httpMethod, $uri)
     {
         $dispatcher = \FastRoute\cachedDispatcher(function (RouteCollector $collector)
@@ -47,7 +73,7 @@ class Router
             case Dispatcher::FOUND:
                 $handler = $routeInfo[1];
                 $vars = $routeInfo[2];
-
+				
                 list($class, $method) = explode("/", $handler, 2);
 
                 $named_class = 'App\Controllers\\' . $class;

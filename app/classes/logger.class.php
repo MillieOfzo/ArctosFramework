@@ -1,4 +1,8 @@
 <?php
+/**
+ * ARCTOS - Lightweight framework.
+ */
+ 
 namespace App\Classes;
 
 use \Config as Config;
@@ -7,8 +11,14 @@ class Logger
 {
     /**
      * Custom log to file function
-     * @param integer $level
-     * @param string $msg
+	 *
+     * @param sting $file The file the method is called on
+	 * @param integer $level 
+	 *    the following integers are accepted
+	 *     1 - CRITICAL
+	 *     2 - WARNING
+	 *     Default - NOTICE 
+     * @param string $msg The message to be logged
      */
     public static function logToFile($file, $level, $msg)
     {
@@ -16,10 +26,10 @@ class Logger
         $env = Config::APP_ENV;
 
         $date = date("Y-m-d");
-        $path = Config::ROOT_PATH;
+        $path = $_SERVER['DOCUMENT_ROOT'];
         $path .= '/Storage/Logs/' . date("Y") . '/';
-        //$path .= "/Src/Logs/".$year."/";
-        // Bestaat de folder niet maak deze dan aan
+
+        // If path doesnt exist create folder
         if (!file_exists($path))
         {
             mkdir($path);

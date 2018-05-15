@@ -40,13 +40,12 @@ class UserModel
         try
         {
             $this->conn->query("UPDATE app_users SET ?u WHERE user_id = ?i", $query_param, $user_id);
-            $updated = true;
+            return true;
         }
         catch(Exception $ex)
         {
-            $updated = self::logError($ex);
+            return self::logError($ex);
         }
-        return $updated;
     }
 
     public function updateUserLastAccess($user_id)
@@ -54,13 +53,12 @@ class UserModel
         try
         {
             $this->conn->query("UPDATE app_users SET user_last_access = now() WHERE user_id = ?s", $user_id);
-            $updated = true;
+            return true;
         }
         catch(Exception $ex)
         {
-            $updated = self::logError($ex);
+            return self::logError($ex);
         }
-        return $updated;
     }
 
     private static function logError($exception)

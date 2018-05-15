@@ -1,5 +1,15 @@
 <?php
+/**
+ * ARCTOS - Lightweight framework.
+ *
+ * Package class
+ * 
+ * Configure css an js package to be used in html views
+ */
+ 
 namespace App\Classes;
+
+use \Config;
 
 class Package
 {
@@ -14,7 +24,11 @@ class Package
             '/public/css/dataTables/datatables_responsive.min.css',
             '/public/css/sweetalert/sweetalert.css',
             '/public/css/select2/dist/css/select2.min.css',
+<<<<<<< HEAD
             '/public/css/main/style_'.\Config::APP_THEME.'.css',
+=======
+            '/public/css/main/style_'.strtolower(Config::APP_THEME).'.css',
+>>>>>>> master
         );
 
         return $cssArr;
@@ -32,7 +46,7 @@ class Package
             '/public/js/main/main.js',
             '/public/js/formvalidation/dist/js/formValidation.min.js',
             '/public/js/formvalidation/dist/js/framework/bootstrap.min.js',
-            '/public/js/formvalidation/dist/js/language/' . strtolower(\Config::APP_LANG) . '_' . strtoupper(\Config::APP_LANG) . '.js',
+            '/public/js/formvalidation/dist/js/language/' . strtolower(Config::APP_LANG) . '_' . strtoupper(Config::APP_LANG) . '.js',
             '/public/js/sweetalert/sweetalert.min.js',
             '/public/js/zxcvbn/zxcvbn.js',
             '/public/js/select2/dist/js/select2.js'

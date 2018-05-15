@@ -1,4 +1,8 @@
 <?php
+/**
+ * ARCTOS - Lightweight framework.
+ */
+ 
 namespace App\Classes;
 
 // Singleton to connect db. NOT CURRENTLY USED

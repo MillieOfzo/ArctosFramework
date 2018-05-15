@@ -1,4 +1,14 @@
 <?php
+/**
+ * ARCTOS - Lightweight framework.
+ *
+ * Error manager class
+ *
+ * Class to catch simple and fatal php errors and log them to file
+ * If Config::DEBUG =  false, errors are not displayed to the browser but written to a log file
+ * Fatal errors are always written to error files located in the location specified with the method SetLogFile()
+ */
+ 
 namespace App\Classes;
 
 /**
@@ -22,26 +32,30 @@ class ErrorManager
 {
     /**
      * Current log level
-     * @var int
+	 *
+     * @param int
      */
     private static $logLevel = E_ALL;
 
     /**
      * Current debug mode
-     * @var bool
+	 *
+     * @param bool
      */
     private static $debug = false;
 
     /**
      * Error log file, stacktrace will be written to that file and detailed error information
-     * @var string
+	 *
+     * @param string
      */
     private static $logFile = '';
 
     /**
      * Sets current log level, log level that is caught by errorhandler when occurs
+	 *
      * @param int $newLogLevel Log level to set the error handler to catch
-     * @param bool $systemlevelalso Whether to set the php error_reporting to set variable too or not (might reduce php overhead of always calling log function when using only potion of available error codes)
+     * @param bool $systemlevel also Whether to set the php error_reporting to set variable too or not (might reduce php overhead of always calling log function when using only potion of available error codes)
      */
     public static function SetLogLevel($newLogLevel)
     {
@@ -51,6 +65,7 @@ class ErrorManager
 
     /**
      * Sets the debug mode on or off (debug mode = errors get output to browser, but between <!-- -->
+	 *
      * @param bool $debug
      */
     public static function SetDebug($debug)
@@ -71,6 +86,7 @@ class ErrorManager
 
     /**
      * Sets main error logfile to new value
+	 *
      * @param string $logFile Log file where full stacktraces are logged (please use full path if possible)
      */
     public static function SetLogFile($logFile)
@@ -80,6 +96,7 @@ class ErrorManager
 
     /**
      * Custom error handler
+	 *
      * @param integer $code
      * @param string $description
      * @param string $file
@@ -103,17 +120,19 @@ class ErrorManager
 
         $str = "[{$datum}] [{$error}] [{$user}] [{$env}] [{$file}, line {$line}] {$description}" . PHP_EOL;
         self::fileLog($str);
-
-        echo '<div class="text-center">
+		/*
+        die( '<div class="text-center">
 				<h3 class="font-bold text-danger">Oops!</h3>
 				<div class="error-desc">
 					<p>Something definitely went wrong here! Please try again, otherwise contact your administrators.</p>
 				</div>
-			</div>';
+			</div>');
+		*/
     }
 
     /**
      * This method is used to write data in file
+	 *
      * @param mixed $logData
      * @param string $fileName
      * @return boolean

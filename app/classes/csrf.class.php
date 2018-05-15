@@ -1,4 +1,12 @@
 <?php
+/**
+ * ARCTOS - Lightweight framework.
+ *
+ * Cross-Site Request Forgery class (CSRF)
+ *
+ * Class to prevent CSRF 
+ */
+ 
 namespace App\Classes;
 
 use \App\Classes\Logger as Logger;
@@ -6,11 +14,9 @@ use \App\Classes\Logger as Logger;
 class Csrf
 {
 
-    function __construct()
-    {
-
-    }
-
+	/**
+	* Creates a string with 32 random characters and stores it in the active session
+	*/
     public static function genCsrfToken()
     {
         $_SESSION['_token'] = bin2hex(random_bytes(32));
