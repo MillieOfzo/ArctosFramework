@@ -1,4 +1,12 @@
 <?php
+/**
+ * ARCTOS - Lightweight framework.
+ *
+ * Helper class
+ * 
+ * Provides a class where custom helper functions can be stored
+ */
+ 
 namespace App\Classes;
 
 class Helper

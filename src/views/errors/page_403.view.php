@@ -19,8 +19,7 @@
 
 </head>
 
-<body class="gray-bg"  id="i18container">
-
+<body class="<?= strtolower(\Config::APP_THEME);?>-bg" id="i18container">
 
     <div class="middle-box text-center animated fadeInDown">
         <h1>403</h1>

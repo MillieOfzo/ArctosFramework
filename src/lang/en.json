@@ -1,0 +1,174 @@
+{
+	"placeholders": {
+		"select": "Select...",
+		"input": "Fill in..."
+	},
+	"layout":{
+		"topnav":{
+			"placeholder":"Search for location",
+			"logout":"Log out"
+		},
+		"sidebar":{
+			"title":{
+			"1":"Home",
+			"2":"Tickets",
+			"3":"Tools",
+			"4":"Gebruiker",
+			"5":"Gebruikers",
+			"6":"Logging",
+			"7":"Instellingen"
+			}
+		}
+	},
+	"error_page":{
+		"return_btn":"Go back",
+		"403":{
+			"label":"Access denied",
+			"msg":"Admin rights are mandatory for access. Contact the admins!"			
+		},
+		"404":{
+			"label":"Page not found",
+			"msg":"Sorry, but the page you are looking for can not be found. Check the URL for errors, refresh the page "			
+		},
+		"500":{
+			"label":"Internal server error",
+			"msg":"The server found something unexpected that could not complete the request. We apologize, you can go back to the main page"	
+		},
+		"maintenance":{
+			"label":"Maintenance busy",
+			"msg":"Wait for or check out status with the admins"			
+		}		
+	},	
+	"loginscreen":{
+		"welcome": "Welcome to",
+		"text": "A lightweight framework application.",
+		"subtext": "Log in to see it in action.",
+		"login": "Log in",
+		"placeholder": {
+			"email":"email",
+			"password":"password"
+		},		
+		"request": "Request",
+		"forget": "Forgot your password"
+	},
+	"password_modal":{
+		"welcome": "Welcome to",
+		"first_time_text": "This is the first time you logged in.",
+		"first_time_subtext": "You must change your password to a password you have chosen yourself. This is to ensure the security of your account.",
+		"form":{
+			"placeholder":{
+				"password":"password"
+			},
+			"close_btn":"Close",
+			"submit_btn":"Update",
+			"password":"change Password",
+			"confirm_password":"Confirm password"
+		}
+	},
+	"send_mail":{
+		"recover_token":{
+			"subject":" password reset (1/2)"
+		},
+		"new_password":{
+			"subject":" password reset (2/2)"
+		}		
+	},
+	"loginmsg":{
+		"csrf":{
+			"label":"CSRF token not valid",
+			"msg":"Refresh the page and try again"
+		},	
+		"lck":{
+			"label":"Authentication failed",
+			"msg":"Account blocked for 2 hours."
+		},
+		"id":{
+			"label":"Authentication failed",
+			"msg":"Check your initials or password."
+		},
+		"dev":{
+			"label":"Error",
+			"msg":"No DEV account."
+		},
+		"blc":{
+			"label":"Error",
+			"msg":"User account is blocked. Contact the administrator."
+		},
+		"uknw":{
+			"label":"Error",
+			"msg":"User does not exist."
+		},
+		"tok":{
+			"suc":{
+				"label":"Successful",
+				"msg":"Reset token requested."
+			},
+			"mul":{
+				"label":"Token request failed",
+				"msg":"Can not request multiple tokens. Please wait till the current token has expired"
+			},			
+			"err":{
+				"label":"Reset token request failed",
+				"msg":"Refresh the page and try again"
+			},
+			"inv":{
+				"label":"Token is invalid",
+				"msg":"Refresh the page and request a new token"
+			},
+			"uknw":{
+				"label":"Token not found",
+				"msg":"Refresh the page and request a new token"
+			},
+			"exp":{
+				"label":"Token expired",
+				"msg":"This is no longer usable. Refresh the page and request a new token"
+			}
+		},
+		"res":{
+			"suc":{
+				"label":"Successful",
+				"msg":"New password sent"
+			},
+			"err":{
+				"label":"Password update failed",
+				"msg":"Refresh the page and request a new token"
+			},
+			"notsend":{
+				"label":"There is a problem with sending the email",
+				"msg":"Refresh the page and request a new token"
+			}			
+		}		
+	},
+	"user":{
+		"title":"User",
+		"edit":{
+			"title":"Edit user",
+			"button":"Update",
+			"input":{
+				"1":"User name",
+				"2":"User last name",
+				"3":"User email"
+			}
+		},		
+		"acc_update":{
+			"msg":{	
+				"err_email":{
+					"label": "Something went wrong",
+					"msg": "This is not a correct email address"
+				},
+				"err_email_in_use":{
+					"label": "Something went wrong",
+					"msg": "This email address is already in use"
+				},				
+				"suc":{
+					"label": "Success",
+					"msg": "User account has been updated"
+				},
+				"err":{
+					"label": "Something went wrong",
+					"msg": "Refresh the page and try again"
+				}				
+			}		
+		}
+	}	
+}

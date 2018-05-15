@@ -24,7 +24,7 @@
 		"return_btn":"Ga terug",
 		"403":{
 			"label":"Toegang geweigerd",
-			"msg":"Admin rechten zijn verplicht voor toegang. Neem contact op met de admins. Doeidoei!"			
+			"msg":"Admin rechten zijn verplicht voor toegang. Neem contact op met de admins!"			
 		},
 		"404":{
 			"label":"Pagina niet gevonden",
@@ -33,10 +33,6 @@
 		"500":{
 			"label":"Interne server error",
 			"msg":"De server heeft iets onverwachts aangetroffen waardoor het verzoek niet kon worden voltooid. Wij verontschuldigen ons. U kunt teruggaan naar de hoofdpagina:"			
-		},
-		"denied":{
-			"label":"Toegang geweigerd",
-			"msg":"Admin rechten zijn verplicht voor toegang. Neem contact op met de admins. Doeidoei!"			
 		},
 		"maintenance":{
 			"label":"Maintenance bezig",
@@ -109,7 +105,7 @@
 			},
 			"mul":{
 				"label":"Token aanvraag mislukt",
-				"msg":"Kan niet meerdere tokens aanvragen."
+				"msg":"Kan niet meerdere tokens aanvragen. Wacht totdat de huidige token vervallen is"
 			},			
 			"err":{
 				"label":"Reset token aanvraag mislukt",
@@ -121,7 +117,7 @@
 			},
 			"uknw":{
 				"label":"Token niet gevonden",
-				"msg":"Gebruiker bestaat niet."
+				"msg":"Refresh de pagina en vraag een nieuw token aan"
 			},
 			"exp":{
 				"label":"Token vervallen",
@@ -158,19 +154,19 @@
 			"msg":{	
 				"err_email":{
 					"label": "Er ging iets mis",
-					"text": "Dit is geen juist email adres"
+					"msg": "Dit is geen juist email adres"
 				},
 				"err_email_in_use":{
 					"label": "Er ging iets mis",
-					"text": "Dit email adres is al in gebruik"
+					"msg": "Dit email adres is al in gebruik"
 				},				
 				"suc":{
 					"label": "Succes",
-					"text": "User account is geupdatet"
+					"msg": "User account is geupdatet"
 				},
 				"err":{
 					"label": "Er ging iets mis",
-					"text": "Refresh de pagina en probeer opnieuw"
+					"msg": "Refresh de pagina en probeer opnieuw"
 				}				
 			}		
 		}

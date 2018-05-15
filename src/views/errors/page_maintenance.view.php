@@ -19,7 +19,7 @@
 	
 </head>
 
-<body class="gray-bg"  id="i18container">
+<body class="<?= strtolower(\Config::APP_THEME);?>-bg" id="i18container">
 	<?php
 		$img_arr = array(
 			'<i class="fa fa-fire"></i>', 

@@ -13,8 +13,7 @@
 					<td style="padding: 20px 0 10px 0;">
 						Open de onderstaande link om je wachtwoord te resetten. Heb jij geen aanvraag gedaan. Klik dan niet op de link! <br>
 						De link vervalt automatisch na 10 minuten.<br><br>
-						{{recover_link}}	
-						<a href="tset">sffsf</a>
+						{{recover_link}}
 					</td>
 				</tr>				
 			</table>
