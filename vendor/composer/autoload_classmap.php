@@ -20,10 +20,12 @@ return array(
     'App\\Classes\\SessionManager' => $baseDir . '/app/classes/session.class.php',
     'App\\Controllers\\AboutController' => $baseDir . '/app/controllers/about.controller.php',
     'App\\Controllers\\IndexController' => $baseDir . '/app/controllers/index.controller.php',
+    'App\\Controllers\\LoggingController' => $baseDir . '/app/controllers/logging.controller.php',
     'App\\Controllers\\LoginController' => $baseDir . '/app/controllers/login.controller.php',
     'App\\Controllers\\UserController' => $baseDir . '/app/controllers/user.controller.php',
     'App\\Models\\AboutModel' => $baseDir . '/app/models/about.model.php',
     'App\\Models\\IndexModel' => $baseDir . '/app/models/index.model.php',
+    'App\\Models\\LoggingModel' => $baseDir . '/app/models/logging.model.php',
     'App\\Models\\LoginModel' => $baseDir . '/app/models/login.model.php',
     'App\\Models\\UserModel' => $baseDir . '/app/models/user.model.php',
     'App\\Routes\\Routes' => $baseDir . '/routes/routes.php',
@@ -283,5 +285,4 @@ return array(
     'PHPMailer\\PHPMailer\\PHPMailer' => $vendorDir . '/phpmailer/phpmailer/src/PHPMailer.php',
     'PHPMailer\\PHPMailer\\POP3' => $vendorDir . '/phpmailer/phpmailer/src/POP3.php',
     'PHPMailer\\PHPMailer\\SMTP' => $vendorDir . '/phpmailer/phpmailer/src/SMTP.php',
-    'PHPMailer\\PHPMailer\\phpmailerException' => $vendorDir . '/phpmailer/phpmailer/src/PHPMailer.php',
 );

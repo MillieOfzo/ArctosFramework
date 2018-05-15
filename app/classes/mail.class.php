@@ -134,16 +134,15 @@ class Mailer
      * @param string|callable|\Psr\Log\LoggerInterface
      */	
 	public static $smtp_debug_output = 'error_log';
-	
+
     /**
      * Build the specified template
-	 *
-     * @param string $template_name The template name 
-     * @param array $val_arr Array containing the values to replace the placeholders in the template
-	 *
-     * @return string Returns the complete template as html
-     */	
-    public static function build($template_name, $val_arr)
+     *
+     * @param string $template_name The template name
+     * @param array  $val_arr Array containing the values to replace the placeholders in the template
+     * @return bool|mixed|string Returns the complete template as html
+     */
+    public static function build($template_name = '', $val_arr = array())
     {
 		$lang = (new Language)->getLanguageFile();
 		
@@ -181,16 +180,16 @@ class Mailer
     }
 
     /**
-     * Build the specified template
-	 *
-     * @param string $subject The template name 
-     * @param string $mail_body The template name 
-     * @param array $to Array containing the addresses to send the email to
-     * @param array $cc Array containing the Carbon Copy addresses
-	 *
+     * Send the build template
+     *
+     * @param string $subject The subject of the email
+     * @param string $mail_body Message body containing the build template
+     * @param array  $to Array containing the addresses to send the email to
+     * @param array  $cc Array containing the Carbon Copy addresses
      * @return bool true if mail is send else false
-     */		
-	public static function send($subject, $mail_body, $to = array(), $cc = array() )
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
+	public static function send($subject ='', $mail_body ='', $to = array(), $cc = array() )
 	{
 		$mail = new PHPMailer(true);
 		

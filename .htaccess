@@ -1,15 +1,17 @@
-
-
 ## Error page redirect
-ErrorDocument 403 /src/views/errors/page_403.view.php
-ErrorDocument 404 /src/views/errors/page_404.view.php
-ErrorDocument 500 /src/views/errors/page_500.view.php
+RewriteRule ^403/?$ /src/views/errors/page_403.view.php [NC]
+RewriteRule ^404/?$ /src/views/errors/page_404.view.php [NC]
+RewriteRule ^500/?$ /src/views/errors/page_500.view.php [NC]
 
+ErrorDocument 404 /404
+ErrorDocument 403 /404
+ErrorDocument 500 /500
+
+## Enable rewrite
 RewriteEngine On
 
-## Prevent access to following folders
-RewriteRule ^(app|config|routes|storage|vendor)(/.*|)$ - [NC,F]
-
+## Prevent http access to following folders
+RewriteRule ^(app|config|routes|storage|tests|vendor)(/.*|)$ - [NC,F]
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f

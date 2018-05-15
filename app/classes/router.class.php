@@ -73,7 +73,7 @@ class Router
             case Dispatcher::FOUND:
                 $handler = $routeInfo[1];
                 $vars = $routeInfo[2];
-
+				
                 list($class, $method) = explode("/", $handler, 2);
 
                 $named_class = 'App\Controllers\\' . $class;

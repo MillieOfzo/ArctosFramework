@@ -13,78 +13,99 @@
 
 class Config
 {
-	 
+
     /**
      * Name of the application
-     */	 
+     * @param string
+     */
     const APP_TITLE = 'ARCTOS framework';
-	
+
     /**
      * Language file to be used in the application. Default: en
-	 * Langeage files are available in: /src/lang/
-     */	
+     * Langeage files are available in: /src/lang/
+     * @param string
+     */
     const APP_LANG = 'en';
-	
+
     /**
-     * Email address from which email are send 
-     */	
+     * Email address from which email are send
+     * @param string
+     */
     const APP_EMAIL = '';
-	
+
     /**
      * Application version number
-     */	
+     * @param string
+     */
     const APP_VER = '0.0.1';
-	
+
     /**
      * Application enviroment e.g OTAP, TESTING, LIVE etc
-     */	
+     * @param string
+     */
     const APP_ENV = 'OTAP';
-	
+
     /**
-     * Application theme. Choose from: light or dark
-     */		
+     * Application theme.
+     * Default: light
+     * Options:
+     *      - light
+     *      - dark
+     * @param string
+     */
     const APP_THEME = 'light';
-	
+
     /**
      * Specify the name of the image to be used as logo
-     */		
+     * @param string
+     */
     const LOGO_NAME = 'logo_light.png';
-	
+
     /**
      * Specify the name of the image to be used as favicon
-     */		
+     * @param string
+     */
     const FAVICON_NAME = 'favicon.png';
-	
+
     /**
      * Specify the full path to the root folder e.g: C:/xampp/htdocs/arctos
-     */		
+     * @param string
+     */
     const ROOT_PATH = 'C:/xampp/htdocs/arctos';
-	
+
     /**
      * Specify the session name
-     */		
+     * @param string
+     */
     const SES_NAME = 'arc_user';
-	
+
     /**
-     * Enable or disable debug. Default: false
-     */		
+     * Enable or disable debug.
+     * Default: false
+     * @param bool
+     */
     const DEBUG = false;
-	
+
     /**
-     * Enable or disable route cacheing in router.class.php. Default: false
-     */		
+     * Enable or disable route cacheing in router.class.php.
+     * Default: false
+     * @param bool
+     */
     const DISABLE_ROUTING_CACHE = false;
-	
+
     /**
      * Specify the SMTP host to be used by mailer class
-     */		
+     * @param string
+     */
     const SMTP_HOST = '';
 
     /**
-     * Specify the SMTP port nr. Default: 25
-     */		
-    const SMTP_PORT = 25;	
-	
+     * Specify the SMTP port nr.
+     * Default: 25
+     * @param int
+     */
+    const SMTP_PORT = 25;
+
     /**
      * DATABASE config items
      */
@@ -95,7 +116,7 @@ class Config
 
     /**
      * FRAMEWORK config items to showcase the used framework
-	 * the application is build on
+     * the application is build on
      */
     public static function getFrameWorkName()
     {

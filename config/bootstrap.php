@@ -15,7 +15,6 @@
 require '../vendor/autoload.php';
 
 use App\Classes\ErrorManager;
-use App\Classes\Csrf;
 use App\Classes\Package;
 use App\Classes\SessionManager;
 use App\Classes\Router;
@@ -32,7 +31,7 @@ ErrorManager::SetLogFile(Config::ROOT_PATH . '/Storage/Logs/' . date("Y") . '/Er
 
 /**
  * Init the catch of errors and fatal errors
- */	
+ */
 $errormanager->catchError();
 $errormanager->catchFatalError();
 

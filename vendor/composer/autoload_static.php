@@ -83,10 +83,12 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
         'App\\Classes\\SessionManager' => __DIR__ . '/../..' . '/app/classes/session.class.php',
         'App\\Controllers\\AboutController' => __DIR__ . '/../..' . '/app/controllers/about.controller.php',
         'App\\Controllers\\IndexController' => __DIR__ . '/../..' . '/app/controllers/index.controller.php',
+        'App\\Controllers\\LoggingController' => __DIR__ . '/../..' . '/app/controllers/logging.controller.php',
         'App\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/controllers/login.controller.php',
         'App\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/controllers/user.controller.php',
         'App\\Models\\AboutModel' => __DIR__ . '/../..' . '/app/models/about.model.php',
         'App\\Models\\IndexModel' => __DIR__ . '/../..' . '/app/models/index.model.php',
+        'App\\Models\\LoggingModel' => __DIR__ . '/../..' . '/app/models/logging.model.php',
         'App\\Models\\LoginModel' => __DIR__ . '/../..' . '/app/models/login.model.php',
         'App\\Models\\UserModel' => __DIR__ . '/../..' . '/app/models/user.model.php',
         'App\\Routes\\Routes' => __DIR__ . '/../..' . '/routes/routes.php',
@@ -346,7 +348,6 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
         'PHPMailer\\PHPMailer\\PHPMailer' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/PHPMailer.php',
         'PHPMailer\\PHPMailer\\POP3' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/POP3.php',
         'PHPMailer\\PHPMailer\\SMTP' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/SMTP.php',
-        'PHPMailer\\PHPMailer\\phpmailerException' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/PHPMailer.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
