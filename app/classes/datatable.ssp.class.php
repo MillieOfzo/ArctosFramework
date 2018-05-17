@@ -17,7 +17,10 @@
  */
 
 namespace App\Classes; 
- 
+
+use \PDO;
+use \PDOException;
+
 class SSP {
 	/**
 	 * Create the data output array for the DataTables rows

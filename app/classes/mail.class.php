@@ -18,7 +18,7 @@ class Mailer
 {
     /**
      * Enable or disable the use of phpmailer smtp functions
-     *
+     * Default: false
      * @param bool
      */	
 	public static $enable_smtp = true;
@@ -35,14 +35,14 @@ class Mailer
      *
      * @param string
      */	
-	public static $smtp_host = Config::SMTP_HOST;
+	public static $smtp_host = '192.168.100.254';
 	
     /**
      * The default SMTP server port.
-     *
+     * Default: 25
      * @param int
      */	
-	public static $smtp_port = Config::SMTP_PORT;
+	public static $smtp_port = 25;
 	
     /**
      * Whether to use SMTP authentication.
@@ -103,8 +103,6 @@ class Mailer
      * * `3` As 2 plus connection status
      * * `4` Low-level data output.
      *
-     * @see SMTP::$do_debug
-     *
      * @param int
      */	
 	public static $smtp_debug_lvl = 1;
@@ -152,7 +150,7 @@ class Mailer
             'header_text' => $lang->loginscreen->text
         );
 
-        $header = file_get_contents(Config::ROOT_PATH . '/app/mail/header.mail.php');
+        $header = file_get_contents('../app/mail/header.mail.php');
         foreach ($header_arr as $keyh => $valueh)
         {
             $header = str_replace('{{' . $keyh . '}}', $valueh, $header);
@@ -162,13 +160,13 @@ class Mailer
             'footer_date' => date('D d.m.Y H:i:s')
         );
 
-        $footer = file_get_contents(Config::ROOT_PATH . '/app/mail/footer.mail.php');
+        $footer = file_get_contents('../app/mail/footer.mail.php');
         foreach ($footer_arr as $keyf => $valuef)
         {
             $footer = str_replace('{{' . $keyf . '}}', $valuef, $footer);
         }
 
-        $template = file_get_contents(Config::ROOT_PATH . '/app/mail/' . $template_name . '.mail.php');
+        $template = file_get_contents('../app/mail/' . $template_name . '.mail.php');
         $val_arr['header'] = $header;
         $val_arr['footer'] = $footer;
         foreach ($val_arr as $key => $value)

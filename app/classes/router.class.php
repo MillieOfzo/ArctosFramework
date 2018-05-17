@@ -21,14 +21,14 @@ class Router
 	 *
      * @param string
      */	
-    private static $cachePath = '../storage/framework/route.cache';
+    const CACHE_PATH = '../storage/framework/route.cache';
 	
     /**
      * Disable or enable the caching of routes. Which improves performance
 	 *
      * @param bool
      */	
-    private static $cacheDisabled = Config::DISABLE_ROUTING_CACHE;
+    const CACHE_DISABLED = Config::DISABLE_ROUTING_CACHE;
 
     /**
      * Route the request to the registered class and method
@@ -37,7 +37,7 @@ class Router
      * @param string $uri The raw url from which the request originated
 	 * @return array Array containing the object response and the view to be shown
      */	
-    public static function route($httpMethod, $uri)
+    public function route($httpMethod, $uri)
     {
         $dispatcher = \FastRoute\cachedDispatcher(function (RouteCollector $collector)
         {
@@ -45,7 +45,7 @@ class Router
             {
                 $collector->addRoute($route[0], $route[1], $route[2]);
             }
-        }, ['cacheFile' => self::$cachePath, 'cacheDisabled' => self::$cacheDisabled]);
+        }, ['cacheFile' => self::CACHE_PATH, 'cacheDisabled' => self::CACHE_DISABLED]);
 
         // Strip query string (?foo=bar) and decode URI
         if (false !== $pos = strpos($uri, '?'))
@@ -55,7 +55,7 @@ class Router
         $uri = rawurldecode($uri);
 
         $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
-        //var_dump( $routeInfo );
+        //var_dump( $uri );
         switch ($routeInfo[0])
         {
             case Dispatcher::NOT_FOUND:
@@ -78,16 +78,27 @@ class Router
 
                 $named_class = 'App\Controllers\\' . $class;
 
-                $obj = call_user_func_array(array(
+                $method_response = call_user_func_array(array(
                     new $named_class,
                     $method
                 ) , $vars);
 
                 $view_name = str_replace('Controller', '', $class);
-                $view = '../src/views/' . $view_name . '.view.php';
+
+                // Methods can return new view
+                // if the response is empty show the default view
+                // else show the returned view
+                if(empty($method_response['returned_view']))
+                {
+                    $view = '../src/views/' . $view_name . '.view.php';
+                }
+                else
+                {
+                    $view = $method_response['returned_view'];
+                }
 
                 return array(
-                    'response' => $obj,
+                    'response' => $method_response,
                     'view' => $view
                 );
             break;

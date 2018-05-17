@@ -6,6 +6,26 @@
 
 $(document).ready(function () {
 
+    $('.autocomplete-append').autocomplete({
+        serviceUrl: '/autocomplete',
+        max: 10,
+        onSelect: function (suggestion) {
+            //alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+            location.href = '/device/'+suggestion.data.replace(/[^0-9\.]+/g, "");
+            $('#url_site').val(suggestion.data);
+            $('.site-nr').html(suggestion.data);
+        }
+    });
+
+    $("form").each(function() {
+        var csrf = $('#token').val();
+        var tokenElement = $(document.createElement('input'));
+        tokenElement.attr('type', 'hidden');
+        tokenElement.attr('name', 'csrf');
+        tokenElement.val(csrf);
+        $(this).append(tokenElement);
+    });
+
 	$('.showform').click(function() {
 		$('#signinForm').animate({
 			height: "toggle",
@@ -48,14 +68,16 @@ $(document).ready(function () {
     // Add body-small class if window less than 768px
     if ($(this).width() < 769) {
         $('body').addClass('body-small'),
-		$('body').removeClass('mini-navbar'),
-		$('#menu_bar').removeClass('hidden'),
-		$('#log_out_span').addClass('hidden')
+            $('body').removeClass('mini-navbar'),
+            $('#menu_bar').removeClass('hidden'),
+            $('#user_span').addClass('hidden'),
+            $('#log_out_span').addClass('hidden')
     } else {
-		$('body').addClass('mini-navbar'),
-        $('body').removeClass('body-small'),
-		$('#menu_bar').addClass('hidden'),
-		$('#log_out_span').removeClass('hidden')
+        $('body').addClass('mini-navbar'),
+            $('body').removeClass('body-small'),
+            $('#menu_bar').addClass('hidden'),
+            $('#user_span').removeClass('hidden'),
+            $('#log_out_span').removeClass('hidden')
     }
 
     // MetsiMenu
@@ -215,20 +237,26 @@ $(document).ready(function () {
     })
 });
 
+window.paceOptions = {
+    ajax: false,
+    restartOnRequestAfter: false,
+};
 
 // Minimalize menu when screen is less than 768px
 $(window).bind("resize", function () {
     if ($(this).width() < 769) {
         $('body').addClass('body-small'),
-		$('body').removeClass('mini-navbar'),
-		$('#menu_bar').removeClass('hidden'),
-		$('#log_out_span').addClass('hidden')
+            $('body').removeClass('mini-navbar'),
+            $('#menu_bar').removeClass('hidden'),
+            $('#user_span').addClass('hidden'),
+            $('#log_out_span').addClass('hidden')
     } else {
-		$('body').addClass('mini-navbar'),
-        $('body').removeClass('body-small'),
-		$('#menu_bar').addClass('hidden'),
-		$('#log_out_span').removeClass('hidden')
-	}
+        $('body').addClass('mini-navbar'),
+            $('body').removeClass('body-small'),
+            $('#menu_bar').addClass('hidden'),
+            $('#user_span').removeClass('hidden'),
+            $('#log_out_span').removeClass('hidden')
+    }
 });
 
 // Local Storage functions

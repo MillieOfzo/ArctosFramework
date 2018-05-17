@@ -15,21 +15,20 @@ use \SafeMySQL;
 
 class Auth
 {
-    private $db;
 
     function __construct()
     {
-        $this->db = new SafeMySQL;
+
     }
 	
 	/**
 	* Get the user_id of the currently logged in user
-	* @return string $auth_user User id of authenticated user
+	* @return int $auth_user User id of authenticated user
 	*/
-    private static function getAuthUser()
+    public static function getAuthUser()
     {
         $auth_user = (isset($_SESSION[Config::SES_NAME])) ? htmlentities($_SESSION[Config::SES_NAME]['user_id'], ENT_QUOTES, 'UTF-8') : '---';
-        return $auth_user;
+        return (int) $auth_user;
     }
 
 	/**
@@ -51,7 +50,7 @@ class Auth
 		
         $user_id = (int)self::getAuthUser();
 
-        if ($conn->getOne("SELECT user_id FROM app_users WHERE user_status = 'Active' AND user_id =  ?i AND user_role = 1", $user_id))
+        if ($conn->getOne("SELECT user_id FROM app_users WHERE user_status = 1 AND user_id =  ?i AND user_role = 1", $user_id))
         {
             return true;
         }
@@ -68,9 +67,9 @@ class Auth
 	* @param int $user_id Accepts user is as integer
 	* @return bool true if there are more than 5 failed login attempts else return false
 	*/		
-	public function checkBrute($user_id)
+	public static function checkBrute($user_id)
     {
-        $conn = $this->db;
+        $conn = new SafeMySQL;
 
         // Get timestamp of current time
         $now = time();
@@ -100,16 +99,15 @@ class Auth
 	*/	
     public static function checkCsrfToken($token)
     {
-        if (hash_equals($token, $_SESSION['_token']))
+        if(Csrf::checkCsrfToken($token))
         {
             return true;
         }
         else
         {
-            // Log to file
-            $msg = "CSRF token invalid for user: " . self::getAuthUser();
-            Logger::logToFile(__FILE__, 0, $msg);
-            return false;
+            http_response_code(403);
+            include '../src/views/errors/page_403.view.php';
+            die();
         }
     }
 
@@ -121,7 +119,7 @@ class Auth
 	*/	
     public static function genPassSeed($length = 2)
     {
-        $path = Config::ROOT_PATH . '/storage/framework/seed_words.conf';
+        $path = '../storage/framework/seed_words.conf';
         $file = file_get_contents($path);
         $word_list = preg_split('/[\s]+/', $file, -1, PREG_SPLIT_NO_EMPTY);
         // var_dump($words);
