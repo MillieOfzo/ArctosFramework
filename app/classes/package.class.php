@@ -16,6 +16,8 @@ class Package
     public static function cssPackage()
     {
         $cssArr = array(
+			'/public/css/pe-icons/pe-icon-7-stroke.css',
+			'/public/css/pe-icons/helper.css',		
             '/public/css/bootstrap/bootstrap.min.css',
             '/public/css/fonts/font-awesome/css/font-awesome.css',
             '/public/css/stroke-icons/stroke-style.css',

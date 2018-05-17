@@ -2,9 +2,9 @@
     "name": "millieofzo/arctosframework",
 	"type": "framework",
 	"framework":"ARCTOS",
-    "version": "1.0.4",
-    "env": "OTAP",
-    "copyright": "ASB Security",
+    "version": "1.0.3",
+    "env": "LIVE",
+    "copyright": "RGO",
     "description": "Lightweight MVC framework",
     "license": "MIT",
     "authors": [
