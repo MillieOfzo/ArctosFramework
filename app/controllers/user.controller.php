@@ -32,24 +32,25 @@ class UserController
     {
 
         $password_post = $_POST['password'];
-        $cleaned_user_id = $this->purifier->purify($_POST['user_id']);
+        $cleaned_user_id = $this->purifier->purify(Auth::getAuthUser());
 
         if (Auth::checkCsrfToken($_POST['csrf']) && !empty($password_post))
         {
             $row = $this->model->getUserRow($cleaned_user_id);
 
-            if ($row)
+            if ($row['user_new'] == 1)
             {
 
-                // Initial query parameter values
+                // First time logging in. Change password and verify user
                 $query_params = array(
                     'user_password' => password_hash($password_post, PASSWORD_ARGON2I) ,
-                    'user_new' => 0
+                    'user_new' => 0,
+                    'user_status' => 1
                 );
 
                 try
                 {
-                    if ($this->model->updateUserPassword($query_params, $cleaned_user_id))
+                    if ($this->model->update($query_params, $cleaned_user_id))
                     {
                         Logger::logToFile(__FILE__, 0, "Password user: " . $row['user_email'] . " changed");
 

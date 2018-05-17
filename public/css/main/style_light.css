@@ -36,6 +36,11 @@ h5 {
   margin-top: 5px;
   font-weight: 600;
 }
+
+.c-accent {
+  color: #1ab394;
+}
+
 .nav > li > a {
   color: #a7b1c2;
   font-weight: 600;
@@ -194,15 +199,15 @@ ul.nav-second-level {
 }
 .minimalize-styl-2 {
   padding: 4px 12px;
-  margin: 14px 5px 5px 20px;
-  font-size: 14px;
+  margin: 8px 0px 5px 10px;
+  font-size: 30px;
   float: left;
 }
 .navbar-form-custom {
   float: left;
   height: 50px;
   padding: 0;
-  width: 200px;
+  width: 180px;
   display: block;
 }
 .navbar-form-custom .form-group {
@@ -3532,10 +3537,13 @@ body.boxed-layout #wrapper {
   overflow: hidden;
 }
 a {
+  color: #1ab394;
+  text-decoration: none;
   cursor: pointer;
 }
 a:hover,
 a:focus {
+  color: #1ab394;
   text-decoration: none;
 }
 .border-bottom {
@@ -4126,6 +4134,7 @@ table.table-mail tr td {
 .progress-small,
 .progress-mini {
   margin-top: 5px;
+  background-color: #e2e4e6;
 }
 .progress-mini,
 .progress-mini .progress-bar {
@@ -8480,9 +8489,9 @@ body.md-skin {
   .lock-word {
     display: none;
   }
-  .navbar-form-custom {
+  /*.navbar-form-custom {
     display: none;
-  }
+  }*/
   .navbar-header {
     display: inline;
     float: left;

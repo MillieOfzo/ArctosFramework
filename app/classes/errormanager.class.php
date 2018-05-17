@@ -35,21 +35,21 @@ class ErrorManager
 	 *
      * @param int
      */
-    private static $logLevel = E_ALL;
+    private $logLevel = E_ALL;
 
     /**
      * Current debug mode
 	 *
      * @param bool
      */
-    private static $debug = false;
+    private $debug = false;
 
     /**
      * Error log file, stacktrace will be written to that file and detailed error information
 	 *
      * @param string
      */
-    private static $logFile = '';
+    private $logFile = '';
 
     /**
      * Sets current log level, log level that is caught by errorhandler when occurs
@@ -57,9 +57,9 @@ class ErrorManager
      * @param int $newLogLevel Log level to set the error handler to catch
      * @param bool $systemlevel also Whether to set the php error_reporting to set variable too or not (might reduce php overhead of always calling log function when using only potion of available error codes)
      */
-    public static function SetLogLevel($newLogLevel)
+    public function SetLogLevel($newLogLevel)
     {
-        self::$logLevel = (int)$newLogLevel;
+        $this->logLevel = (int)$newLogLevel;
         error_reporting($newLogLevel);
     }
 
@@ -68,10 +68,10 @@ class ErrorManager
 	 *
      * @param bool $debug
      */
-    public static function SetDebug($debug)
+    public function SetDebug($debug)
     {
-        self::$debug = $debug === true || $debug === 'On';
-        if (self::$debug)
+		$this->debug = $debug === true || $debug === 'On';
+        if ($this->debug)
         {
             $mode = 'On';
         }
@@ -89,9 +89,9 @@ class ErrorManager
 	 *
      * @param string $logFile Log file where full stacktraces are logged (please use full path if possible)
      */
-    public static function SetLogFile($logFile)
+    public function SetLogFile($logFile)
     {
-        self::$logFile = $logFile;
+        $this->logFile = $logFile;
     }
 
     /**
@@ -104,7 +104,7 @@ class ErrorManager
      * @param mixed $context
      * @return boolean
      */
-    public static function handleError($code, $description, $file = null, $line = null, $context = null)
+    public function handleError($code, $description, $file = null, $line = null, $context = null)
     {
         $displayErrors = ini_get("display_errors");
         $displayErrors = strtolower($displayErrors);
@@ -119,7 +119,7 @@ class ErrorManager
         $user = (isset($_SESSION[\Config::SES_NAME]['app_location_data'])) ? htmlentities($_SESSION[Config::SES_NAME]['app_location_data'], ENT_QUOTES, 'UTF-8') : '---';
 
         $str = "[{$datum}] [{$error}] [{$user}] [{$env}] [{$file}, line {$line}] {$description}" . PHP_EOL;
-        self::fileLog($str);
+        $this->fileLog($str);
 		/*
         die( '<div class="text-center">
 				<h3 class="font-bold text-danger">Oops!</h3>
@@ -137,9 +137,9 @@ class ErrorManager
      * @param string $fileName
      * @return boolean
      */
-    private static function fileLog($logData)
+    private function fileLog($logData)
     {
-        $file = self::$logFile;
+        $file = $this->logFile;
         // Open file
         $fileContent = @file_get_contents($file);
         $status = file_put_contents($file, $logData . $fileContent);
@@ -197,7 +197,7 @@ class ErrorManager
     }
 
     /**
-     * Set the error handling function to ErrorManager::handleError()
+     * Set the error handling function to ErrorManager->handleError()
      */
     public function catchError()
     {
@@ -213,7 +213,7 @@ class ErrorManager
      *
      * @return Die statement with error message.
      */
-    public static function shutdown()
+    public function shutdown()
     {
         $isError = false;
 
@@ -236,12 +236,12 @@ class ErrorManager
 
                     $str = "[{$datum}] [{$name}] [{$user}] [{$env}] [{$file}, line {$line}] {$description}" . PHP_EOL;
 
-                    $isError = self::fileLog($str);
+                    $isError = $this->fileLog($str);
                 break;
             }
         }
 
-        if ($isError && self::$debug !== 1)
+        if ($isError && $this->debug !== 1)
         {
             // If an ajax call is being proccesed
             if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
@@ -274,7 +274,7 @@ class ErrorManager
     }
 
     /**
-     * Set the error handling function to ErrorManager::handleError()
+     * Set the fatal error handling function to ErrorManager->shutdown()
      */
     public function catchFatalError()
     {

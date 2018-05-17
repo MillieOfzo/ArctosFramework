@@ -5,7 +5,7 @@
  
 namespace App\Classes;
 
-use \Config as Config;
+use \Config;
 
 class Logger
 {

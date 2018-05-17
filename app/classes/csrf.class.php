@@ -14,28 +14,33 @@ use \App\Classes\Logger as Logger;
 class Csrf
 {
 
-	/**
-	* Creates a string with 32 random characters and stores it in the active session
-	*/
+    /**
+     * Creates a string with 32 random characters and stores it in the active session
+     * @throws \Exception
+     */
     public static function genCsrfToken()
     {
-        $_SESSION['_token'] = bin2hex(random_bytes(32));
+        return bin2hex(random_bytes(32));
     }
 
-    /*
-    public function checkCsrfToken($post_val)
+    /**
+     * Compare token hash with session token
+     * @param string $token Token hash
+     * @return bool returns false if token is not valid
+     */
+    public static function checkCsrfToken($token)
     {
-        if (!hash_equals($post_val['csrf'], $_SESSION['_token']))
+        if (hash_equals($token, $_SESSION['_token']))
         {
-            $msg = "CSRF token invalid for user: " . $this->auth_user;
-            Logger::logToFile( 0, $msg);
-    
-            $response_array['type'] = 'warning';
-            $response_array['title'] = LANG['error_msg']['csrf']['label'];
-            $response_array['body'] = LANG['error_msg']['csrf']['msg'];
-            jsonArr($response_array);
+            return true;
+        }
+        else
+        {
+            // Log to file
+            $msg = "CSRF token invalid for user: " . Auth::getAuthUser();
+            Logger::logToFile(__FILE__, 0, $msg);
+            return false;
         }
     }
-    */
 }
 

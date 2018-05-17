@@ -13,6 +13,45 @@ class UserModel
         $this->conn = new SafeMySQL;
     }
 
+    public function create($query_param)
+    {
+        try
+        {
+            $this->conn->query("INSERT INTO app_users SET ?u", $query_param);
+            return true;
+        }
+        catch(Exception $ex)
+        {
+            return self::logError($ex);
+        }
+    }
+
+    public function update($query_param, $user_id)
+    {
+        try
+        {
+            $this->conn->query("UPDATE app_users SET ?u WHERE user_id = ?i", $query_param, $user_id);
+            return true;
+        }
+        catch(Exception $ex)
+        {
+            return self::logError($ex);
+        }
+    }
+
+    public function delete($user_id)
+    {
+        try
+        {
+            $this->conn->query("DELETE FROM app_users WHERE user_id = ?i", $user_id);
+            return true;
+        }
+        catch(Exception $ex)
+        {
+            return self::logError($ex);
+        }
+    }
+
     public function getUserRow($user_selector)
     {
         if (is_numeric($user_selector))
@@ -28,19 +67,6 @@ class UserModel
         {
             $row = $this->conn->getRow("SELECT * FROM app_users WHERE ?p LIMIT 1", $parse);
             return $row;
-        }
-        catch(Exception $ex)
-        {
-            return self::logError($ex);
-        }
-    }
-
-    public function updateUserPassword($query_param, $user_id)
-    {
-        try
-        {
-            $this->conn->query("UPDATE app_users SET ?u WHERE user_id = ?i", $query_param, $user_id);
-            return true;
         }
         catch(Exception $ex)
         {

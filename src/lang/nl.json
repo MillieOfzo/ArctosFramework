@@ -20,6 +20,13 @@
 			}
 		}
 	},
+	"swal":{
+		"confirm":{
+			"title":"Weet je het zeker?",
+			"confirmbutton":"Ja, ik weet het zeker",
+			"cancelbutton":"Annuleer"
+		}
+	},
 	"error_page":{
 		"return_btn":"Ga terug",
 		"403":{
@@ -167,8 +174,179 @@
 				"err":{
 					"label": "Er ging iets mis",
 					"msg": "Refresh de pagina en probeer opnieuw"
-				}				
+				}
 			}		
 		}
-	}	
+	},
+	"users":{
+		"title":"Gebruikers",
+		"edit":{
+			"title":"Update gebruiker",
+			"button":"Update",
+			"input":{
+				"1":"Gebruiker naam",
+				"2":"Gebruikers achternaam",
+				"3":"Gebruikers email",
+				"4":"Gebruikers rol",
+				"5":"Gebruikers status"
+			},
+			"msg":{
+				"del":{
+					"label": "Succes",
+					"msg": "Succesvol verwijderd"
+				},
+				"suc":{
+					"label": "Succes",
+					"msg": "Gebruiker is geupdatet"
+				},
+				"err":{
+					"label": "Er ging iets mis",
+					"msg": "Refresh de pagina en probeer het opnieuw"
+				}
+			}
+		},
+		"new":{
+			"title":"Nieuwe gebruiker",
+			"button":"Create",
+			"input":{
+				"1":"Gebruiker naam",
+				"2":"Gebruikers achternaam",
+				"3":"Gebruikers email"
+			},
+			"msg":{
+				"login_email":{
+					"label": "Succes",
+					"suc_msg": "Login email verzonden naar",
+					"err_msg": "Login email niet verzonden"
+				},
+				"suc":{
+					"label": "Succes",
+					"msg": "Gebruiker is aangemaakt"
+				},
+				"err":{
+					"label": "Er ging iets mis",
+					"msg": "Refresh de pagina en probeer het opnieuw"
+				}
+			}
+		},
+		"status":{
+			"s1":"Actief",
+			"s2":"Geblokkeerd",
+			"s3":"Niet geverifeerd"
+		},
+		"actions":{
+			"edit":"Aanpassen",
+			"delete":"Verwijderen"
+		},
+		"table":{
+			"th1":"Gebruikers ID",
+			"th2":"Gebruikersnaam",
+			"th3":"Achternaam",
+			"th4":"Email adres",
+			"th5":"Gebruikers rol",
+			"th6":"Status",
+			"th7":"Laatst online",
+			"th8":"Actie"
+		},
+		"swal":{
+			"confirm":{
+				"msg":"De gebruiker: __placeholder__ wordt permanent verwijderd!"
+			}
+		}
+
+	},
+	"tickets":{
+		"label":"Ticket",
+		"select":{
+			"label":{
+				"current":"Huidige status",
+				"on_hold":"On hold tot",
+				"sent_to":"Doorsturen naar",
+				"external":"Externe partij",
+				"canceled":"Reden geannuleerd",
+				"options":"Ticket opties",
+				"actions":"Ticket acties"
+			}
+		},
+		"status":{
+			"aangevraagd":"Aangevraagd",
+			"open":"Open",
+			"on_hold":"On hold",
+			"totaal_uitval":"Totaal uitval",
+			"gesloten":"Gesloten",
+			"geannuleerd":"Geannuleerd",
+			"opnieuw_geopend":"Opnieuw openen",
+			"opnieuw_verzenden":"Opnieuw verzenden",
+			"doorzetten":"Doorzetten",
+			"storing_hersteld":"Storing hersteld",
+			"ticket_onnodig":"Ticket onnodig",
+			"unknown":"ONBEKENDE STATUS",
+			"longer_than":" dagen of meer open"
+		},
+		"create":{
+			"label":"Nieuw ticket",
+			"txt":{
+				"scs":"SCS nummer",
+				"service":"Service",
+				"location":"Locatie",
+				"address":"Adres",
+				"zipcode":"Postcode",
+				"city":"Stad",
+				"for":"Voor",
+				"storing":"Storing",
+				"action":"Actie",
+				"cp":"Contact",
+				"cptel":"Contact telefoon nummer",
+				"comment":"Extra commentaar"
+			},
+			"malfunction":{
+				"anders":"Anders",
+				"1":"Geen lijnsync",
+				"2":"GPRS uitval",
+				"3":"RAM uitval",
+				"4":"ACCU uitval",
+				"5":"230v uitval",
+				"6":"Router uitval",
+				"7":"NVR comm uitval",
+				"8":"Totaal uitval"
+			}
+		},
+		"update":{
+			"submitted_by":"Aangemaakt door",
+			"checked_by":"Gecontrolleerd door",
+			"status":"Status",
+			"updates":"Updates",
+			"ticket_for":"Ticket voor",
+			"create":{
+				"label":"Update ticket",
+				"external":"Extern ticket nummer",
+				"up_comm":"Update commentaar",
+				"up_status":"Update status"
+			}
+		},
+		"filters":{
+			"service":"Service (ALL)",
+			"external":"Extern (ALL)",
+			"status":"Status (ALL)"
+		},
+		"table": {
+			"th1": "Ticket#",
+			"th2": "Locatie ID",
+			"th3": "Locatie naam",
+			"th5": "Dienst",
+			"th6": "Externe partij",
+			"th7": "Storing",
+			"th8": "Ticket nummer",
+			"th9": "Aangemaakt op",
+			"th10": "Status"
+		},
+		"buttons":{
+			"new":"Nieuw",
+			"send":"Verzenden",
+			"re_send":"Opnieuw verzenden",
+			"send_fast":"Onmiddelijk verzenden",
+			"send_too":"Doorzetten naar",
+			"update":"Update"
+		}
+	}
 }

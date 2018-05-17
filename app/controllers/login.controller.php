@@ -11,7 +11,6 @@ use App\Classes\Auth;
 use App\Classes\Mailer;
 use App\Classes\Language;
 
-
 class LoginController
 {
     private $model;
@@ -48,8 +47,8 @@ class LoginController
 
             if ($row)
             {
-                // Brute force preventie
-                if ($this->auth->checkBrute($row['user_id']) === true)
+                // Brute force prevention
+                if (Auth::checkBrute($row['user_id']) === true)
                 {
                     Logger::logToFile(__FILE__, 1, "Account: " . $row['user_email'] . " geblokkeerd");
                     return '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->lck->label . '</b><br><span>' . $this->lang->loginmsg->lck->msg . '</span></div>';
@@ -328,7 +327,7 @@ class LoginController
                 
 				if($send_mail)
 				{
-					if ($this->user->updateUserPassword($query_params, $cleaned_user_id))
+					if ($this->user->update($query_params, $cleaned_user_id))
 					{	
 						Logger::logToFile(__FILE__, 0, "Password reset. Mail send to user: " . $row['user_email']);
 		        
@@ -356,7 +355,8 @@ class LoginController
         }
         else
         {
-            return '<div class="alert alert-danger" data-i18n="[html]login.res.err"><b>' . $this->lang->loginmsg->csrf->label . '</b><br><span>' . $this->lang->loginmsg->csrf->msg . '</span></div>';
+			// CRSF token invalid but ask user to request a new token
+			return '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->res->err->label . '</b><br><span>' . $this->lang->loginmsg->res->err->msg . '</span></div>';
         }
     }
 
@@ -372,9 +372,8 @@ class LoginController
 
         // Update Lastaccess kolom in users database
         // TODO: Check if user exist
-        $id = $_SESSION[Config::SES_NAME]['user_id'];
-
-        $connected = $this->user->updateUserLastAccess($id);
+        Auth::
+        $connected = $this->user->updateUserLastAccess(Auth::getAuthUser());
 
         //Redirect naar juiste index pagina op basis van Userrole
         $user_role = $_SESSION[Config::SES_NAME]['user_role'];

@@ -68,12 +68,6 @@ class Config
     const FAVICON_NAME = 'favicon.png';
 
     /**
-     * Specify the full path to the root folder e.g: C:/xampp/htdocs/arctos
-     * @param string
-     */
-    const ROOT_PATH = 'C:/xampp/htdocs/arctos';
-
-    /**
      * Specify the session name
      * @param string
      */

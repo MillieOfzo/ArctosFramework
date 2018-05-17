@@ -1,14 +1,14 @@
 <?php
 
 	require_once '../config/bootstrap.php';
-
+	$title = explode('/',$_SERVER['REQUEST_URI']);
 ?>
 
 <!DOCTYPE html>
 <html lang="<?= Config::APP_LANG;?>">
 <head>
 
-	<title><?= Config::APP_TITLE;?></title>
+	<title><?= Config::APP_TITLE;?> | <?= $title[1];?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="UTF-8">
@@ -56,9 +56,16 @@ if (\App\Classes\Auth::checkAuth()){
 			</div>
 	
 		</div>
-	
 	</body>
+    <?php
+
+    if(isset($_SESSION[\Config::SES_NAME]['user_new']) && htmlentities($_SESSION[\Config::SES_NAME]['user_new'], ENT_QUOTES, 'UTF-8') == 1) {
+        include '../src/views/modals/new_user.modal.php';
+        echo "<script>$('#myModal').modal('show');</script>";
+    }
+    ?>
 <?php } else { ?>
+
 	<body class="<?= strtolower(\Config::APP_THEME);?>-bg" id="i18container">
 	
 		<div class="middle-box text-center loginscreen animated fadeInDown ">
@@ -82,8 +89,7 @@ if (\App\Classes\Auth::checkAuth()){
 					<button type="submit" class="btn btn-primary block full-width m-b" name="login" value="Login" data-i18n="[html]loginscreen.login">Login</button>
 	
 					<a class="link showform" id="password"><small data-i18n="[html]loginscreen.forget">Forgot password?</small></a>
-					
-					<input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['_token'], ENT_QUOTES, 'UTF-8');?>">
+
 				</form>
 			
 				<div id="show_form" style="display: none;">
@@ -94,29 +100,23 @@ if (\App\Classes\Auth::checkAuth()){
 						<button type="submit" name="request" value="request" class="btn btn-primary block full-width m-b" data-i18n="[html]loginscreen.request">Request </button>
 	
 						<a class="link showform" id="password" data-i18n="[html]loginscreen.login">Login</a>
-						<input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['_token'], ENT_QUOTES, 'UTF-8');?>">
 					</form>
 				</div>	
 	
 				<p class="m-t"> <small><?= \Config::getFrameWorkName() . ' ' . \Config::getFrameWorkVersion();?><font color='#0092D0'> | </font><?= date("D d-m-Y")?><font color='#0092D0'> | </font><?= date("H:i:s");?><font color='#0092D0'> | </font> <?= \Config::APP_ENV . " " . \Config::APP_VER; ?></small> </p>
 				
 			</div>
-		</div>		
-	</body>
-	
-	
-<?php }; ?>
-		
-    <!-- Mainly scripts -->
-    <?php
-        foreach($arr_js as $js){
-            echo '<script src="'.$js.'"></script>';
+		</div>
+        <?php
+        foreach($arr_js as $js) {
+            echo '<script src="' . $js . '"></script>';
         }
-		
-		if(isset($_SESSION[\Config::SES_NAME]['user_new']) && htmlentities($_SESSION[\Config::SES_NAME]['user_new'], ENT_QUOTES, 'UTF-8') == 1) {
-			include '../src/views/modals/new_user.modal.php';
-			echo "<script>$('#myModal').modal('show');</script>";
-		}		
-    ?>
+        ?>
+	</body>
+
+<?php }; ?>
+
+<input type="text" hidden id="token" value="<?= htmlspecialchars($_SESSION['_token'], ENT_QUOTES, 'UTF-8');?>" />
+
 </html>
 	

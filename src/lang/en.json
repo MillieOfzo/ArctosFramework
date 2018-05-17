@@ -20,6 +20,13 @@
 			}
 		}
 	},
+	"swal":{
+		"confirm":{
+			"title":"Are you sure?",
+			"confirmbutton":"Yes, i am sure",
+			"cancelbutton":"Cancel"
+		}
+	},
 	"error_page":{
 		"return_btn":"Go back",
 		"403":{
@@ -170,5 +177,81 @@
 				}				
 			}		
 		}
-	}	
+	},
+	"users":{
+		"title":"Users",
+		"edit":{
+			"title":"Edit users",
+			"button":"Update",
+			"input":{
+				"1":"Users name",
+				"2":"User last name",
+				"3":"User email",
+				"4":"Users role",
+				"5":"Users status"
+			},
+			"msg":{
+				"del":{
+					"label": "Success",
+					"text": "Successfully removed"
+				},
+				"suc":{
+					"label": "Success",
+					"text": "User account has been updated"
+				},
+				"err":{
+					"label": "Something went wrong",
+					"text": "Try again or contact the administrator"
+				}
+			}
+		},
+		"new":{
+			"title":"New user",
+			"button":"Create",
+			"input":{
+				"1":"User name",
+				"2":"User last name",
+				"3":"User email"
+			},
+			"msg":{
+				"login_email":{
+					"label": "Success",
+					"text": "Login email sent to",
+					"err": "Login email not sent"
+				},
+				"suc":{
+					"label": "Success",
+					"text": "User account has been updated"
+				},
+				"err":{
+					"label": "Something went wrong",
+					"text": "Try again or contact the administrator"
+				}
+			}
+		},
+		"status":{
+			"s1":"Active",
+			"s2":"Blocked",
+			"s3":"Not verified"
+		},
+		"actions":{
+			"edit":"Edit",
+			"delete":"Delete"
+		},
+		"table":{
+			"th1":"User ID",
+			"th2":"Username",
+			"th3":"Last name",
+			"th4":"Email address",
+			"th5":"User role",
+			"th6":"Status",
+			"th7":"Last access",
+			"th8":"Action"
+		},
+		"swal":{
+			"confirm":{
+				"text":"The user: __placeholder__ will be permanently deleted!"
+			}
+		}
+	}
 }

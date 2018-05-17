@@ -37,12 +37,12 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['_token'], ENT_QUOTES, 'UTF-8');?>">
-                    <input type="hidden" name="user_id" value="<?= htmlspecialchars($_SESSION[\Config::SES_NAME]['user_id'], ENT_QUOTES, 'UTF-8');?>">
-
-                    <div class="form-group" style="float: right;">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"><span data-i18n="[html]password_modal.form.close_btn"></span></button>
-                        <button type="submit" class="btn btn-success" name="update_account" value="Update Account" ><span data-i18n="[html]password_modal.form.submit_btn"></span></button>
+                    <div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"></label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+							<button type="button" class="btn btn-default" data-dismiss="modal"><span data-i18n="[html]password_modal.form.close_btn"></span></button>
+							<button type="submit" class="btn btn-primary" name="update_account" value="Update Account" ><span data-i18n="[html]password_modal.form.submit_btn"></span></button>
+                        </div>
                     </div>
                 </form>
             </div>

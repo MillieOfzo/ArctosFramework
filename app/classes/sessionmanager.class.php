@@ -12,17 +12,19 @@ namespace App\Classes;
 
 class SessionManager
 {
+
     /**
      * Needs to call the regenerateSession function on new requests and periodically after that, as well as destroy the session if it is invalid. Here is the complete SessionStart function.
-	 * This function starts, validates and secures a session.
-	 *
-	 * @param string $name The name of the session.
-	 * @param int $limit Expiration date of the session cookie, 0 for session only
-	 * @param string $path Used to restrict where the browser sends the cookie
-	 * @param string $domain Used to allow subdomains access to the cookie
-	 * @param bool $secure If true the browser only sends the cookie over https
-	 */
-    public static function sessionStart($name, $limit = 0, $path = '/', $domain = null, $secure = null)
+     * This function starts, validates and secures a session.
+     *
+     * @param string $name The name of the session.
+     * @param int    $limit Expiration date of the session cookie, 0 for session only
+     * @param string $path Used to restrict where the browser sends the cookie
+     * @param null   $domain Used to allow subdomains access to the cookie
+     * @param bool   $secure If true the browser only sends the cookie over https
+     * @throws \Exception
+     */
+    public function sessionStart($name, $limit = 0, $path = '/', $domain = null, $secure = null)
     {
         // Set the cookie name
         session_name($name . '_Session');
@@ -35,23 +37,25 @@ class SessionManager
         session_start();
 
         // Make sure the session hasn't expired, and destroy it if it has
-        if (self::validateSession())
+        if ($this->validateSession())
         {
             // Check to see if the session is new or a hijacking attempt
-            if (!self::preventHijacking())
+            if (!$this->preventHijacking())
             {
                 // Reset session data and regenerate id
                 $_SESSION = array();
                 $_SESSION['IPaddress'] = $_SERVER['REMOTE_ADDR'];
                 $_SESSION['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
-                self::regenerateSession();
+				$_SESSION['_token'] = Csrf::genCsrfToken();
+
+                $this->regenerateSession();
 
                 // Give a 5% chance of the session id changing on any request
                 
             }
             elseif (rand(1, 100) <= 5)
             {
-                self::regenerateSession();
+                $this->regenerateSession();
             }
         }
         else
@@ -59,8 +63,7 @@ class SessionManager
             $_SESSION = array();
             session_destroy();
             session_start();
-			// Add csrf token to session
-			Csrf::genCsrfToken();
+
         }
     }
 	
@@ -70,7 +73,7 @@ class SessionManager
 	 *
 	 * @return bool
 	 */
-    protected static function preventHijacking()
+    protected function preventHijacking()
     {
         if (!isset($_SESSION['IPaddress']) || !isset($_SESSION['userAgent'])) 
 			return false;
@@ -83,7 +86,7 @@ class SessionManager
 
         return true;
     }
-	
+
     /**
      * If an application creates a lot of quick connections to the server some interesting things can happen.
      * PHP, and many other languages, restricts access to the session data to one running script at a time,
@@ -103,8 +106,9 @@ class SessionManager
      * To accomplish this we’re going to add the regenerateSession function. This function adds the obsolete flag and expiration to the session,
      * regenerates the ID to create the new session and saves them both.
      * It then reopens the new session and removes the obsolete flag. Unlike our other internal functions we are leaving this one open for use outside the class so that it can be tied into login scripts.
+     * @throws \Exception
      */
-    protected static function regenerateSession()
+    protected function regenerateSession()
     {
         // If this session is obsolete it means there already is a new id
         if (isset($_SESSION['OBSOLETE']))
@@ -115,8 +119,7 @@ class SessionManager
             }
             return;
         }
-		// Add new csrf token to regenerated session
-        Csrf::genCsrfToken();
+
         // Set current session to expire in 10 seconds
         $_SESSION['OBSOLETE'] = true;
         $_SESSION['EXPIRES'] = time() + 10;
@@ -142,7 +145,7 @@ class SessionManager
 	 *
 	 * @return bool
      */
-    protected static function validateSession()
+    protected function validateSession()
     {
         if (isset($_SESSION['OBSOLETE']) && !isset($_SESSION['EXPIRES'])) 
 			return false;
