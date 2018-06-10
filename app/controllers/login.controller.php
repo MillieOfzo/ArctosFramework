@@ -363,7 +363,7 @@ class LoginController
     public function redirectLogin()
     {
         // We check to see whether the user is logged in or not
-        if (Auth::checkAuth())
+        if (!Auth::checkAuth())
         {
             // Remember that this die statement is absolutely critical.  Without it,
             // people can view your members-only content without logging in.
@@ -372,27 +372,21 @@ class LoginController
 
         // Update Lastaccess kolom in users database
         // TODO: Check if user exist
-        Auth::
         $connected = $this->user->updateUserLastAccess(Auth::getAuthUser());
+        $user_row = $this->user->getUserRow(Auth::getAuthUser());
 
         //Redirect naar juiste index pagina op basis van Userrole
-        $user_role = $_SESSION[Config::SES_NAME]['user_role'];
-
-        if (APP_INITIALIZE === 0 && $connected)
-        {
-            Helper::redirect('/view');
-        }
-        elseif ($user_role == 1 && $connected)
+        if ($user_row['user_role'] == 1 && $connected)
         {
             Helper::redirect('/home');
         }
-        elseif ($user_role == 2 && $connected)
+        elseif ($user_row['user_role'] == 2 && $connected)
         {
             Helper::redirect('/home');
         }
         else
         {
-            Helper::redirect('/');
+            Helper::redirect('/home');
         }
     }
 }

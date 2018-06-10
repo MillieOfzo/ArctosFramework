@@ -15,10 +15,12 @@
 require '../vendor/autoload.php';
 
 use App\Classes\ErrorManager;
-use App\Classes\Package;
+use App\Classes\FileManager;
 use App\Classes\SessionManager;
 use App\Classes\Router;
 use App\Models\UserModel;
+
+//ob_start();
 
 /**
  * Setup Errormanager
@@ -26,7 +28,7 @@ use App\Models\UserModel;
 $errormanager = new ErrorManager;
 $errormanager->SetLogLevel(E_ALL);
 $errormanager->SetDebug(Config::DEBUG);
-$errormanager->SetLogFile('../Storage/Logs/' . date("Y") . '/Errors/' . date("Y-m-d") . '_error.log');
+$errormanager->SetLogFile(__DIR__ .'/../storage/logs/' . date("Y") . '/Errors/' . date("Y-m-d") . '_error.log');
 
 /**
  * Init the catch of errors and fatal errors
@@ -53,8 +55,8 @@ if (isset($_SESSION[Config::SES_NAME]))
 /**
  * Define packages as variables to allow pushes to the array
  */	
-$arr_js = Package::jsPackage();
-$arr_css = Package::cssPackage();
+$arr_js = FileManager::jsFiles();
+$arr_css = FileManager::cssFiles();
 
 /**
  * Init router on requests and return response from method

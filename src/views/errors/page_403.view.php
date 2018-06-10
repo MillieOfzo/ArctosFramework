@@ -12,7 +12,7 @@
 
     <!-- Mainly CSS -->
     <?php
-        foreach(\App\Classes\Package::cssPackage() as $css){
+        foreach(\App\Classes\FileManager::cssFiles() as $css){
             echo '<link href="'.$css.'" rel="stylesheet">';
         }
     ?>
@@ -35,7 +35,7 @@
 
     <!-- Mainly scripts -->
     <?php
-        foreach(\App\Classes\Package::jsPackage()  as $js){
+        foreach(\App\Classes\FileManager::jsFiles()  as $js){
             echo '<script src="'.$js.'"></script>';
         }	
     ?>

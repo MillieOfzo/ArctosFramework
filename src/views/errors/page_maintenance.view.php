@@ -12,7 +12,7 @@
 
     <!-- Mainly CSS -->
     <?php
-        foreach(\App\Classes\Package::cssPackage() as $css){
+        foreach(\App\Classes\FileManager::cssFiles() as $css){
             echo '<link href="'.$css.'" rel="stylesheet">';
         }
     ?>
@@ -42,13 +42,13 @@
         <div class="error-desc">
 		   <p data-i18n="[html]error_page.maintenance.msg">Wacht uit of vraag status na bij de admins.
 			</p>	
-			<a href="<?= URL_ROOT; ?>" class='btn btn-primary' data-i18n="[html]error_page.return_btn">Return to safety</a>			
+			<a href="/" class='btn btn-primary' data-i18n="[html]error_page.return_btn">Return to safety</a>
         </div>
     </div>
 
     <!-- Mainly scripts -->
     <?php
-        foreach(\App\Classes\Package::jsPackage()  as $js){
+        foreach(\App\Classes\FileManager::jsFiles()  as $js){
             echo '<script src="'.$js.'"></script>';
         }	
     ?>

@@ -52,15 +52,15 @@ class UserModel
         }
     }
 
-    public function getUserRow($user_selector)
+    public function getUserRow($selector)
     {
-        if (is_numeric($user_selector))
+        if (is_numeric($selector))
         {
-            $parse = $this->conn->parse("user_id = ?i", $user_selector);
+            $parse = $this->conn->parse("user_id = ?i", (int)$selector);
         }
         else
         {
-            $parse = $this->conn->parse("user_email = ?s", $user_selector);
+            $parse = $this->conn->parse("user_email = ?s", $selector);
         }
 
         try

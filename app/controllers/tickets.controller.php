@@ -49,7 +49,7 @@ class TicketsController
 	public function newView()
     {
         return array(
-            'returned_view' => '../src/views/ticket_new.view.php'
+            'view' => '../src/views/ticket_new.view.php'
         );
     }
 
@@ -57,7 +57,7 @@ class TicketsController
     {
         $ticket_row = $this->model->getTicketRow($ticket_id);
         return array(
-            'returned_view' => '../src/views/ticket_view.view.php',
+            'view' => '../src/views/ticket_view.view.php',
             'returned_ticket_id' => $ticket_id,
             'returned_ticket_created_by' => $ticket_row['ticket_created_by'],
             'returned_ticket_checked_by' => $ticket_row['ticket_checked_by'],

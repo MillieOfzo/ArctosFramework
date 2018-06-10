@@ -11,6 +11,12 @@ namespace App\Classes;
 
 class Helper
 {
+	public static function getUrlProtocol()
+	{
+		$protocol = isset($_SERVER['HTTPS']) && strcasecmp('off', $_SERVER['HTTPS']) !== 0 ? "https" : "http";
+		return $protocol;
+	}
+	
     public static function jsonArr($response_array)
     {
         header('Content-type: application/json; charset=UTF-8');
@@ -21,6 +27,7 @@ class Helper
     public static function redirect($url)
     {
         header("location: {$url}");
+		exit();		 
     }
 }
 

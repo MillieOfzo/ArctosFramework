@@ -39,11 +39,16 @@ if (\App\Classes\Auth::checkAuth()){
 				<?php
 				// Top menu bar
 				include '../src/views/layout/topnav.layout.php';
-	
-				// View content
-				if(file_exists($obj['view'])){
+
+				//var_dump($obj);
+                if(isset($obj['response']['view'])) {
+                    // First check is to detemine if a class sends back a view
+                    include $obj['response']['view'];
+                } elseif(file_exists($obj['view'])){
+                    // If this is not the case use the controllers view
 					include $obj['view'];
 				} else {
+                    // If none if found return a 404
 					http_response_code(404);
 					include '../src/views/errors/page_404.php';
 					die();
