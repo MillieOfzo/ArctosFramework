@@ -193,15 +193,15 @@
 			"msg":{
 				"del":{
 					"label": "Success",
-					"text": "Successfully removed"
+					"msg": "Successfully removed"
 				},
 				"suc":{
 					"label": "Success",
-					"text": "User account has been updated"
+					"msg": "User account has been updated"
 				},
 				"err":{
 					"label": "Something went wrong",
-					"text": "Try again or contact the administrator"
+					"msg": "Try again or contact the administrator"
 				}
 			}
 		},
@@ -216,16 +216,16 @@
 			"msg":{
 				"login_email":{
 					"label": "Success",
-					"text": "Login email sent to",
-					"err": "Login email not sent"
+					"suc_msg":  "Login email sent to",
+					"err_msg": "Login email not sent"
 				},
 				"suc":{
 					"label": "Success",
-					"text": "User account has been updated"
+					"msg": "User account has been updated"
 				},
 				"err":{
 					"label": "Something went wrong",
-					"text": "Try again or contact the administrator"
+					"msg": "Try again or contact the administrator"
 				}
 			}
 		},
@@ -250,7 +250,7 @@
 		},
 		"swal":{
 			"confirm":{
-				"text":"The user: __placeholder__ will be permanently deleted!"
+				"msg":"The user: __placeholder__ will be permanently deleted!"
 			}
 		}
 	}

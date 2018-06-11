@@ -39,11 +39,16 @@ if (\App\Classes\Auth::checkAuth()){
 				<?php
 				// Top menu bar
 				include '../src/views/layout/topnav.layout.php';
-	
-				// View content
-				if(file_exists($obj['view'])){
+
+				//var_dump($obj);
+                if(isset($obj['response']['view'])) {
+                    // First check is to detemine if a class sends back a view
+                    include $obj['response']['view'];
+                } elseif(file_exists($obj['view'])){
+                    // If this is not the case use the controllers view
 					include $obj['view'];
 				} else {
+                    // If none if found return a 404
 					http_response_code(404);
 					include '../src/views/errors/page_404.php';
 					die();
@@ -70,13 +75,12 @@ if (\App\Classes\Auth::checkAuth()){
 	
 		<div class="middle-box text-center loginscreen animated fadeInDown ">
 			<div class="wrapper wrapper-content">
-				<div>
-					<!--<h1 class="logo-name">DB+</h1>-->
-					<h1 class="logo-name"><img src="/public/img/<?= \Config::LOGO_NAME;?>" width="100%"></img></h1>
-				</div>
-					<h3 ><span data-i18n="[html]loginscreen.welcome">Welcome to</span> <?= \Config::APP_TITLE;?> </h3>
-					<p data-i18n="[html]loginscreen.text">An improved experience for managing RMS and SCS.</p>
-					<p data-i18n="[html]loginscreen.subtext">Login in. To see it in action.</p>
+
+				<h1 class="logo-name"><img src="/public/img/<?= \Config::LOGO_NAME;?>" class="header-img" width="100%"></img></h1>			
+				<h3 ><span data-i18n="[html]loginscreen.welcome">Welcome to</span> <?= \Config::APP_TITLE;?> </h3>
+				<p data-i18n="[html]loginscreen.text">An improved experience for managing RMS and SCS.</p>
+				<p data-i18n="[html]loginscreen.subtext">Login in. To see it in action.</p>
+				
 				<?= $obj['response'];?>
 				
 				<form class="m-t" id="signinForm" action="/login" method="post">

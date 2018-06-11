@@ -11,11 +11,13 @@ namespace App\Classes;
 
 use \Config;
 
-class Package
+class FileManager
 {
-    public static function cssPackage()
+    public static function cssFiles()
     {
         $cssArr = array(
+			'/public/css/pe-icons/pe-icon-7-stroke.css',
+			'/public/css/pe-icons/helper.css',		   
             '/public/css/bootstrap/bootstrap.min.css',
             '/public/css/fonts/font-awesome/css/font-awesome.css',
             '/public/css/stroke-icons/stroke-style.css',
@@ -32,7 +34,7 @@ class Package
         return $cssArr;
     }
 
-    public static function jsPackage()
+    public static function jsFiles()
     {
         $jsArr = array(
             '/public/js/jquery/jquery-3.1.1.min.js',

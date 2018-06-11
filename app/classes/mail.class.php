@@ -145,9 +145,10 @@ class Mailer
 		$lang = (new Language)->getLanguageFile();
 		
         $header_arr = array(
-            'header_logo' => 'http://' . $_SERVER['HTTP_HOST'] . '/public/img/' . Config::LOGO_NAME,
+            'header_logo' => Helper::getUrlProtocol() . '://' . $_SERVER['HTTP_HOST'] . '/public/img/' . Config::LOGO_NAME,
+            'header_link' => Helper::getUrlProtocol() . '://' . $_SERVER['HTTP_HOST'],
             'header_title' => Config::APP_TITLE,
-            'header_text' => $lang->loginscreen->text
+            //'header_text' => $lang->loginscreen->text
         );
 
         $header = file_get_contents('../app/mail/header.mail.php');
@@ -157,7 +158,8 @@ class Mailer
         }
 
         $footer_arr = array(
-            'footer_date' => date('D d.m.Y H:i:s')
+            'footer_date' => date('D d/m/Y H:i:s'),
+            'footer_year' => date('Y')
         );
 
         $footer = file_get_contents('../app/mail/footer.mail.php');
@@ -184,10 +186,11 @@ class Mailer
      * @param string $mail_body Message body containing the build template
      * @param array  $to Array containing the addresses to send the email to
      * @param array  $cc Array containing the Carbon Copy addresses
-     * @return bool true if mail is send else false
+     * @param string $attachment
+     * @return bool if mail is send else false
      * @throws \PHPMailer\PHPMailer\Exception
      */
-	public static function send($subject ='', $mail_body ='', $to = array(), $cc = array() )
+	public static function send($subject ='', $mail_body ='', $to = array(), $cc = array(), $attachment = '')
 	{
 		$mail = new PHPMailer(true);
 		
@@ -215,7 +218,7 @@ class Mailer
 		}
 
 
-        //Recipients
+        // Recipients
         $mail->SetFrom(Config::APP_EMAIL);
 		if(count($to) > 0)
 		{
@@ -233,11 +236,17 @@ class Mailer
 			}
 		}
 
-        //Content
+        // Content
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body = $mail_body;	
-        //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';	
+        //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+        // Attachment
+        if($attachment != '')
+        {
+            $mail->addAttachment($attachment);
+        }
 
         if($mail->send())
 		{

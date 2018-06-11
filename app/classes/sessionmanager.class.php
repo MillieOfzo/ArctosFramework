@@ -45,7 +45,7 @@ class SessionManager
                 // Reset session data and regenerate id
                 $_SESSION = array();
                 $_SESSION['IPaddress'] = $_SERVER['REMOTE_ADDR'];
-                $_SESSION['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
+                //$_SESSION['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
 				$_SESSION['_token'] = Csrf::genCsrfToken();
 
                 $this->regenerateSession();
@@ -75,14 +75,15 @@ class SessionManager
 	 */
     protected function preventHijacking()
     {
-        if (!isset($_SESSION['IPaddress']) || !isset($_SESSION['userAgent'])) 
+        //if (!isset($_SESSION['IPaddress']) || !isset($_SESSION['userAgent']))
+        if (!isset($_SESSION['IPaddress']) )
 			return false;
 
-        if ($_SESSION['IPaddress'] != $_SERVER['REMOTE_ADDR']) 
+        if ($_SESSION['IPaddress'] != $_SERVER['REMOTE_ADDR'])
 			return false;
 
-        if ($_SESSION['userAgent'] != $_SERVER['HTTP_USER_AGENT']) 
-			return false;
+        //if ($_SESSION['userAgent'] != $_SERVER['HTTP_USER_AGENT'])
+		//	return false;
 
         return true;
     }

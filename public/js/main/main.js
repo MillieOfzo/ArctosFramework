@@ -6,6 +6,8 @@
 
 $(document).ready(function () {
 
+
+
     $('.autocomplete-append').autocomplete({
         serviceUrl: '/autocomplete',
         max: 10,
