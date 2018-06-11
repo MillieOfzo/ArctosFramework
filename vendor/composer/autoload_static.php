@@ -92,7 +92,7 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
         'App\\Models\\IndexModel' => __DIR__ . '/../..' . '/app/models/index.model.php',
         'App\\Models\\LoggingModel' => __DIR__ . '/../..' . '/app/models/logging.model.php',
         'App\\Models\\LoginModel' => __DIR__ . '/../..' . '/app/models/login.model.php',
-        'App\\Models\\TicketsModel' => __DIR__ . '/../..' . '/app/models/tickets.model.php',
+        'App\\Models\\TicketModel' => __DIR__ . '/../..' . '/app/models/ticket.model.php',
         'App\\Models\\UserModel' => __DIR__ . '/../..' . '/app/models/user.model.php',
         'App\\Routes\\Routes' => __DIR__ . '/../..' . '/routes/routes.php',
         'FastRoute\\BadRouteException' => __DIR__ . '/..' . '/nikic/fast-route/src/BadRouteException.php',

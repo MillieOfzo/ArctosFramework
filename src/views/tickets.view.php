@@ -73,37 +73,36 @@
     $(document).ready(function() {
 		var url_str = $('#url_string').val();
 		var lang_code = $('html').attr('lang');
-		$.extend( true, $.fn.dataTable.defaults, {
-			language: {
-				url: '/public/js/dataTables/'+$('html').attr('lang')+'.json'
-			},
-			iDisplayLength: 10,
-			deferRender: true,
-			order: [[ 8, "desc"]],
-			lengthMenu: [ 10, 20, 25 ],
-			processing: true,
-			serverSide: true,
-			responsive: true,	
-			dom: '<"html5buttons"B>lTfgitp',
-			buttons: [
-                { extend: 'copy'},
-                {extend: 'csv'},
-                {extend: 'excel', title: 'ExampleFile'},
-                {extend: 'pdf', title: 'ExampleFile'},
 
-                {extend: 'print',
-                 customize: function (win){
-                        $(win.document.body).addClass('white-bg');
-                        $(win.document.body).css('font-size', '10px');
+        // Datatables defaults
+        $.extend( true, $.fn.dataTable.defaults, {
+            language: {
+                url: '/public/js/dataTables/' + $('html').attr('lang')+'.json'
+            },
+            iDisplayLength: 10,
+            deferRender: true,
+            order: [[ 0, "desc"]],
+            lengthMenu: [ 10, 20, 25 ],
+            responsive: {
+                details: {
+                    renderer: function ( api, rowIdx, columns ) {
+                        var data = $.map( columns, function ( col, i ) {
+                            return col.hidden ?
+                                '<tr data-dt-row="'+col.rowIndex+'" data-dt-column="'+col.columnIndex+'">'+
+                                '<td>'+col.title+':'+'</td> '+
+                                '<td>'+col.data+'</td>'+
+                                '</tr>' :
+                                '';
+                        } ).join('');
 
-                        $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
+                        return data ?
+                            $('<table/ width="100%" class="sub_responsive">').append( data ) :
+                            false;
+                    }
                 }
-                }
-            ]			
-		} );		
-				
+            }
+        } );
+
 		//Function voor het filteren van de data in table
 		$("#filter_dienst").on('change', function() {
 			$("#datatable-all, #datatable-open, #datatable-close, #datatable-annu, #datatable-kpn, #datatable-onhold, #datatable-actie").DataTable().column(4).search($(this).val()).draw();
@@ -118,7 +117,25 @@
 		var interval;
 		var table_active = $("#datatable-all").DataTable({	
 			ajax: '/tickets/table',
-	
+            order: [[ 8, "desc"]],
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+                { extend: 'copy'},
+                {extend: 'csv'},
+                {extend: 'excel', title: 'ExampleFile'},
+                {extend: 'pdf', title: 'ExampleFile'},
+
+                {extend: 'print',
+                    customize: function (win){
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ],
 			fnInitComplete: function(oSettings, json) {
 				$('#ibox1').children('.ibox-content').toggleClass('sk-loading');
 

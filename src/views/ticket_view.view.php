@@ -1,44 +1,12 @@
-<?php
-$wb_conn = new SafeMySQL();
-$search = preg_replace("/[^A-Z0-9-]/","", $obj['response']['returned_ticket_id']);
-$row = $wb_conn->getRow("SELECT * FROM app_customer_tickets WHERE ticket_nr = ?s",$search);
-
-if($row['ticket_external_ticket_nr'] == "") {
-    $ticket 		= "";
-    $ticket_naam 	= "";
-} else {
-    $ticket 		= $row['ticket_external_ticket_nr'];
-    $ticket_naam 	= "Ticketnr:";
-}
-if ($row["ticket_submitted"] == 1) {
-    $display 		= "display:none";
-    $displaytext 	= "<b>Werkbon is al een keer verzonden<br> Vraag de admin om het formulier handmatig te verzenden</b>";
-} else {
-    $display 		= "display:block";
-    $displaytext 	= "";
-}
-if ($row["ticket_on_hold"] == 1 && $row["ticket_date_on_hold"] != '') {
-    $display_hold 	= "display:block;";
-} else {
-    $display_hold 	= "display:none;";
-}
-if ($row["ticket_status"] == "Geannuleerd" && $row["ticket_sub_status"] != '') {
-    $display_geannuleerd 	= "display:block;";
-} else {
-    $display_geannuleerd 	= "display:none;";
-}
-$on_hold_date 			= ($row['ticket_date_on_hold'] == NULL || $row['ticket_date_on_hold'] == "0000-00-00") ? date('d-m-Y') : date('d-m-Y', strtotime($row['ticket_date_on_hold']));
-?>
-
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-md-6">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <span class="pull-right"><span data-i18n="[html]tickets.update.submitted_by">Submitted by</span>:<b><?=  $obj['response']['returned_ticket_created_by']; ?></b>
-                    <span data-i18n="[html]tickets.update.checked_by">Checked by</span>: <b><?=  $obj['response']['returned_ticket_checked_by']; ?></b></span>
+                    <span class="pull-right"><span data-i18n="[html]tickets.update.submitted_by">Submitted by</span>:<b><?=  $obj['response']['returned_ticket_row']['ticket_created_by']; ?></b>
+                    <span data-i18n="[html]tickets.update.checked_by">Checked by</span>: <b><?=  $obj['response']['returned_ticket_row']['ticket_checked_by']; ?></b></span>
 
-                    <h2><a href="/tickets" class="text-primary"><i class="fa fa-arrow-left"></i> </a><span data-i18n="[html]tickets.label">Ticket</span> <b><?=  $obj['response']['returned_ticket_id']; ?></b> <small></small></h2>
+                    <h2><a href="/tickets" class="text-primary"><i class="fa fa-arrow-left"></i> </a><span data-i18n="[html]tickets.label">Ticket</span> <b><?=  $obj['response']['returned_ticket_row']['ticket_id']; ?></b> <small></small></h2>
 
                     <div class="clearfix"></div>
                 </div>
@@ -83,7 +51,7 @@ $on_hold_date 			= ($row['ticket_date_on_hold'] == NULL || $row['ticket_date_on_
                             <label class="control-label"><span >Update status:</span><font color='red'>*</font></label>
                             <select class="select2 form-control"  name="status_update" id="status_update">
                                 <optgroup data-i18n="[label]tickets.select.label.current" label="Huidige status..."></optgroup>
-                                <option value="<?=  $row['ticket_status'];?>"> <?=  $row['ticket_status'];?> </option>
+                                <option value="<?=  $obj['response']['returned_ticket_row']['ticket_status']; ?>"> <?=  $obj['response']['returned_ticket_row']['ticket_status']; ?> </option>
                                 <optgroup data-i18n="[label]tickets.select.label.options" label="Ticket opties..."></optgroup>
                                 <option value="Open" data-i18n="[html]tickets.status.open">Open</option>
                                 <option value="On hold" data-i18n="[html]tickets.status.on_hold">On hold</option>
@@ -98,19 +66,19 @@ $on_hold_date 			= ($row['ticket_date_on_hold'] == NULL || $row['ticket_date_on_
                         </div>
 
 
-                        <div class="form-group" id="on_hold_div" style="<?= $display_hold;?>">
+                        <div class="form-group" id="on_hold_div" style="<?= $obj['response']['display_hold'];?>">
                             <label class="control-label"><span data-i18n="[html]tickets.select.label.on_hold"></span>:<font color='red'>*</font></label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" name="datum_on_hold" class="form-control" value="<?= $on_hold_date;?>" placeholder="dd-mm-jjjj" data-inputmask="'mask': '99-99-9999'">
+                                <input type="text" name="datum_on_hold" class="form-control" value="<?=  $obj['response']['on_hold_date']; ?>" placeholder="dd-mm-jjjj" data-inputmask="'mask': '99-99-9999'">
                             </div>
                         </div>
-                        <div class="form-group" id="geannuleerd_div" style="<?= $display_geannuleerd;?>">
+                        <div class="form-group" id="geannuleerd_div" style="<?=  $obj['response']['display_geannuleerd']; ?>">
                             <label class="control-label"><span data-i18n="[html]tickets.select.label.canceled">Reden geannuleerd</span>:<font color='red'>*</font></label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-times"></i></span>
                                 <select class="form-control"  name="reden_geannuleerd" >
-                                    <option value="<?=  $row['ticket_sub_status'];?>"> <?=  $row['ticket_sub_status'];?> </option>
+                                    <option value="<?=  $obj['response']['returned_ticket_row']['ticket_sub_status'];?>"> <?=  $obj['response']['returned_ticket_row']['ticket_sub_status'];?> </option>
                                     <optgroup data-i18n="[label]tickets.select.label.canceled" label="Reason canceled..."></optgroup>
                                     <option value="Storing hersteld">Storing hersteld</option>
                                     <option value="Ticket onnodig">Ticket onnodig</option>
@@ -131,13 +99,12 @@ $on_hold_date 			= ($row['ticket_date_on_hold'] == NULL || $row['ticket_date_on_
                         </div>
 
                         <div class="alert alert-warning"  id="gesloten_div" style="display:none;">
-                            <b>Pro Tip:</b> Sluit de openstaande werkbon in SCS op OMS: <b><?=  $row['ticket_customer_scsnr'];?></b>.
+                            <b>Pro Tip:</b> Sluit de openstaande werkbon in SCS op OMS: <b><?=  $obj['response']['returned_ticket_row']['ticket_customer_scsnr'];?></b>.
                         </div>
 
-                        <input type="text" hidden name="ticket_id" id="ticket_id" value="<?=  $obj['response']['returned_ticket_id']; ?>">
+                        <input type="text" hidden name="ticket_id" id="ticket_id" value="<?=  $obj['response']['returned_ticket_row']['ticket_id']; ?>">
                         <input type="text" hidden name="wb_id" value="">
                         <input type="text" hidden name="totaal_uitval" value=""/>
-                        <input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['_token'], ENT_QUOTES, 'UTF-8');?>">
 
                         <button class="btn btn-primary" name="save_button" value="Opslaan" id="send"><i class='fa fa-save fa-fw'></i> <span data-i18n="[html]tickets.buttons.update">Update</span></button>
                         <button class="btn btn-success hidden" name="save_button" value="VerzendenOpnieuw" id="btn_send_opnieuw"  ><i class="fa fa-envelope"></i> <span data-i18n="[html]tickets.buttons.re_send">Update</span></button>

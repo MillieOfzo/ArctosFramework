@@ -5995,7 +5995,7 @@ dd.project-people {
   padding: 0;
 }
 .chat-message {
-  padding: 10px 20px;
+  padding: 10px 0px;
 }
 .message-avatar {
   height: 48px;

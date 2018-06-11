@@ -70,7 +70,7 @@ class Routes
 				// Tickets
 				array('GET', '/tickets', 'TicketsController/index'),
 				array('GET', '/tickets/table', 'TicketsController/getTableTickets'),
-				array('GET', '/tickets/new', 'TicketsController/newView'),
+				array('GET', '/tickets/new', 'TicketsController/newTicket'),
 				array('GET', '/tickets/view/{id:[0-9A-Za-z]+}', 'TicketsController/updateView'),
 				array('GET', '/tickets/get/updates/{id:[0-9A-Za-z]+}', 'TicketsController/getTicketUpdates'),
 				array('GET', '/tickets/get/info/{id:[0-9A-Za-z]+}', 'TicketsController/getTicketInfo'),

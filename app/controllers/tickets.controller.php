@@ -10,7 +10,7 @@ use App\Classes\Auth;
 use App\Classes\Mailer;
 use App\Classes\Language;
 use App\Classes\SSP;
-use App\Models\TicketsModel;
+use App\Models\TicketModel;
 
 class TicketsController
 {
@@ -19,48 +19,53 @@ class TicketsController
     function __construct()
     {
         $this->conn = new SafeMySQL;
+        $this->ticket = new TicketModel;
         $this->auth_user = htmlentities($_SESSION[Config::SES_NAME]['user_email'], ENT_QUOTES, 'UTF-8');
-        $this->model = new TicketsModel;
-        $this->auth = new Auth;
         $this->lang = (new Language)->getLanguageFile();
         $this->purifier = new \HTMLPurifier(\HTMLPurifier_Config::createDefault());
     }
 
 	public function index()
 	{
-        $tickets_external ='<option></option>';
-        foreach($this->conn->getAll("SELECT * FROM app_customer_tickets_external") as $extern)
-        {
-            $tickets_external .= '<option value="'.$extern['external_id'].'">'.$extern['external_name'].'</option>';
-        }
-
-        $tickets_malfunctions ='<option></option>';
-        foreach($this->conn->getAll("SELECT * FROM app_customer_tickets_malfunctions") as $mal)
-        {
-            $tickets_malfunctions .= '<option value="'.$mal['malfunctions_id'].'">'.$mal['malfunctions_name'].'</option>';
-        }
-
         return array(
-            'tickets_external' => $tickets_external,
-            'tickets_malfunctions' => $tickets_malfunctions
+            'tickets_external' => $this->getTicketExternal(),
+            'tickets_malfunctions' => $this->getTicketMalfunctions()
         );
 	}
 
-	public function newView()
+	public function newTicket()
     {
         return array(
-            'view' => '../src/views/ticket_new.view.php'
+            'view' => '../src/views/ticket_new.view.php',
+            'tickets_external' => $this->getTicketExternal(),
+            'tickets_malfunctions' => $this->getTicketMalfunctions(),
         );
     }
 
     public function updateView($ticket_id)
     {
-        $ticket_row = $this->model->getTicketRow($ticket_id);
+        $row = $this->ticket->getTicketRow($ticket_id);
+
+        if ($row["ticket_on_hold"] == 1 && $row["ticket_date_on_hold"] != '') {
+            $display_hold 	= "display:block;";
+        } else {
+            $display_hold 	= "display:none;";
+        }
+        if ($row["ticket_status"] == "Geannuleerd" && $row["ticket_sub_status"] != '') {
+            $display_geannuleerd 	= "display:block;";
+        } else {
+            $display_geannuleerd 	= "display:none;";
+        }
+        $on_hold_date 		= ($row['ticket_date_on_hold'] == NULL || $row['ticket_date_on_hold'] == "0000-00-00") ? date('d-m-Y') : date('d-m-Y', strtotime($row['ticket_date_on_hold']));
+
+
         return array(
             'view' => '../src/views/ticket_view.view.php',
-            'returned_ticket_id' => $ticket_id,
-            'returned_ticket_created_by' => $ticket_row['ticket_created_by'],
-            'returned_ticket_checked_by' => $ticket_row['ticket_checked_by'],
+            'tickets_malfunctions' => $this->getTicketMalfunctions(),
+            'returned_ticket_row' => $row,
+            'display_hold' => $display_hold,
+            'on_hold_date' => $on_hold_date,
+            'display_geannuleerd' => $display_geannuleerd,
         );
     }
 
@@ -69,7 +74,7 @@ class TicketsController
         Auth::checkCsrfToken($_POST['csrf']);
         $cleaned_ticket_id = $this->purifier->purify($_POST['ticket_id']);
 
-        $row_wb = $this->model->getTicketRow($cleaned_ticket_id);
+        $row_wb = $this->ticket->getTicketRow($cleaned_ticket_id);
 
         // Roep status text functie aan; regelt de sub-labels in het user commentaar
         $status_text = date("D d M Y H:i:s") . ' ';
@@ -161,7 +166,7 @@ class TicketsController
         // Indien status Doorzetten
         if ($_POST['status_update'] == "Doorzetten")
         {
-            $door_naar = $this->model->getExternal($_POST['doorzetten_naar']);
+            $door_naar = $this->ticket->getExternal($_POST['doorzetten_naar']);
 
             $query_data['ticket_extern'] = $door_naar;
             $query_data['ticket_put_through'] = 1;
@@ -208,8 +213,8 @@ class TicketsController
 
             if ($row_wb)
             {
-                $this->model->updateTicket($query_data, $_POST['ticket_id']);
-                $this->model->insertTicketText($update_txt_query);
+                $this->ticket->updateTicket($query_data, $_POST['ticket_id']);
+                $this->ticket->insertTicketText($update_txt_query);
 
                 $msg_type = 'success';
                 $msg_title = 'Succes';
@@ -395,6 +400,7 @@ class TicketsController
 						<i class="fa fa-clock-o"> </i>
 						<span data-i18n="[html]location.tab.update">Last update </span>: '.date('D d M Y, H:i:s',strtotime($row['ticket_changed_date'])).'
 					</small>');
+
 		Helper::jsonArr(array($info));
     }
 
@@ -643,6 +649,28 @@ class TicketsController
             $res = $post_val['status_update'];
         }
         return $res;
+    }
+
+    private function getTicketExternal()
+    {
+        $tickets_external ='<option></option>';
+        foreach($this->conn->getAll("SELECT * FROM app_customer_tickets_external") as $extern)
+        {
+            $tickets_external .= '<option value="'.$extern['external_id'].'">'.$extern['external_name'].'</option>';
+        }
+
+        return $tickets_external;
+    }
+
+    private function getTicketMalfunctions()
+    {
+        $tickets_malfunctions ='<option></option>';
+        foreach($this->conn->getAll("SELECT * FROM app_customer_tickets_malfunctions") as $mal)
+        {
+            $tickets_malfunctions .= '<option value="'.$mal['malfunctions_id'].'">'.$mal['malfunctions_name'].'</option>';
+        }
+
+        return $tickets_malfunctions;
     }
 }
 

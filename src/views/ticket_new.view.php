@@ -61,7 +61,7 @@
                                     <label class="control-label" ><span data-i18n="[html]tickets.create.txt.for">Werkbon voor</span><font color="red">*</font></label>
                                     <select id="voor" name="extern" class="select2 form-control"  >
                                         <option value="" ></option>
-
+                                        <?= $obj['response']['tickets_external'];?>
                                     </select>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                     <div id="storing_wijzigen" >
                                         <select name="storing" class="select2 form-control" onchange="Storing(this.value)"  id="storing_select">
                                             <option value=""></option>
-
+                                            <?= $obj['response']['tickets_malfunctions'];?>
                                             <option data-i18n="[html]tickets.create.malfunction.anders" value="anders">Anders</option>
                                         </select>
                                     </div><span id="searchclear" style="display:none;" class="fa fa-remove"></span>
@@ -105,8 +105,6 @@
                                     <textarea name="comment" class="resizable_textarea form-control"  data-i18n="[placeholder]placeholders.input"></textarea>
                                 </div>
                             </div>
-
-                            <input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['_token'], ENT_QUOTES, 'UTF-8');?>">
 
                             <div class="col-md-12">
                                 <div class="ln_solid"></div>
@@ -316,64 +314,6 @@ foreach($arr_js as $js){
                     }
                 });
             });
-// ==========================================================================================================
-//	AUTOCOMPLETE	
-// ==========================================================================================================
-//	DROPDOWN
-// ==========================================================================================================	
-        $(document).ready(function() {
-            $('#autocomplete-custom-append').autocomplete({
-                serviceUrl: '/src/helpers/scs_naw_hint.json.php',
-                max: 10,
-                onSearchComplete: function (query, suggestions) {
-                    if(!suggestions.length) {
-                        $('#Error').modal('show');
-                    }
-                }
-            });
-        });
-//	GET LOCATION VALUES BASED ON AUTOCOMPLETE
-// ==========================================================================================================	
-        $(function(){
-
-            $('#autocomplete-custom-append').on('keyup', fillForm);
-            $('.autocomplete-suggestions').on('mouseleave', fillForm);
-
-            function fillForm(){
-                var inpval=$('#autocomplete-custom-append').val();
-                var elementCP=document.getElementById('CP');
-                var elementCPTEL=document.getElementById('CPTEL');
-                $.ajax({
-                    type: 'POST',
-                    data: ({p : inpval}),
-                    url: '/src/helpers/scs_naw_get.json.php',
-                    success: function(data) {
-
-                        var object = $.parseJSON(data);
-                        $.each(object, function () {
-                            $.each(this, function (name, value) {
-                                if (name == "omsnr") {
-                                    $("#OMSNR").val(value);
-                                } else if (name == "dienst") {
-                                    $("#DIENST").val(value);
-                                } else if (name == "locatie") {
-                                    $("#LOCATIE").val(value);
-                                } else if (name == "adres") {
-                                    $("#ADRES").val(value);
-                                } else if (name == "postcode") {
-                                    $("#POSTCODE").val(value);
-                                } else if (name == "plaats") {
-                                    $("#PLAATS").val(value);
-                                } else if (name == "regio") {
-                                    $("#REGIO").val(value);
-                                }
-
-                            });
-                        });
-                    }
-                });
-            };
-        });
 
     });
 

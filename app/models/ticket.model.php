@@ -4,7 +4,7 @@ namespace App\Models;
 use \SafeMySQL;
 use App\Classes\Logger;
 
-class TicketsModel
+class TicketModel
 {
     private $conn;
 

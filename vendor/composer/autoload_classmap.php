@@ -29,7 +29,7 @@ return array(
     'App\\Models\\IndexModel' => $baseDir . '/app/models/index.model.php',
     'App\\Models\\LoggingModel' => $baseDir . '/app/models/logging.model.php',
     'App\\Models\\LoginModel' => $baseDir . '/app/models/login.model.php',
-    'App\\Models\\TicketsModel' => $baseDir . '/app/models/tickets.model.php',
+    'App\\Models\\TicketModel' => $baseDir . '/app/models/ticket.model.php',
     'App\\Models\\UserModel' => $baseDir . '/app/models/user.model.php',
     'App\\Routes\\Routes' => $baseDir . '/routes/routes.php',
     'FastRoute\\BadRouteException' => $vendorDir . '/nikic/fast-route/src/BadRouteException.php',
