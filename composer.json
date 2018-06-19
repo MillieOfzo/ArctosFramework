@@ -2,7 +2,7 @@
     "name": "millieofzo/arctosframework",
 	"type": "framework",
 	"framework":"ARCTOS",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "env": "LIVE",
     "copyright": "Roelof Jan van Golen",
     "description": "Lightweight MVC framework",
