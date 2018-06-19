@@ -2,7 +2,6 @@
 *.pdf
 *.log
 *.sql
-*.xml
 
 tests/*
 .idea/*
