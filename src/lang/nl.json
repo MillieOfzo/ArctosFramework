@@ -147,6 +147,9 @@
 		}		
 	},
 	"user":{
+		"tooltip":{
+			"password_reset":"Wachtwoord reset"
+		},
 		"title":"Gebruiker",
 		"edit":{
 			"title":"Edit gebruiker",

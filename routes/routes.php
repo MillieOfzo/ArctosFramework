@@ -60,13 +60,19 @@ class Routes
                 // ===================================================================
 				array('GET', '/', 'LoginController/redirectLogin'),
                 array('GET', '/logout/{id:[0-9A-Za-z]+}', 'LoginController/processLogout'),
+				
 				// Autocomplete
                 array('GET', '/autocomplete', 'IndexController/getAutoComplete'),
+				
 				// Home
 				array('GET', '/home', 'HomeController/index'),
+				
                 // User
                 array('GET', '/user', 'UserController/index'),
                 array('POST', '/user/password/update', 'UserController/updateUserPass'),
+                array('GET', '/user/info', 'UserController/getUserInfo'),
+                array('POST', '/user/update', 'UserController/updateUser'),
+				
 				// Tickets
 				array('GET', '/tickets', 'TicketsController/index'),
 				array('GET', '/tickets/table', 'TicketsController/getTableTickets'),

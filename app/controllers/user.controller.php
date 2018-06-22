@@ -17,7 +17,7 @@ class UserController
 
     function __construct()
     {
-        $this->model = new UserModel;
+        $this->user = new UserModel;
         $this->auth = new Auth;
         $this->lang = (new Language)->getLanguageFile();
         $this->purifier = new \HTMLPurifier(\HTMLPurifier_Config::createDefault());
@@ -28,6 +28,63 @@ class UserController
 
     }
 
+    public function updateUser()
+    {
+        $cleaned_user_id = $this->purifier->purify($_POST['user_id']);
+
+        if (Auth::checkCsrfToken($_POST['csrf'])) {
+            $query_data = array(
+                'user_name' => $_POST['user_name'],
+                'user_last_name' => $_POST['user_last_name'],
+                'user_email' => $_POST['user_email']
+            );
+
+            if ($this->user->update( $query_data, $cleaned_user_id)) {
+                // Log to file
+                $msg = "User " . $_POST['user_email'] . " updatet by " . Auth::getAuthUser();
+                $err_lvl = 0;
+
+                $res['title'] = $this->lang->users->edit->msg->suc->label;
+                $res['text'] = $this->lang->users->edit->msg->suc->msg;
+                $res['type'] = 'success';
+            }
+        } else {
+            $res['title'] = $this->lang->users->edit->msg->err->label;
+            $res['text'] = $this->lang->users->edit->msg->err->msg;
+            $res['type'] = 'error';
+        }
+
+        Logger::logToFile(__FILE__, $err_lvl, $msg);
+
+        Helper::jsonArr($res);
+    }
+
+    public function getUserInfo()
+    {
+        // Get current dealer row
+        $user_row = $this->user->getUserRow($_SESSION[Config::SES_NAME]['user_id']);
+
+        if ($user_row['user_status'] == 1) {
+            $status = '<span class="label label-success"  >' . $this->lang->users->status->s1 . '</span>';
+        } elseif ($user_row['user_status'] == 2) {
+            $status = '<span class="label label-danger" >' . $this->lang->users->status->s2 . '</span>';
+        } else {
+            $status = '<span class="label label-warning" >' . $this->lang->users->status->s3 . '</span>';
+        }
+
+        $res = array(
+            'user_status'       => $status,
+            'user_id' 	        => $user_row['user_id'],
+            'user_name' 	    => $user_row['user_name'],
+            'user_last_name' 	=> $user_row['user_last_name'],
+            'user_email' 	    => $user_row['user_email'],
+            'user_last_access' 	=> $user_row['user_last_access'],
+            'user_role'         => $this->user->getUserRole($user_row['user_id']),
+        );
+
+        Helper::jsonArr($res);
+    }	
+	
     public function updateUserPass()
     {
 
@@ -36,7 +93,7 @@ class UserController
 
         if (Auth::checkCsrfToken($_POST['csrf']) && !empty($password_post))
         {
-            $row = $this->model->getUserRow($cleaned_user_id);
+            $row = $this->user->getUserRow($cleaned_user_id);
 
             if ($row['user_new'] == 1)
             {
@@ -50,7 +107,7 @@ class UserController
 
                 try
                 {
-                    if ($this->model->update($query_params, $cleaned_user_id))
+                    if ($this->user->update($query_params, $cleaned_user_id))
                     {
                         Logger::logToFile(__FILE__, 0, "Password user: " . $row['user_email'] . " changed");
 

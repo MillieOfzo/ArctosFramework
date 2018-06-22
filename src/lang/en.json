@@ -149,6 +149,9 @@
 	"user":{
 		"title":"User",
 		"edit":{
+			"tooltip":{
+				"password_reset":"Password reset"
+			},
 			"title":"Edit user",
 			"button":"Update",
 			"input":{

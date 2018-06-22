@@ -44,6 +44,7 @@ class FileManager
             '/public/js/i18next/i18next.min.js',
             '/public/js/main/main.js',
 			'/public/js/pace/pace.min.js',
+			'/public/js/moment/moment.js',
             '/public/js/formvalidation/dist/js/formValidation.min.js',
             '/public/js/formvalidation/dist/js/framework/bootstrap.min.js',
             '/public/js/formvalidation/dist/js/language/' . strtolower(Config::APP_LANG) . '_' . strtoupper(Config::APP_LANG) . '.js',
