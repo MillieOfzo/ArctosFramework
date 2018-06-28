@@ -178,8 +178,12 @@
             $('input[name="user_name"]').val(data[1]);
             $('input[name="user_last_name"]').val(data[2]);
             $('input[name="user_email"]').val(data[3]);
-			$('select[name="user_role"]').select2("val", data[8]);
-			$('select[name="user_status"]').select2("val", data[9] );
+			$('select[name="user_role"]').select2({ width: '100%' });
+            $('select[name="user_role"]').val(data[9]);
+            $('select[name="user_role"]').trigger('change');
+			$('select[name="user_status"]').select2({ width: '100%' });
+            $('select[name="user_status"]').val(data[10]);
+            $('select[name="user_status"]').trigger('change');
 			menuEditor.fadeIn();
         });		
 		

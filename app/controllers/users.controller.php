@@ -276,6 +276,10 @@ class UsersController
             array(
                 'db' => "user_status",
                 'dt' => 9
+            ),
+            array(
+                'db' => "user_status",
+                'dt' => 10
             )			
         );
         

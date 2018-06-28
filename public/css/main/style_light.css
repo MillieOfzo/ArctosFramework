@@ -37,9 +37,30 @@ h5 {
   font-weight: 600;
 }
 
+.c-divider {
+  color: #0092D0;
+}
+
 .c-accent {
   color: #1ab394;
 }
+
+.c-success {
+  color: #1ab394;
+}
+
+.c-warning {
+  color: #f8ac59;
+}
+
+.c-danger {
+  color: #ed5565;
+}
+
+.c-white {
+  color: #FFFFFF;
+}
+
 
 .nav > li > a {
   color: #a7b1c2;
