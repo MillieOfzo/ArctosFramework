@@ -116,7 +116,7 @@ class Router
 
                 $view_name = str_replace('Controller', '', $class);
 
-                $view = '../src/views/' . $view_name . '.view.php';
+                $view = '../src/views/' . strtolower($view_name) . '.view.php';
 
                 return array(
                     'response' => $obj,

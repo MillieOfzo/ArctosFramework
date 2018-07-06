@@ -74,6 +74,7 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
         'App\\Classes\\Csrf' => __DIR__ . '/../..' . '/app/classes/csrf.class.php',
         'App\\Classes\\ErrorManager' => __DIR__ . '/../..' . '/app/classes/errormanager.class.php',
         'App\\Classes\\FileManager' => __DIR__ . '/../..' . '/app/classes/filemanager.class.php',
+        'App\\Classes\\Framework' => __DIR__ . '/../..' . '/app/classes/framework.class.php',
         'App\\Classes\\Helper' => __DIR__ . '/../..' . '/app/classes/helper.class.php',
         'App\\Classes\\Language' => __DIR__ . '/../..' . '/app/classes/language.class.php',
         'App\\Classes\\Logger' => __DIR__ . '/../..' . '/app/classes/logger.class.php',

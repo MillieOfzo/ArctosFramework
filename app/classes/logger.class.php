@@ -27,7 +27,7 @@ class Logger
 
         $date = date("Y-m-d");
         $path = $_SERVER['DOCUMENT_ROOT'];
-        $path .= '/Storage/Logs/' . date("Y") . '/';
+        $path .= '/storage/logs/' . date("Y") . '/';
 
         // If path doesnt exist create folder
         if (!file_exists($path))

@@ -13,7 +13,12 @@
 
 class Config
 {
-	 
+	/**
+     * Name of the application
+     * @var string
+     */
+    const APP_COPYRIGHT = ''; 
+	
     /**
      * Name of the application
      * @var string
@@ -89,36 +94,5 @@ class Config
     const DB_PASS = '';
     const DB_NAME = '';
 
-    /**
-     * FRAMEWORK config items to showcase the used framework
-	 * the application is build on
-     */
-    public static function getFrameWorkName()
-    {
-        $array = self::getFrameWorkCompose();
-
-        return $array['framework'];
-    }
-
-    public static function getFrameWorkVersion()
-    {
-        $array = self::getFrameWorkCompose();
-
-        return $array['version'];
-    }
-
-    public static function getFrameWorkCopyright()
-    {
-        $array = self::getFrameWorkCompose();
-
-        return $array['copyright'];
-    }
-
-    private static function getFrameWorkCompose()
-    {
-        $content = file_get_contents('../composer.json');
-        return json_decode($content, true);
-
-    }
 }
 

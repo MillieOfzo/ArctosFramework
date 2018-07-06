@@ -11,6 +11,7 @@ return array(
     'App\\Classes\\Csrf' => $baseDir . '/app/classes/csrf.class.php',
     'App\\Classes\\ErrorManager' => $baseDir . '/app/classes/errormanager.class.php',
     'App\\Classes\\FileManager' => $baseDir . '/app/classes/filemanager.class.php',
+    'App\\Classes\\Framework' => $baseDir . '/app/classes/framework.class.php',
     'App\\Classes\\Helper' => $baseDir . '/app/classes/helper.class.php',
     'App\\Classes\\Language' => $baseDir . '/app/classes/language.class.php',
     'App\\Classes\\Logger' => $baseDir . '/app/classes/logger.class.php',

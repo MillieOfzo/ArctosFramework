@@ -107,7 +107,14 @@ if (\App\Classes\Auth::checkAuth()){
 					</form>
 				</div>	
 	
-				<p class="m-t"> <small><?= \Config::getFrameWorkName() . ' ' . \Config::getFrameWorkVersion();?><font color='#0092D0'> | </font><?= date("D d-m-Y")?><font color='#0092D0'> | </font><?= date("H:i:s");?><font color='#0092D0'> | </font> <?= \Config::APP_ENV . " " . \Config::APP_VER; ?></small> </p>
+				<p class="m-t"> 
+				<small>
+				<?= \App\Classes\Framework::getFrameWorkName() . ' ' . \App\Classes\Framework::getFrameWorkVersion();?>
+				<font color='#0092D0'> | </font><?= date("D d-m-Y")?>
+				<font color='#0092D0'> | </font><?= date("H:i:s");?>
+				<font color='#0092D0'> | </font><?= \Config::APP_ENV . " " . \Config::APP_VER; ?>
+				</small> 
+				</p>
 				
 			</div>
 		</div>
