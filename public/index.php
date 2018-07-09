@@ -2,6 +2,7 @@
 
 	require_once '../config/bootstrap.php';
 	$title = explode('/',$_SERVER['REQUEST_URI']);
+	
 ?>
 
 <!DOCTYPE html>
@@ -69,65 +70,33 @@ if (\App\Classes\Auth::checkAuth()){
         echo "<script>$('#myModal').modal('show');</script>";
     }
     ?>
-<?php } else { ?>
+<?php 
+} else {
+    // Check if response view is returned by the login controller
+    if(isset($obj['response']['view']))
+    {
+        include $obj['response']['view'];
+    }
+    else
+    {
+        include '../src/views/index.view.php';
+    }
 
-	<body class="<?= strtolower(\Config::APP_THEME);?>-bg" id="i18container">
-	
-		<div class="middle-box text-center loginscreen animated fadeInDown ">
-			<div class="wrapper wrapper-content">
+    //var_dump($obj);
+ };
+ ?>
 
-				<h1 class="logo-name"><img src="/public/img/<?= \Config::LOGO_NAME;?>" class="header-img" width="100%"></img></h1>			
-				<h3 ><span data-i18n="[html]loginscreen.welcome">Welcome to</span> <?= \Config::APP_TITLE;?> </h3>
-				<p data-i18n="[html]loginscreen.text">An improved experience for managing RMS and SCS.</p>
-				<p data-i18n="[html]loginscreen.subtext">Login in. To see it in action.</p>
-				
-				<?= $obj['response'];?>
-				
-				<form class="m-t" id="signinForm" action="/login" method="post">
-					<div class="form-group">
-						<input type="email" class="form-control" placeholder="Email" name="email" required="" value="" data-i18n="[placeholder]loginscreen.placeholder.email">
-					</div>
-					<div class="form-group">
-						<input type="password" class="form-control" placeholder="Password" name="password" required="" data-i18n="[placeholder]loginscreen.placeholder.password">
-					</div>
-					<button type="submit" class="btn btn-primary block full-width m-b" name="login" value="Login" data-i18n="[html]loginscreen.login">Login</button>
-	
-					<a class="link showform" id="password"><small data-i18n="[html]loginscreen.forget">Forgot password?</small></a>
-
-				</form>
-			
-				<div id="show_form" style="display: none;">
-					<form class="login-form" action="/login/gentoken" method="post">
-						<div class="form-group">
-							<input type="email" class="form-control" placeholder="Email" name="email" required="" data-i18n="[placeholder]loginscreen.placeholder.email">
-						</div>			
-						<button type="submit" name="request" value="request" class="btn btn-primary block full-width m-b" data-i18n="[html]loginscreen.request">Request </button>
-	
-						<a class="link showform" id="password" data-i18n="[html]loginscreen.login">Login</a>
-					</form>
-				</div>	
-	
-				<p class="m-t"> 
-				<small>
-				<?= \App\Classes\Framework::getFrameWorkName() . ' ' . \App\Classes\Framework::getFrameWorkVersion();?>
-				<font color='#0092D0'> | </font><?= date("D d-m-Y")?>
-				<font color='#0092D0'> | </font><?= date("H:i:s");?>
-				<font color='#0092D0'> | </font><?= \Config::APP_ENV . " " . \Config::APP_VER; ?>
-				</small> 
-				</p>
-				
-			</div>
-		</div>
-        <?php
-        foreach($arr_js as $js) {
-            echo '<script src="' . $js . '"></script>';
-        }
-        ?>
-	</body>
-
-<?php }; ?>
-
-<input type="text" hidden id="token" value="<?= htmlspecialchars($_SESSION['_token'], ENT_QUOTES, 'UTF-8');?>" />
+<script type="text/javascript" id="cookieinfo"
+        src="/public/js/cookieinfo/cookieinfo.min.js"
+        data-bg="#645862"
+        data-fg="#FFFFFF"
+        data-link="#f6a821"
+        data-divlinkbg ="#f6a821"
+        data-cookie="TitaniumCookie"
+        data-text-align="left"
+        data-moreinfo ="/cookie">
+</script>
+<input type="text" hidden id="token" value="<?= isset($_SESSION['_token']) ? htmlspecialchars($_SESSION['_token'], ENT_QUOTES, 'UTF-8') : '';?>" />
 
 </html>
 	
