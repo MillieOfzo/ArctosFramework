@@ -30,7 +30,7 @@ class SessionManager
         session_name($name . '_Session');
 
         // Set SSL level
-        $https = isset($secure) ? $secure : isset($_SERVER['HTTPS']);
+        $https = ($secure == true && isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? $secure : false;
 
         // Set session cookie options
         session_set_cookie_params($limit, $path, $domain, $https, true);
