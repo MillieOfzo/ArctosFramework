@@ -10,7 +10,7 @@
 				
 				<?= $obj['response'];?>
 				
-				<form class="m-t" id="signinForm" action="/login" method="post">
+				<form class="m-t" id="signinForm" action="<?php if(\Config::LDAP_ENABLED){echo'/loginldap';} else { echo '/login';}?>" method="post">
 					<div class="form-group">
 						<input type="email" class="form-control" placeholder="Email" name="email" required="" value="" data-i18n="[placeholder]loginscreen.placeholder.email">
 					</div>

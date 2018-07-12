@@ -10,6 +10,7 @@ use App\Classes\Helper;
 use App\Classes\Auth;
 use App\Classes\Mailer;
 use App\Classes\Language;
+use App\Classes\LdapAuth;
 
 class LoginController
 {
@@ -35,7 +36,74 @@ class LoginController
         $this->lang = (new Language)->getLanguageFile();
         $this->purifier = new \HTMLPurifier(\HTMLPurifier_Config::createDefault());
     }
+	public function processLdapLogin()
+	{
+		if (!empty($_POST['login']) && Auth::checkCsrfToken($_POST['csrf']))
+        {
+			$cleaned_email = strtolower($this->purifier->purify($_POST['email']));
+			$cleaned_password = $this->purifier->purify($_POST['password']);
+			
+			$filter = "mail={$cleaned_email}";
+			
+			$ldap = new LdapAuth();
+			$ldap->setLdapConn(\Config::LDAP_DOMAIN);
+			$ldap->setLdapOption(LDAP_OPT_REFERRALS, 0);
+			$ldap->setLdapOption(LDAP_OPT_PROTOCOL_VERSION, 3);
+			$ldap->ldapBind(Config::LDAP_USERNM, Config::LDAP_PASSWD);
+			
+			$user_info = $ldap->ldapSearch($filter);
+			$user_token = $user_info[0]["dn"];
+			$user_guid = $user_info[0]["objectguid"][0];
+			
+			$access = false;
+			if($ldap->ldapBind($user_token, $cleaned_password))
+			{
+				$entries = $ldap->ldapSearch($filter, array("memberof"));
+				
+				foreach($entries[0] as $key => $val)
+				{
+					if($key == 'memberof'){
+						foreach($entries[0]['memberof'] as $grps) {
+							// is user
+							if(strpos($grps, $ldap->getLdapAuthGroup())) 
+							{ 
+								$access = true; 
+								break; 
+							};
+						}
+					}
+				}
+				if($access)
+				{
+					$this->model->removeLoginAttempt($user_guid);
+					$ldap->ldapCreateUserSession($user_info);
+					die($this->redirectLogin());
+				}
+			}
+			else
+			{
+				$query_arr = array(
+					'user_id' => $user_guid,
+					'user_ip_adres' => $_SERVER['REMOTE_ADDR'],
+					'user_ip_port' => $_SERVER['REMOTE_PORT'],
+					'user_attempt_time' => time() ,
+					'user_attempt_date_time' => date("Y-m-d H:i:s")
+				);
+	
+				// Save login attempt in database
+				$this->model->failedLoginAttempt($query_arr);
+				Logger::logToFile(__FILE__, 2, "Login failed. User: " . $cleaned_email);
+	
+				return '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->id->label . '</b><br><span>' . $this->lang->loginmsg->id->msg . '</span></div>';
 
+			}
+        }
+        else
+        {
+            return '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->csrf->label . '</b><br><span>' . $this->lang->loginmsg->csrf->msg . '</span></div>';
+        }		
+	}
+	
     public function processLogin()
     {
         $cleaned_email = strtolower($this->purifier->purify($_POST['email']));
@@ -75,7 +143,6 @@ class LoginController
                         {
                             $login_ok = true;
                         }
-
                     }
                 }
             }

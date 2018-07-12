@@ -77,6 +77,8 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
         'App\\Classes\\Framework' => __DIR__ . '/../..' . '/app/classes/framework.class.php',
         'App\\Classes\\Helper' => __DIR__ . '/../..' . '/app/classes/helper.class.php',
         'App\\Classes\\Language' => __DIR__ . '/../..' . '/app/classes/language.class.php',
+        'App\\Classes\\LdapAuth' => __DIR__ . '/../..' . '/app/classes/ldap.class.php',
+        'App\\Classes\\LdapAuthStatus' => __DIR__ . '/../..' . '/app/classes/ldap.class.php',
         'App\\Classes\\Logger' => __DIR__ . '/../..' . '/app/classes/logger.class.php',
         'App\\Classes\\Mailer' => __DIR__ . '/../..' . '/app/classes/mail.class.php',
         'App\\Classes\\Router' => __DIR__ . '/../..' . '/app/classes/router.class.php',
