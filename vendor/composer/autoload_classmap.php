@@ -14,6 +14,8 @@ return array(
     'App\\Classes\\Framework' => $baseDir . '/app/classes/framework.class.php',
     'App\\Classes\\Helper' => $baseDir . '/app/classes/helper.class.php',
     'App\\Classes\\Language' => $baseDir . '/app/classes/language.class.php',
+    'App\\Classes\\LdapAuth' => $baseDir . '/app/classes/ldap.class.php',
+    'App\\Classes\\LdapAuthStatus' => $baseDir . '/app/classes/ldap.class.php',
     'App\\Classes\\Logger' => $baseDir . '/app/classes/logger.class.php',
     'App\\Classes\\Mailer' => $baseDir . '/app/classes/mail.class.php',
     'App\\Classes\\Router' => $baseDir . '/app/classes/router.class.php',

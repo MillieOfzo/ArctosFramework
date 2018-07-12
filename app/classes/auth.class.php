@@ -37,6 +37,22 @@ class Auth
 	*/	
     public static function checkAuth()
     {
+		// If LDAP auth is enabled and there is not yet created a user session
+		// login user via windows auth
+		if(Config::LDAP_ENABLED && empty($_SESSION[Config::SES_NAME]))
+		{
+			$ldap = new LdapAuth();
+			$ldap->setLdapConn(Config::LDAP_DOMAIN);
+			$ldap->setLdapOption(LDAP_OPT_REFERRALS, 0);
+			$ldap->setLdapOption(LDAP_OPT_PROTOCOL_VERSION, 3);
+			$ldap->ldapBind(Config::LDAP_USERNM, Config::LDAP_PASSWD);
+			
+			if($ldap->ldapAuthenticate($_SERVER['AUTH_USER']))
+			{
+				return (!empty($_SESSION[Config::SES_NAME])) ? true : false;
+			}
+			return false;
+		}
         return (!empty($_SESSION[Config::SES_NAME])) ? true : false;
     }
 

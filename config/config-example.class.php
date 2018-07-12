@@ -43,7 +43,7 @@ class Config
      * Application version number
      * @var string
      */	
-    const APP_VER = '1.0.4';
+    const APP_VER = '1.0.5';
 	
     /**
      * Application enviroment e.g OTAP, TESTING, LIVE etc
@@ -94,5 +94,46 @@ class Config
     const DB_PASS = '';
     const DB_NAME = '';
 
+    /**
+     * Enable LDAP authentication
+	 * Default: false
+     * @var bool
+     */	
+	const LDAP_ENABLED 	= false;
+	
+	/**
+     * LDAP host.
+	 * Enter static array with multiple IPs of host or
+	 * enter domain name string e.g: ldap.asb.nl
+	 * Default: array()
+     * @var array|string
+     */	
+	const LDAP_DOMAIN 	= array();
+	
+	/**
+     * LDAP connection port
+	 * Default: 389
+     * @var integer
+     */	
+	const LDAP_PORT 	= 389;
+	
+	/**
+     * LDAP connection ping timeout
+	 * Default: 1 second
+     * @var integer
+     */	
+	const LDAP_TIMEOUT 	= 1;	
+	
+	/**
+     * LDAP authentication user
+     * @var string
+     */	
+	const LDAP_USERNM 	= '';
+	
+	/**
+     * LDAP authentication user password
+     * @var string
+     */		
+	const LDAP_PASSWD 	= '';	
 }
 
