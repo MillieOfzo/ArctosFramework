@@ -1,6 +1,6 @@
 <div class="middle-box animated fadeInDown" style="max-width: 800px; padding-bottom: 50px; color:#949ba2;">
 
-    <div id="page-wrapper" class="statement">
+    <div id="page-wrapper statement" class="">
         <h2>ALGEMENE VOORWAARDEN</h2>
         <p >Deze licentieovereenkomst voor eindgebruikers (de &ldquo;Overeenkomst&rdquo;) is een <strong>wettelijke overeenkomst</strong> tussen de natuurlijke of rechtspersoon die voornemens is de Software te downloaden en/of deze daadwerkelijk downloadt en gebruikt en ASB Monitoring BV (&ldquo;Onderneming&rdquo;), de auteur van de software (de &ldquo;Software&rdquo;), hetgeen aanverwante media, geprinte of gedrukte materialen en &ldquo;online&rdquo; of elektronische documentatie kan omvatten.</p>
         <p >Door de Software te installeren, er toegang toe te krijgen, te kopi&euml;ren of deze (anderszins) te gebruiken, is Licentienemer <strong>gebonden aan de in deze Overeenkomst bepaalde voorwaarden</strong>. Indien Licentienemer niet instemt met en/of niet voldoet aan de voorwaarden van deze Overeenkomst, moet Licentienemer zich onthouden van het downloaden, installeren of (verder) gebruiken van de Software.</p>

@@ -51,7 +51,7 @@ if (\App\Classes\Auth::checkAuth()){
 				} else {
                     // If none if found return a 404
 					http_response_code(404);
-					include '../src/views/errors/page_404.php';
+					include '../src/views/errors/page_404.view.php';
 					die();
 				}
 								

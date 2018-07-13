@@ -520,6 +520,9 @@ body.canvas-menu .nav-header {
 body.mini-navbar #page-wrapper {
   margin: 0 0 0 70px;
 }
+body #statement {
+  margin: 0 0 0 70px;
+}
 body.fixed-sidebar.mini-navbar .footer,
 body.canvas-menu.mini-navbar .footer {
   margin: 0 0 0 0 !important;

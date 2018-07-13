@@ -1,6 +1,6 @@
 <div class="middle-box animated fadeInDown" style="max-width: 800px; padding-bottom: 50px; color:#949ba2;" >
 
-    <div id="page-wrapper" class="statement">
+    <div id="page-wrapper statement" class="">
         <h2 class="c-white">PRIVACY VERKLARING</h2>
         <p>
             ASB Monitoring BV, gevestigd aan Boschdijk 720, 5624 CL Eindhoven, is
