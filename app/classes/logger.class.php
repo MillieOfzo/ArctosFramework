@@ -60,6 +60,12 @@ class Logger
         file_put_contents($filename, $str . $fileContent);
 
     }
-
+	
+	public static function logError($exception)
+    {
+        $msg = 'Regel: ' . $exception->getLine() . ' Bestand: ' . $exception->getFile() . ' Error: ' . $exception->getMessage();
+        self::logToFile(__FILE__, 1, $msg);
+        return false;
+    }
 }
 
