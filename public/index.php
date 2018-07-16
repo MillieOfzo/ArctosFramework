@@ -92,7 +92,7 @@ if (\App\Classes\Auth::checkAuth()){
         data-fg="#FFFFFF"
         data-link="#f6a821"
         data-divlinkbg ="#f6a821"
-        data-cookie="TitaniumCookie"
+        data-cookie="ArctosCookie"
         data-text-align="left"
         data-moreinfo ="/cookie">
 </script>
