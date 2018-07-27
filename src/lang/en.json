@@ -118,6 +118,10 @@
 				"label":"Reset token request failed",
 				"msg":"Refresh the page and try again"
 			},
+			"notsend":{
+				"label":"No connection available to the mail server",
+				"msg":"Please contact the Titanium helpdesk"
+			},				
 			"inv":{
 				"label":"Token is invalid",
 				"msg":"Refresh the page and request a new token"

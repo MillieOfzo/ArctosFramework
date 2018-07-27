@@ -197,6 +197,13 @@ class Mailer
         // SMTP server settings
 		if(self::$enable_smtp)
 		{
+			// Check if there is an SMTP connection possible
+			if(!$smtp->connect(self::$smtp_host, self::$smtp_port, 10))
+			{
+				Logger::logToFile(__FILE__, 0, 'No connection with SMTP server');			
+				return 0;
+			}
+			
 			if(self::$enable_smtp_debug)
 			{
 				$mail->SMTPDebug = self::$smtp_debug_lvl;

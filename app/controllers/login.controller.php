@@ -288,7 +288,17 @@ class LoginController
 
                 $mail_body = Mailer::build('gen_token', $email_values);
 				$send_mail = Mailer::send(Config::APP_TITLE . ' ' . $this->lang->send_mail->recover_token->subject, $mail_body, array($row['user_email']));
+				
+                if($send_mail == 0)
+				{
+					$this->model->deleteRecoverToken($row['user_id']);
 
+                    return array(
+                        'view' => $this->return_view,
+                        'msg' => '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->tok->notsend->label . '</b><br><span>' . $this->lang->loginmsg->tok->notsend->msg . '</span></div>'
+                    );					
+				}
+				
                 if($send_mail)
 				{
 

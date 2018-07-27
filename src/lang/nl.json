@@ -118,6 +118,10 @@
 				"label":"Reset token aanvraag mislukt",
 				"msg":"Refresh de pagina en probeer opnieuw"
 			},
+			"notsend":{
+				"label":"Geen verbinding met de mail server",
+				"msg":"Neem contact op met de Titanium-helpdesk"
+			},			
 			"inv":{
 				"label":"Token is ongeldig",
 				"msg":"Refresh de pagina en vraag een nieuw token aan"
