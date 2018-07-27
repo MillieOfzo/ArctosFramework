@@ -94,13 +94,13 @@ class LoginController
 				$this->model->failedLoginAttempt($query_arr);
 				Logger::logToFile(__FILE__, 2, "Login failed. User: " . $cleaned_email);
 	
-				return '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->id->label . '</b><br><span>' . $this->lang->loginmsg->id->msg . '</span></div>';
+				return $this->setResponseMsg( '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->id->label . '</b><br><span>' . $this->lang->loginmsg->id->msg . '</span></div>');
 
 			}
         }
         else
         {
-            return '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->csrf->label . '</b><br><span>' . $this->lang->loginmsg->csrf->msg . '</span></div>';
+            return $this->setResponseMsg( '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->csrf->label . '</b><br><span>' . $this->lang->loginmsg->csrf->msg . '</span></div>');
         }		
 	}
 	
@@ -119,7 +119,7 @@ class LoginController
                 if (Auth::checkBrute($row['user_id']) === true)
                 {
                     Logger::logToFile(__FILE__, 1, "Account: " . $row['user_email'] . " geblokkeerd");
-                    return '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->lck->label . '</b><br><span>' . $this->lang->loginmsg->lck->msg . '</span></div>';
+                    return $this->setResponseMsg( '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->lck->label . '</b><br><span>' . $this->lang->loginmsg->lck->msg . '</span></div>');
                 }
                 else
                 {
@@ -129,13 +129,13 @@ class LoginController
                     if ($row['user_status'] === "Blocked")
                     {
                         Logger::logToFile(__FILE__, 2, "Login attempt. Blocked user: " . $cleaned_email);
-                        return '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->blc->label . '</b><br><span>' . $this->lang->loginmsg->blc->msg . '</span></div>';
+                        return $this->setResponseMsg( '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->blc->label . '</b><br><span>' . $this->lang->loginmsg->blc->msg . '</span></div>');
 
                     }
                     elseif (Config::APP_ENV == "OTAP" && $check_dev == false)
                     {
                         Logger::logToFile(__FILE__, 2, "Login attempt. Non DEV user: " . $cleaned_email);
-                        return '<div class="alert alert-warning" ><b>' . $this->lang->loginmsg->dev->label . '</b><br><span><b>' . $this->lang->loginmsg->dev->msg . '</b></span></div>';
+                        return $this->setResponseMsg( '<div class="alert alert-warning" ><b>' . $this->lang->loginmsg->dev->label . '</b><br><span><b>' . $this->lang->loginmsg->dev->msg . '</b></span></div>');
                     }
                     else
                     {
@@ -182,13 +182,13 @@ class LoginController
 
                 Logger::logToFile(__FILE__, 2, "Login failed. User: " . $cleaned_email);
 
-                return '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->id->label . '</b><br><span>' . $this->lang->loginmsg->id->msg . '</span></div>';
+                return $this->setResponseMsg( '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->id->label . '</b><br><span>' . $this->lang->loginmsg->id->msg . '</span></div>');
 
             }
         }
         else
         {
-            return '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->csrf->label . '</b><br><span>' . $this->lang->loginmsg->csrf->msg . '</span></div>';
+            return $this->setResponseMsg( '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->csrf->label . '</b><br><span>' . $this->lang->loginmsg->csrf->msg . '</span></div>');
         }
     }
 
@@ -262,7 +262,7 @@ class LoginController
 					}
 					else
 					{
-						return '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->tok->mul->label . '</b><br><span >' . $this->lang->loginmsg->tok->mul->msg . '</span></div>';					
+						return $this->setResponseMsg( '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->tok->mul->label . '</b><br><span >' . $this->lang->loginmsg->tok->mul->msg . '</span></div>');					
 					}
 					
 				}
@@ -293,10 +293,7 @@ class LoginController
 				{
 					$this->model->deleteRecoverToken($row['user_id']);
 
-                    return array(
-                        'view' => $this->return_view,
-                        'msg' => '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->tok->notsend->label . '</b><br><span>' . $this->lang->loginmsg->tok->notsend->msg . '</span></div>'
-                    );					
+                    return $this->setResponseMsg('<div class="alert alert-danger"><b>' . $this->lang->loginmsg->tok->notsend->label . '</b><br><span>' . $this->lang->loginmsg->tok->notsend->msg . '</span></div>');			
 				}
 				
                 if($send_mail)
@@ -314,24 +311,24 @@ class LoginController
 					
 					Logger::logToFile(__FILE__, 0, "Token request successful user: " . $row['user_email']);
 
-					return '<div class="alert alert-success" ><b>' . $this->lang->loginmsg->tok->suc->label . '</b><br><span>' . $this->lang->loginmsg->tok->suc->msg . '</span></div>';						
+					return $this->setResponseMsg( '<div class="alert alert-success" ><b>' . $this->lang->loginmsg->tok->suc->label . '</b><br><span>' . $this->lang->loginmsg->tok->suc->msg . '</span></div>');						
 				}
 				else 
 				{
 					Logger::logToFile(__FILE__, 0, 'Message could not be sent.');
 					$this->model->deleteRecoverToken($row['user_id']);
-					return '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->tok->err->label . '</b><br><span>' . $this->lang->loginmsg->tok->err->msg . '</span></div>';
+					return $this->setResponseMsg( '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->tok->err->label . '</b><br><span>' . $this->lang->loginmsg->tok->err->msg . '</span></div>');
 				}
 
             }
             else
             {
-                return '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->uknw->label . '</b><br><span>' . $this->lang->loginmsg->uknw->msg . '</span></div>';
+                return $this->setResponseMsg( '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->uknw->label . '</b><br><span>' . $this->lang->loginmsg->uknw->msg . '</span></div>');
             }
         }
         else
         {
-            return '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->tok->err->label . '</b><br><span>' . $this->lang->loginmsg->tok->err->msg . '</span></div>';
+            return $this->setResponseMsg( '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->tok->err->label . '</b><br><span>' . $this->lang->loginmsg->tok->err->msg . '</span></div>');
 
         }
     }
@@ -358,7 +355,7 @@ class LoginController
                     // If token expired remove record
                     $this->model->deleteRecoverToken($cleaned_user_id);
 
-                    return '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->tok->exp->label . '</b><br><span>' . $this->lang->loginmsg->tok->exp->msg . '</span></div>';
+                    return $this->setResponseMsg( '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->tok->exp->label . '</b><br><span>' . $this->lang->loginmsg->tok->exp->msg . '</span></div>');
                 }
                 else
                 {
@@ -377,7 +374,7 @@ class LoginController
             }
             else
             {
-                return '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->tok->uknw->label . '</b><br><span>' . $this->lang->loginmsg->tok->uknw->msg . '</span></div>';
+                return $this->setResponseMsg( '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->tok->uknw->label . '</b><br><span>' . $this->lang->loginmsg->tok->uknw->msg . '</span></div>');
             }
 
             if ($token_auth)
@@ -401,7 +398,14 @@ class LoginController
                 
                 $mail_body = Mailer::build('password_reset', $email_values);
 				$send_mail = Mailer::send(Config::APP_TITLE . ' ' . $this->lang->send_mail->new_password->subject, $mail_body, array($row['user_email']));
-                
+				
+                if($send_mail == 0)
+				{
+					$this->model->deleteRecoverToken($row['user_id']);
+
+                    return $this->setResponseMsg('<div class="alert alert-danger"><b>' . $this->lang->loginmsg->tok->notsend->label . '</b><br><span>' . $this->lang->loginmsg->tok->notsend->msg . '</span></div>');			
+				}         
+				
 				if($send_mail)
 				{
 					if ($this->user->update($query_params, $cleaned_user_id))
@@ -410,30 +414,30 @@ class LoginController
 		        
 						$this->model->deleteRecoverToken($cleaned_user_id);
 		        
-						return '<div class="alert alert-success" ><b >' . $this->lang->loginmsg->res->suc->label . '</b><br><span>' . $this->lang->loginmsg->res->suc->msg . '</span></div>';
+						return $this->setResponseMsg( '<div class="alert alert-success" ><b >' . $this->lang->loginmsg->res->suc->label . '</b><br><span>' . $this->lang->loginmsg->res->suc->msg . '</span></div>');
 					}
 					else
 					{
 						Logger::logToFile(__FILE__, 0, "Password not updated for user: " . $row['user_email']);
-						return '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->res->err->label . '</b><br><span>' . $this->lang->loginmsg->res->err->msg . '</span></div>';
+						return $this->setResponseMsg( '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->res->err->label . '</b><br><span>' . $this->lang->loginmsg->res->err->msg . '</span></div>');
 					}						
 				}
 				else 
 				{
 					Logger::logToFile(__FILE__, 0, 'Message could not be sent.');
-					return '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->res->notsend->label . '</b><br><span>' . $this->lang->loginmsg->res->notsend->msg . '</span></div>';
+					return $this->setResponseMsg( '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->res->notsend->label . '</b><br><span>' . $this->lang->loginmsg->res->notsend->msg . '</span></div>');
 				}
             }
             else
             {
-                return '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->tok->inv->label . '</b><br><span>' . $this->lang->loginmsg->tok->inv->msg . '</span></div>';
+                return $this->setResponseMsg( '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->tok->inv->label . '</b><br><span>' . $this->lang->loginmsg->tok->inv->msg . '</span></div>');
 
             }
         }
         else
         {
 			// CRSF token invalid but ask user to request a new token
-			return '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->res->err->label . '</b><br><span>' . $this->lang->loginmsg->res->err->msg . '</span></div>';
+			return $this->setResponseMsg( '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->res->err->label . '</b><br><span>' . $this->lang->loginmsg->res->err->msg . '</span></div>');
         }
     }
 
@@ -466,5 +470,12 @@ class LoginController
             Helper::redirect('/home');
         }
     }
+
+	private function setResponseMsg($msg)
+	{
+		return array(
+			'res' => $msg
+		);
+	}	
 }
 

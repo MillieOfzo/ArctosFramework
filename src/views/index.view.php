@@ -8,7 +8,7 @@
 				<p data-i18n="[html]loginscreen.text">An improved experience for managing RMS and SCS.</p>
 				<p data-i18n="[html]loginscreen.subtext">Login in. To see it in action.</p>
 				
-				<?= $obj['response'];?>
+				<?php if(isset($obj['response']['res'])) echo $obj['response']['res'];?>
 				
 				<form class="m-t" id="signinForm" action="<?php if(\Config::LDAP_ENABLED){echo'/loginldap';} else { echo '/login';}?>" method="post">
 					<div class="form-group">

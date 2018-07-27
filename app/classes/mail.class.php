@@ -192,6 +192,7 @@ class Mailer
      */
 	public static function send($subject ='', $mail_body ='', $to = array(), $cc = array(), $attachment = '')
 	{
+		$smtp = new SMTP();
 		$mail = new PHPMailer(true);
 		
         // SMTP server settings

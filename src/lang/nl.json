@@ -3,6 +3,10 @@
 		"select": "Selecteer...",
 		"input": "Vul in..."
 	},
+	"cookie":{
+		"msg": "Wij gebruiken cookies om uw ervaring te verbeteren. Door deze site te blijven bezoeken, gaat u akkoord met ons gebruik van cookies.",
+		"msg_link": "Meer informatie"
+	},
 	"layout":{
 		"topnav":{
 			"placeholder":"Zoek naar locatie",
@@ -121,7 +125,7 @@
 			"notsend":{
 				"label":"Geen verbinding met de mail server",
 				"msg":"Neem contact op met de Titanium-helpdesk"
-			},			
+			},
 			"inv":{
 				"label":"Token is ongeldig",
 				"msg":"Refresh de pagina en vraag een nieuw token aan"
