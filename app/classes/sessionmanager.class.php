@@ -10,6 +10,8 @@
  
 namespace App\Classes;
 
+use \Config;
+
 class SessionManager
 {
 
@@ -66,6 +68,30 @@ class SessionManager
 
         }
     }
+
+	public function sessionDestroy()
+	{
+        // If we want to keep some session information such as shopping cart contents,
+        // we only remove the user's data from the session without unsetting remaining
+        // session variables and without destroying the session.
+        unset($_SESSION[Config::SES_NAME]);
+        unset($_SESSION['_token']);
+
+        // Otherwise, we unset all of the session variables.
+        $_SESSION = array();
+
+        // If it's desired to kill the session, also delete the session cookie.
+        // Note: This will destroy the session, and not just the session data!
+        if (ini_get("session.use_cookies"))
+        {
+            $params = session_get_cookie_params();
+            setcookie(session_name() , '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+            //setcookie('sWebCookie' , '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+        }
+
+        // Finally, destroy the session.
+        session_destroy();		
+	}
 	
 	/**
 	 * This function checks to make sure a session exists and is coming from the proper host. On new visits and hacking
