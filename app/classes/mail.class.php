@@ -18,7 +18,7 @@ class Mailer
 {
     /**
      * Enable or disable the use of phpmailer smtp functions
-     * Default: false
+     * Default: true
      * @param bool
      */	
 	public static $enable_smtp = true;

@@ -11,6 +11,7 @@ use App\Classes\Auth;
 use App\Classes\Mailer;
 use App\Classes\Language;
 use App\Classes\LdapAuth;
+use App\Classes\SessionManager;
 
 class LoginController
 {
