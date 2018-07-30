@@ -36,6 +36,7 @@ class LoginController
         $this->lang = (new Language)->getLanguageFile();
         $this->purifier = new \HTMLPurifier(\HTMLPurifier_Config::createDefault());
     }
+	
 	public function processLdapLogin()
 	{
 		if (!empty($_POST['login']) && Auth::checkCsrfToken($_POST['csrf']))
@@ -237,7 +238,7 @@ class LoginController
 					}
 					else
 					{
-						return $this->setResponseMsg($this->lang->loginmsg->tok->mul->label, $this->lang->loginmsg->tok->mul->msg, 'danger');					
+						return $this->setResponseMsg( $this->lang->loginmsg->tok->mul->label, $this->lang->loginmsg->tok->mul->msg, 'danger');					
 					}
 					
 				}
@@ -268,7 +269,7 @@ class LoginController
 				{
 					$this->login->deleteRecoverToken($row['user_id']);
 
-                    return $this->setResponseMsg($this->lang->loginmsg->tok->notsend->label, $this->lang->loginmsg->tok->notsend->msg, 'danger');			
+                    return $this->setResponseMsg( $this->lang->loginmsg->tok->notsend->label, $this->lang->loginmsg->tok->notsend->msg, 'danger');			
 				}
 				
                 if($send_mail)
@@ -286,7 +287,7 @@ class LoginController
 					
 					Logger::logToFile(__FILE__, 0, "Token request successful user: " . $row['user_email']);
 
-					return $this->setResponseMsg($this->lang->loginmsg->tok->suc->label, $this->lang->loginmsg->tok->suc->msg);						
+					return $this->setResponseMsg( $this->lang->loginmsg->tok->suc->label, $this->lang->loginmsg->tok->suc->msg);						
 				}
 				else 
 				{
@@ -294,7 +295,6 @@ class LoginController
 					$this->login->deleteRecoverToken($row['user_id']);
 					return $this->setResponseMsg( $this->lang->loginmsg->tok->err->label, $this->lang->loginmsg->tok->err->msg, 'danger');
 				}
-
             }
             else
             {
@@ -330,7 +330,7 @@ class LoginController
                     // If token expired remove record
                     $this->login->deleteRecoverToken($cleaned_user_id);
 
-                    return $this->setResponseMsg($this->lang->loginmsg->tok->exp->label, $this->lang->loginmsg->tok->exp->msg, 'danger');
+                    return $this->setResponseMsg( $this->lang->loginmsg->tok->exp->label, $this->lang->loginmsg->tok->exp->msg, 'danger');
                 }
                 else
                 {
@@ -349,7 +349,7 @@ class LoginController
             }
             else
             {
-                return $this->setResponseMsg($this->lang->loginmsg->tok->uknw->label, $this->lang->loginmsg->tok->uknw->msg, 'danger');
+                return $this->setResponseMsg( $this->lang->loginmsg->tok->uknw->label, $this->lang->loginmsg->tok->uknw->msg, 'danger');
             }
 
             if ($token_auth)
@@ -377,8 +377,7 @@ class LoginController
                 if($send_mail == 0)
 				{
 					$this->login->deleteRecoverToken($row['user_id']);
-
-                    return $this->setResponseMsg($this->lang->loginmsg->tok->notsend->label, $this->lang->loginmsg->tok->notsend->msg, 'danger');			
+                    return $this->setResponseMsg( $this->lang->loginmsg->tok->notsend->label, $this->lang->loginmsg->tok->notsend->msg, 'danger');			
 				}         
 				
 				if($send_mail)
@@ -386,16 +385,14 @@ class LoginController
 					if ($this->user->update($query_params, $cleaned_user_id))
 					{	
 						Logger::logToFile(__FILE__, 0, "Password reset. Mail send to user: " . $row['user_email']);
-		        
 						$this->login->deleteRecoverToken($cleaned_user_id);
-		        
-						return $this->setResponseMsg( $this->lang->loginmsg->res->suc->label, $this->lang->loginmsg->res->suc->msg);
+						return $this->setResponseMsg( $this->lang->loginmsg->res->suc->label, $this->lang->loginmsg->res->suc->msg );
 					}
 					else
 					{
 						Logger::logToFile(__FILE__, 0, "Password not updated for user: " . $row['user_email']);
-						return $this->setResponseMsg($this->lang->loginmsg->res->err->label, $this->lang->loginmsg->res->err->msg, 'danger');
-					}						
+						return $this->setResponseMsg( $this->lang->loginmsg->res->err->label, $this->lang->loginmsg->res->err->msg, 'danger');
+					}				
 				}
 				else 
 				{
