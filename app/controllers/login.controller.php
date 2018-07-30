@@ -30,9 +30,8 @@ class LoginController
 	
     function __construct()
     {
-        $this->model = new LoginModel;
+        $this->login = new LoginModel;
         $this->user = new UserModel;
-        $this->auth = new Auth;
         $this->lang = (new Language)->getLanguageFile();
         $this->purifier = new \HTMLPurifier(\HTMLPurifier_Config::createDefault());
     }
@@ -75,7 +74,7 @@ class LoginController
 				}
 				if($access)
 				{
-					$this->model->removeLoginAttempt($user_guid);
+					$this->login->removeLoginAttempt($user_guid);
 					$ldap->ldapCreateUserSession($user_info);
 					die($this->redirectLogin());
 				}
@@ -91,7 +90,7 @@ class LoginController
 				);
 	
 				// Save login attempt in database
-				$this->model->failedLoginAttempt($query_arr);
+				$this->login->failedLoginAttempt($query_arr);
 				Logger::logToFile(__FILE__, 2, "Login failed. User: " . $cleaned_email);
 	
 				return $this->setResponseMsg( '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->id->label . '</b><br><span>' . $this->lang->loginmsg->id->msg . '</span></div>');
@@ -159,7 +158,7 @@ class LoginController
 
                 // Remove all login attempt from user to prevent getting blocked.
                 $id = $row['user_id'];
-                $this->model->removeLoginAttempt($id);
+                $this->login->removeLoginAttempt($id);
 
                 Logger::logToFile(__FILE__, 0, "Login success. User: " . $_SESSION[Config::SES_NAME]['user_email']);
 
@@ -178,7 +177,7 @@ class LoginController
                 );
 
                 // Save login attempt in database
-                $this->model->failedLoginAttempt($query_arr);
+                $this->login->failedLoginAttempt($query_arr);
 
                 Logger::logToFile(__FILE__, 2, "Login failed. User: " . $cleaned_email);
 
@@ -251,14 +250,14 @@ class LoginController
             if ($row)
             {
 				// If there already has been requested a token don't request again but check if the token is expired
-				if ($this->model->checkRecoverTokenExsists() > 0)
+				if ($this->login->checkRecoverTokenExsists() > 0)
 				{
-					$row_token = $this->model->getRecoverToken($row['user_id']);
+					$row_token = $this->login->getRecoverToken($row['user_id']);
 					
 					if ($_SERVER["REQUEST_TIME"] - $row_token['user_token_date_time'] > $this->token_expiration)
 					{
 						// If token expired remove record
-						$this->model->deleteRecoverToken($row_token['user_id']);
+						$this->login->deleteRecoverToken($row_token['user_id']);
 					}
 					else
 					{
@@ -291,7 +290,7 @@ class LoginController
 				
                 if($send_mail == 0)
 				{
-					$this->model->deleteRecoverToken($row['user_id']);
+					$this->login->deleteRecoverToken($row['user_id']);
 
                     return $this->setResponseMsg('<div class="alert alert-danger"><b>' . $this->lang->loginmsg->tok->notsend->label . '</b><br><span>' . $this->lang->loginmsg->tok->notsend->msg . '</span></div>');			
 				}
@@ -307,7 +306,7 @@ class LoginController
 						'user_token_salt' => $salt
 					);
 	
-					$this->model->saveRecoverToken($query_params);	
+					$this->login->saveRecoverToken($query_params);	
 					
 					Logger::logToFile(__FILE__, 0, "Token request successful user: " . $row['user_email']);
 
@@ -316,7 +315,7 @@ class LoginController
 				else 
 				{
 					Logger::logToFile(__FILE__, 0, 'Message could not be sent.');
-					$this->model->deleteRecoverToken($row['user_id']);
+					$this->login->deleteRecoverToken($row['user_id']);
 					return $this->setResponseMsg( '<div class="alert alert-danger"><b>' . $this->lang->loginmsg->tok->err->label . '</b><br><span>' . $this->lang->loginmsg->tok->err->msg . '</span></div>');
 				}
 
@@ -341,7 +340,7 @@ class LoginController
         if (Auth::checkCsrfToken($csrf_token))
         {
 
-            $row_token = $this->model->getRecoverToken($cleaned_user_id);
+            $row_token = $this->login->getRecoverToken($cleaned_user_id);
 
             $token_auth = false;
 
@@ -353,7 +352,7 @@ class LoginController
                     Logger::logToFile(__FILE__, 0, "Token expired user " . $row_token['user_id']);
 
                     // If token expired remove record
-                    $this->model->deleteRecoverToken($cleaned_user_id);
+                    $this->login->deleteRecoverToken($cleaned_user_id);
 
                     return $this->setResponseMsg( '<div class="alert alert-danger" ><b>' . $this->lang->loginmsg->tok->exp->label . '</b><br><span>' . $this->lang->loginmsg->tok->exp->msg . '</span></div>');
                 }
@@ -401,7 +400,7 @@ class LoginController
 				
                 if($send_mail == 0)
 				{
-					$this->model->deleteRecoverToken($row['user_id']);
+					$this->login->deleteRecoverToken($row['user_id']);
 
                     return $this->setResponseMsg('<div class="alert alert-danger"><b>' . $this->lang->loginmsg->tok->notsend->label . '</b><br><span>' . $this->lang->loginmsg->tok->notsend->msg . '</span></div>');			
 				}         
@@ -412,7 +411,7 @@ class LoginController
 					{	
 						Logger::logToFile(__FILE__, 0, "Password reset. Mail send to user: " . $row['user_email']);
 		        
-						$this->model->deleteRecoverToken($cleaned_user_id);
+						$this->login->deleteRecoverToken($cleaned_user_id);
 		        
 						return $this->setResponseMsg( '<div class="alert alert-success" ><b >' . $this->lang->loginmsg->res->suc->label . '</b><br><span>' . $this->lang->loginmsg->res->suc->msg . '</span></div>');
 					}
