@@ -43,7 +43,7 @@ class Config
      * Application version number
      * @var string
      */	
-    const APP_VER = '1.0.5';
+    const APP_VER = '1.0.6';
 	
     /**
      * Application enviroment e.g OTAP, TESTING, LIVE etc

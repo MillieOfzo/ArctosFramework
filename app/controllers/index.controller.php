@@ -6,11 +6,11 @@ use App\Classes\Helper;
 
 class IndexController
 {
-    private $model;
+    private $index;
 
     function __construct()
     {
-        $this->model = new IndexModel;
+        $this->index = new IndexModel;
     }
 
     public function index()

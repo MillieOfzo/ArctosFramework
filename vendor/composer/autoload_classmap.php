@@ -21,6 +21,7 @@ return array(
     'App\\Classes\\Router' => $baseDir . '/app/classes/router.class.php',
     'App\\Classes\\SSP' => $baseDir . '/app/classes/datatable.ssp.class.php',
     'App\\Classes\\SessionManager' => $baseDir . '/app/classes/sessionmanager.class.php',
+    'App\\Controllers\\BaseController' => $baseDir . '/app/controllers/base.controller.php',
     'App\\Controllers\\CookieController' => $baseDir . '/app/controllers/cookie.controller.php',
     'App\\Controllers\\HomeController' => $baseDir . '/app/controllers/home.controller.php',
     'App\\Controllers\\IndexController' => $baseDir . '/app/controllers/index.controller.php',

@@ -124,7 +124,7 @@
 			},
 			"notsend":{
 				"label":"Geen verbinding met de mail server",
-				"msg":"Neem contact op met de Titanium-helpdesk"
+				"msg":"Neem contact op met de helpdesk"
 			},
 			"inv":{
 				"label":"Token is ongeldig",

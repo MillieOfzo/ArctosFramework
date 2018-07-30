@@ -84,6 +84,7 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
         'App\\Classes\\Router' => __DIR__ . '/../..' . '/app/classes/router.class.php',
         'App\\Classes\\SSP' => __DIR__ . '/../..' . '/app/classes/datatable.ssp.class.php',
         'App\\Classes\\SessionManager' => __DIR__ . '/../..' . '/app/classes/sessionmanager.class.php',
+        'App\\Controllers\\BaseController' => __DIR__ . '/../..' . '/app/controllers/base.controller.php',
         'App\\Controllers\\CookieController' => __DIR__ . '/../..' . '/app/controllers/cookie.controller.php',
         'App\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/controllers/home.controller.php',
         'App\\Controllers\\IndexController' => __DIR__ . '/../..' . '/app/controllers/index.controller.php',

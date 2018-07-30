@@ -13,12 +13,11 @@ use App\Classes\Language;
 use App\Classes\LdapAuth;
 use App\Classes\SessionManager;
 
-class LoginController
+class LoginController extends BaseController
 {
     private $model;
     private $auth;
     private $lang;
-    private $purifier;
 	
 	/**
 	 * Token expiration time
@@ -34,15 +33,14 @@ class LoginController
         $this->login = new LoginModel;
         $this->user = new UserModel;
         $this->lang = (new Language)->getLanguageFile();
-        $this->purifier = new \HTMLPurifier(\HTMLPurifier_Config::createDefault());
     }
 	
 	public function processLdapLogin()
 	{
 		if (!empty($_POST['login']) && Auth::checkCsrfToken($_POST['csrf']))
         {
-			$cleaned_email = strtolower($this->purifier->purify($_POST['email']));
-			$cleaned_password = $this->purifier->purify($_POST['password']);
+			$cleaned_email = strtolower(Helper::purifyInput($_POST['email']));
+			$cleaned_password = Helper::purifyInput($_POST['password']);
 			
 			$filter = "mail={$cleaned_email}";
 			
@@ -107,7 +105,7 @@ class LoginController
 	
     public function processLogin()
     {
-        $cleaned_email = strtolower($this->purifier->purify($_POST['email']));
+        $cleaned_email = strtolower(Helper::purifyInput($_POST['email']));
         if (!empty($_POST['login']) && Auth::checkCsrfToken($_POST['csrf']))
         {
             $row = $this->user->getUserRow($cleaned_email);
@@ -198,7 +196,7 @@ class LoginController
         if (isset($csrf) && Auth::checkCsrfToken($csrf))
         {
             $user_email = htmlspecialchars($_SESSION[Config::SES_NAME]['user_email'], ENT_QUOTES, 'UTF-8');
-            $cleaned_email = strtolower($this->purifier->purify($user_email));
+            $cleaned_email = strtolower(Helper::purifyInput($user_email));
 
 			$session = new SessionManager();
 			$session->sessionDestroy();
@@ -217,7 +215,7 @@ class LoginController
 
     public function genRecoverToken()
     {
-        $cleaned_email = strtolower($this->purifier->purify($_POST['email']));
+        $cleaned_email = strtolower(Helper::purifyInput($_POST['email']));
 
         if (!empty($_POST['request']) && Auth::checkCsrfToken($_POST['csrf']))
         {
@@ -311,7 +309,7 @@ class LoginController
     public function processPassReset($token, $csrf_token, $user_id)
     {
 
-        $cleaned_user_id = $this->purifier->purify($user_id);
+        $cleaned_user_id = Helper::purifyInput($user_id);
 
         if (Auth::checkCsrfToken($csrf_token))
         {
@@ -443,26 +441,5 @@ class LoginController
         }
     }
 
-	private function setResponseMsg($label, $test, $type = 'success')
-	{
-		switch($type)
-		{
-			case 'warning':
-				$type = 'alert alert-warning';
-				break;
-			case 'danger':
-				$type = 'alert alert-danger';
-				break;
-			default:
-				$type = 'alert alert-success';
-				break;
-		}
-		
-		$msg = "<div class=\"{$type}\"><b>{$label}</b><br><span>{$test}</span></div>";
-		
-		return array(
-			'res' => $msg
-		);
-	}	
 }
 
