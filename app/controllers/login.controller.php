@@ -9,7 +9,6 @@ use App\Classes\Logger;
 use App\Classes\Helper;
 use App\Classes\Auth;
 use App\Classes\Mailer;
-use App\Classes\Language;
 use App\Classes\LdapAuth;
 use App\Classes\SessionManager;
 
@@ -17,7 +16,6 @@ class LoginController extends BaseController
 {
     private $model;
     private $auth;
-    private $lang;
 	
 	/**
 	 * Token expiration time
@@ -30,9 +28,9 @@ class LoginController extends BaseController
 	
     function __construct()
     {
+		parent::__construct();
         $this->login = new LoginModel;
         $this->user = new UserModel;
-        $this->lang = (new Language)->getLanguageFile();
     }
 	
 	public function processLdapLogin()

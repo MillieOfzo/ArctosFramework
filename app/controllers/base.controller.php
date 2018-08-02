@@ -10,18 +10,26 @@
 namespace App\Controllers;
 
 use \Config;
+use App\Classes\Language;
 
-class BaseController
+abstract class BaseController
 {
+	private $label;
+	protected $lang;
 	protected $res = [];
 
+    function __construct()
+    {
+		$this->lang = (new Language)->getLanguageFile();		
+    }	
+	
 	protected function returnMsg($title, $text = '', $type = 'success')
 	{
-		return $this->res = [
+		return $this->res = array(
 			'title' => $title,
 			'text' => $text,
 			'type' => $type
-		];
+		);
 	}	
 	
 	protected function setResponseMsg($label, $test, $type = 'success')
@@ -41,10 +49,10 @@ class BaseController
 		
 		$msg = "<div class=\"{$type}\"><b>{$label}</b><br><span>{$test}</span></div>";
 		
-		return [
+		return $this->res = array(
 			'res' => $msg
-		];
+		);
 	}	
-	
+
 }
 

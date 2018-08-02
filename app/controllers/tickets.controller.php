@@ -8,20 +8,19 @@ use App\Classes\Logger;
 use App\Classes\Helper;
 use App\Classes\Auth;
 use App\Classes\Mailer;
-use App\Classes\Language;
 use App\Classes\SSP;
 use App\Models\TicketModel;
 
-class TicketsController
+class TicketsController extends BaseController
 {
     private $succesMessage;
 
     function __construct()
     {
+		parent::__construct();
         $this->conn = new SafeMySQL;
         $this->ticket = new TicketModel;
         $this->auth_user = htmlentities($_SESSION[Config::SES_NAME]['user_email'], ENT_QUOTES, 'UTF-8');
-        $this->lang = (new Language)->getLanguageFile();
         $this->purifier = new \HTMLPurifier(\HTMLPurifier_Config::createDefault());
     }
 

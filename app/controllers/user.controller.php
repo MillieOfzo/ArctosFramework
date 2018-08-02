@@ -6,20 +6,16 @@ use App\Models\UserModel;
 use App\Classes\Logger;
 use App\Classes\Helper;
 use App\Classes\Auth;
-use App\Classes\Language;
 
-class UserController
+class UserController extends BaseController
 {
-    private $model;
-    private $auth;
-    private $lang;
+    private $user;
     private $purifier;
 
     function __construct()
     {
+		parent::__construct();
         $this->user = new UserModel;
-        $this->auth = new Auth;
-        $this->lang = (new Language)->getLanguageFile();
         $this->purifier = new \HTMLPurifier(\HTMLPurifier_Config::createDefault());
     }
 
