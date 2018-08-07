@@ -10,7 +10,6 @@
 namespace App\Classes;
 
 use \Config;
-use App\Classes\Language;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 

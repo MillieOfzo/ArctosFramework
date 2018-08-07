@@ -6,8 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Classes\\ApiException' => $baseDir . '/app/classes/apiservice.class.php',
+    'App\\Classes\\ApiService' => $baseDir . '/app/classes/apiservice.class.php',
     'App\\Classes\\Auth' => $baseDir . '/app/classes/auth.class.php',
-    'App\\Classes\\Autocomplete' => $baseDir . '/app/classes/autocomplete.class.php',
     'App\\Classes\\Csrf' => $baseDir . '/app/classes/csrf.class.php',
     'App\\Classes\\ErrorManager' => $baseDir . '/app/classes/errormanager.class.php',
     'App\\Classes\\FileManager' => $baseDir . '/app/classes/filemanager.class.php',

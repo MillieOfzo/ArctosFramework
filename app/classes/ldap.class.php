@@ -9,7 +9,6 @@
 namespace App\Classes;
 
 use \Config;
-use \App\Classes\Logger;
 
 abstract class LdapAuthStatus
 {

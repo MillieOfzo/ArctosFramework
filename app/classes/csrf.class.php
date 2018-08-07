@@ -9,8 +9,6 @@
  
 namespace App\Classes;
 
-use \App\Classes\Logger as Logger;
-
 class Csrf
 {
 

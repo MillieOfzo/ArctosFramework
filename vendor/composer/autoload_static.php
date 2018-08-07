@@ -69,8 +69,9 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
     );
 
     public static $classMap = array (
+        'App\\Classes\\ApiException' => __DIR__ . '/../..' . '/app/classes/apiservice.class.php',
+        'App\\Classes\\ApiService' => __DIR__ . '/../..' . '/app/classes/apiservice.class.php',
         'App\\Classes\\Auth' => __DIR__ . '/../..' . '/app/classes/auth.class.php',
-        'App\\Classes\\Autocomplete' => __DIR__ . '/../..' . '/app/classes/autocomplete.class.php',
         'App\\Classes\\Csrf' => __DIR__ . '/../..' . '/app/classes/csrf.class.php',
         'App\\Classes\\ErrorManager' => __DIR__ . '/../..' . '/app/classes/errormanager.class.php',
         'App\\Classes\\FileManager' => __DIR__ . '/../..' . '/app/classes/filemanager.class.php',

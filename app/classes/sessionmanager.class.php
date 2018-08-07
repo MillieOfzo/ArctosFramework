@@ -46,7 +46,9 @@ class SessionManager
             {
                 // Reset session data and regenerate id
                 $_SESSION = array();
-                $_SESSION['IPaddress'] = $_SERVER['REMOTE_ADDR'];
+                $_SESSION['LANGUAGE'] = Config::APP_LANG;
+                $_SESSION['IP_ADDRESS'] = $_SERVER['REMOTE_ADDR'];
+				$_SESSION['API_TOKEN'] = null;
                 //$_SESSION['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
 				$_SESSION['_token'] = Csrf::genCsrfToken();
 
@@ -68,7 +70,7 @@ class SessionManager
 
         }
     }
-
+	
 	public function sessionDestroy()
 	{
         // If we want to keep some session information such as shopping cart contents,
@@ -90,7 +92,9 @@ class SessionManager
         }
 
         // Finally, destroy the session.
-        session_destroy();		
+        session_destroy();
+		// Redirect user to login page
+		Helper::redirect('/');
 	}
 	
 	/**
@@ -101,11 +105,11 @@ class SessionManager
 	 */
     protected function preventHijacking()
     {
-        //if (!isset($_SESSION['IPaddress']) || !isset($_SESSION['userAgent']))
-        if (!isset($_SESSION['IPaddress']) )
+        //if (!isset($_SESSION['IP_ADDRESS']) || !isset($_SESSION['userAgent']))
+        if (!isset($_SESSION['IP_ADDRESS']) )
 			return false;
 
-        if ($_SESSION['IPaddress'] != $_SERVER['REMOTE_ADDR'])
+        if ($_SESSION['IP_ADDRESS'] != $_SERVER['REMOTE_ADDR'])
 			return false;
 
         //if ($_SESSION['userAgent'] != $_SERVER['HTTP_USER_AGENT'])
@@ -182,5 +186,6 @@ class SessionManager
 
         return true;
     }
+
 }
 
