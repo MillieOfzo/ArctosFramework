@@ -19,7 +19,6 @@
         "ezyang/htmlpurifier": "^4.10",
         "phpmailer/phpmailer": "^6.0",
         "colshrapnel/safemysql": "^1.0",
-        "owasp/csrf-protector-php": "dev-nojs-support",
         "guzzlehttp/guzzle": "~6.0"
     },
     "autoload": {
