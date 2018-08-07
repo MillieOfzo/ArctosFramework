@@ -28,10 +28,38 @@ The LDAP class provides Single Sign On capabilities. Read below instructions on 
 ## Mailer class
 The mailer class is an wrapper over PHPmailer. This enables easy creation and sending of application mails. Custom email templates can be created or edited in the folder `C:\xampp\htdocs\Arctos\app\mail`
 ## Router class
-The router class is the main component of the application and uses [FastRoute](https://github.com/nikic/FastRoute). This class regulates all http requests to their respective controller. 
+The router class is the main component of the application and uses [FastRoute](https://github.com/nikic/FastRoute). This class regulates all http requests to their respective controller and through the default index.php page located in `C:\xampp\htdocs\Arctos\public\index.php`. 
 Routes are defined in the file `C:\xampp\htdocs\Arctos\routes\routes.php`. 
 ### Usage 
-Say you want to show the privacy page if you navigate to ```http://arctos.localhost/privacy```
+Say you want to show the privacy page if you navigate to `http://arctos.localhost/privacy`. And route should be defined in the routes.php files as followed:
+```php
+	array('GET', '/privacy', 'PrivacyController/index'),
+```
+If the url matches the route conditions http method `GET` and url path `/privacy` it will call the `PrivacyController` class and the method `index`.
+The method could look like below and would return an array with a new view ```php '../src/views/docs/privacy_'.strtolower(Config::APP_LANG).'.view.php' ```
+```php
+    public function index()
+    {
+		$available_lang = $this->lang->getAvailableLanguageFiles();
+
+		$backup_lang = array_diff( $available_lang, array(Config::APP_LANG));
+				
+		if(file_exists('../src/views/docs/privacy_'.strtolower(Config::APP_LANG).'.view.php'))
+		{
+			return array('view' => '../src/views/docs/privacy_'.strtolower(Config::APP_LANG).'.view.php');
+		}
+		else
+		{
+			foreach($backup_lang as $backup)
+			{
+				if(file_exists('../src/views/docs/privacy_'.strtolower($backup).'.view.php'))
+				{
+					return array('view' => '../src/views/docs/privacy_'.strtolower($backup).'.view.php');
+				}
+			}
+		}
+    }
+```
 ## Logger class
 ## Language class
 ## Api service
