@@ -33,39 +33,73 @@ Routes are defined in the file `C:\xampp\htdocs\Arctos\routes\routes.php`.
 ### Usage 
 Say you want to show the privacy page if you navigate to `http://arctos.localhost/privacy`. And route should be defined in the routes.php files as followed:
 ```php
-	array('GET', '/privacy', 'PrivacyController/index'),
+array('GET', '/privacy', 'PrivacyController/index'),
 ```
-If the url matches the route conditions http method `GET` and url path `/privacy` it will call the `PrivacyController` class and the method `index`.
-The method could look like below and would return an array with a new view ```php '../src/views/docs/privacy_'.strtolower(Config::APP_LANG).'.view.php' ```
+If the url matches the route conditions http method `GET` and url path `/privacy` it will call the `\Arctos\app\Controllers\PrivacyController` class and the method `index`.
+The method could look like below and would return an array with a new view 
 ```php
-    public function index()
+'../src/views/docs/privacy_'.strtolower(Config::APP_LANG).'.view.php'
+```
+```php
+public function index()
+{
+  $available_lang = $this->lang->getAvailableLanguageFiles();
+  
+  $backup_lang = array_diff( $available_lang, array(Config::APP_LANG));
+  		
+  if(file_exists('../src/views/docs/privacy_'.strtolower(Config::APP_LANG).'.view.php'))
+  {
+    return array('view' => '../src/views/docs/privacy_'.strtolower(Config::APP_LANG).'.view.php');
+  }
+  else
+  {
+    foreach($backup_lang as $backup)
     {
-		$available_lang = $this->lang->getAvailableLanguageFiles();
-
-		$backup_lang = array_diff( $available_lang, array(Config::APP_LANG));
-				
-		if(file_exists('../src/views/docs/privacy_'.strtolower(Config::APP_LANG).'.view.php'))
-		{
-			return array('view' => '../src/views/docs/privacy_'.strtolower(Config::APP_LANG).'.view.php');
-		}
-		else
-		{
-			foreach($backup_lang as $backup)
-			{
-				if(file_exists('../src/views/docs/privacy_'.strtolower($backup).'.view.php'))
-				{
-					return array('view' => '../src/views/docs/privacy_'.strtolower($backup).'.view.php');
-				}
-			}
-		}
+      if(file_exists('../src/views/docs/privacy_'.strtolower($backup).'.view.php'))
+      {
+        return array('view' => '../src/views/docs/privacy_'.strtolower($backup).'.view.php');
+      }
     }
+  }
+}
 ```
 ## Logger class
+Logger class can be used to Log user and/or application action by simply calling:
+```php
+/**
+ * Custom log to file function
+ *
+ * @param sting $file The file the method is called on
+ * @param integer $level 
+ *    the following integers are accepted
+ *     1 - CRITICAL
+ *     2 - WARNING
+ *     Default - NOTICE 
+ * @param string $msg The message to be logged
+ */
+Logger::logToFile(__FILE__, 0, $msg);
+```
 ## Language class
+The language class is used to get the language file (as configured in \Arctos\config\config.php) from the folder `\Arctos\src\lang`
 ## Api service
+The ApiService class can be used if the application makes use of an external API.
+Inside the class are some configuration option to enable a connection to the API.
 ## Session manager
+The session manager provides secure sessions for the application.
 ## File manager
+The file manager enables user to create packages for their CSS and JS files. Which can be used in views as followed:
+```php
+// $arr_js is set in the \config\bootstrap.php file
+foreach($arr_js as $js){
+    echo '<script src="'.$js.'"></script>';
+}
+```
 ## Error manager
+Class to catch simple and fatal php errors and log them to file. If 
+```php
+\Config::DEBUG = false 
+```
+errors are not displayed to the browser but written to a log file.
 
 
 # IIS7 config
@@ -80,48 +114,48 @@ The method could look like below and would return an array with a new view ```ph
 - web.config can be edited manually by copying the below web.config to the web.config located in `%SystemDrive%\inetpub\wwwroot\arctos` 
 
 ```xml
-	<?xml version="1.0" encoding="UTF-8"?>
-	<configuration>
-		<system.webServer>
-			<rewrite>
-				<rules>
-					<rule name="Imported Rule 1">
-						<match url="^403/?$" />
-						<action type="Rewrite" url="/src/views/errors/page_403.view.php" />
-					</rule>
-					<rule name="Imported Rule 2">
-						<match url="^404/?$" />
-						<action type="Rewrite" url="/src/views/errors/page_404.view.php" />
-					</rule>
-					<rule name="Imported Rule 3">
-						<match url="^500/?$" />
-						<action type="Rewrite" url="/src/views/errors/page_500.view.php" />
-					</rule>
-					<rule name="Imported Rule 4">
-						<match url="^(app|config|routes|storage|vendor)(/.*|)$" />
-						<action type="CustomResponse" statusCode="403" statusReason="Forbidden" statusDescription="Forbidden" />
-					</rule>
-					<rule name="Imported Rule 5" enabled="true" stopProcessing="true">
-						<match url="^(.+)$" ignoreCase="false" />
-						<conditions logicalGrouping="MatchAll">
-							<add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
-							<add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
-						</conditions>
-						<action type="Rewrite" url="public/index.php/{R:1}" />
-					</rule>
-				</rules>
-			</rewrite>
-			<directoryBrowse enabled="true" />
-			<defaultDocument>
-				<files>
-					<add value="public/index.php" />
-				</files>
-			</defaultDocument>
-			<staticContent>
-				<mimeMap fileExtension=".hxd" mimeType="application/hxd" />
-			</staticContent>
-		</system.webServer>
-	</configuration>
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <system.webServer>
+    <rewrite>
+      <rules>
+        <rule name="Imported Rule 1">
+        	<match url="^403/?$" />
+        	<action type="Rewrite" url="/src/views/errors/page_403.view.php" />
+        </rule>
+        <rule name="Imported Rule 2">
+        	<match url="^404/?$" />
+        	<action type="Rewrite" url="/src/views/errors/page_404.view.php" />
+        </rule>
+        <rule name="Imported Rule 3">
+        	<match url="^500/?$" />
+        	<action type="Rewrite" url="/src/views/errors/page_500.view.php" />
+        </rule>
+        <rule name="Imported Rule 4">
+        	<match url="^(app|config|routes|storage|vendor)(/.*|)$" />
+        	<action type="CustomResponse" statusCode="403" statusReason="Forbidden" statusDescription="Forbidden" />
+        </rule>
+        <rule name="Imported Rule 5" enabled="true" stopProcessing="true">
+        	<match url="^(.+)$" ignoreCase="false" />
+        	<conditions logicalGrouping="MatchAll">
+        		<add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+        		<add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+        	</conditions>
+        	<action type="Rewrite" url="public/index.php/{R:1}" />
+        </rule>
+      </rules>
+    </rewrite>
+    <directoryBrowse enabled="true" />
+    <defaultDocument>
+    	<files>
+    		<add value="public/index.php" />
+    	</files>
+    </defaultDocument>
+    <staticContent>
+    	<mimeMap fileExtension=".hxd" mimeType="application/hxd" />
+    </staticContent>
+  </system.webServer>
+</configuration>
 ```
 
 # Domain controller SSO config
