@@ -1,27 +1,43 @@
 # Arctos Framework
 <p align="center">
 <img src="public/img/logo_light.png"  width="20%" align="center" /></p>
+Flexible and lightweight framework
 
 # Features
-* User authentication
-* Ticketing
-  * Item 2a
-  * Item 2b
-* User action logging
+- Easy to use configuration file
+- User authentication
+- Ticketing
+  - Create tickets
+  - Update tickets
+- User action logging
+- Pretty urls
+- Model View Controller based routing
 
 # Classes
 Multiple classes are integrated in this framework. Designed to be flexible and easy to use or extend.
-- Authentication class
-- CSRF class
-- LDAP class
-- Mailer class
-- Router class
-- Logger class
-- Language class
-- Api service
-- Session manager
-- File manager
-- Error manager
+## Authentication class
+The authentication class is designed to check if an user is authenticated. Sub functions include
+	- Check if user is admin
+	- Check if csrf token is valid
+	- Check if application is being brute forced
+	- Get current authenticated user id
+## CSRF class
+The Cross-Site Request Forgery class prevents csrf by attaching an 32bit string to each form. Which will be validated server site.
+## LDAP class
+The LDAP class provides Single Sign On capabilities. Read below instructions on how to enable and configure SSO.
+## Mailer class
+The mailer class is an wrapper over PHPmailer. This enables easy creation and sending of application mails. Custom email templates can be created or edited in the folder `C:\xampp\htdocs\Arctos\app\mail`
+## Router class
+The router class is the main component of the application and uses [FastRoute](https://github.com/nikic/FastRoute). This class regulates all http requests to their respective controller. 
+Routes are defined in the file `C:\xampp\htdocs\Arctos\routes\routes.php`. 
+### Usage 
+Say you want to show the privacy page if you navigate to ```http://arctos.localhost/privacy```
+## Logger class
+## Language class
+## Api service
+## Session manager
+## File manager
+## Error manager
 
 
 # IIS7 config
