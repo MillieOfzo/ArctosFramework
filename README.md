@@ -1,5 +1,3 @@
-# Arctos Framework
-
 <img src="public/img/logo_light.png"  width="30%" />
 
 Flexible and lightweight framework
