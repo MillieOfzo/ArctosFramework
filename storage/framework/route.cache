@@ -1,0 +1,42 @@
+<?php return array (
+  0 => 
+  array (
+    'GET' => 
+    array (
+      '/' => 'IndexController/index',
+      '/privacy' => 'PrivacyController/index',
+      '/terms' => 'TermsController/index',
+      '/cookie' => 'CookieController/index',
+    ),
+    'POST' => 
+    array (
+      '/login' => 'LoginController/processLogin',
+      '/login/gentoken' => 'LoginController/genRecoverToken',
+      '/register' => 'RegisterController/processUserRegistration',
+      '/register/dealer' => 'RegisterController/processDealerRegistration',
+    ),
+  ),
+  1 => 
+  array (
+    'GET' => 
+    array (
+      0 => 
+      array (
+        'regex' => '~^(?|/login/gentoken/([0-9A-Za-z]+)/([0-9A-Za-z]+)/([0-9]+))$~',
+        'routeMap' => 
+        array (
+          4 => 
+          array (
+            0 => 'LoginController/processPassReset',
+            1 => 
+            array (
+              'id' => 'id',
+              'csrf' => 'csrf',
+              'user' => 'user',
+            ),
+          ),
+        ),
+      ),
+    ),
+  ),
+);

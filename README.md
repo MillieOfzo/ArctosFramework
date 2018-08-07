@@ -22,7 +22,7 @@ The authentication class is designed to check if an user is authenticated. Sub f
 	- Check if application is being brute forced
 	- Get current authenticated user id
 ## CSRF class
-The Cross-Site Request Forgery class prevents csrf by attaching an 32bit string to each form. Which will be validated server site.
+The Cross-Site Request Forgery class prevents csrf by attaching an 32bit string to each form. Which will be validated server side.
 ## LDAP class
 The LDAP class provides Single Sign On capabilities. Read below instructions on how to enable and configure SSO.
 ## Mailer class
@@ -30,16 +30,32 @@ The mailer class is an wrapper over PHPmailer. This enables easy creation and se
 ## Router class
 The router class is the main component of the application and uses [FastRoute](https://github.com/nikic/FastRoute). This class regulates all http requests to their respective controller and through the default index.php page located in `C:\xampp\htdocs\Arctos\public\index.php`. 
 Routes are defined in the file `C:\xampp\htdocs\Arctos\routes\routes.php`. 
-### Usage 
-Say you want to show the privacy page if you navigate to `http://arctos.localhost/privacy`. And route should be defined in the routes.php files as followed:
+#### Usage 
+##### Initialize 
+The router class is initialized by the framework bootstrap file.
+```php
+/**
+ * Init router on requests and return response from method
+ */
+$router = new Router;
+$obj = $router->route($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+```
+`$_SERVER['REQUEST_METHOD']` Is the used url method (GET, POST etc)  and `$_SERVER['REQUEST_URI']` is the url request
+
+##### Collector and dispatcher
+All stored routes in `routes.php` are collected by the collector and added as a route to the dispatcher. It is possible to cache the routes by setting 
+```php
+private static $cacheDisabled = true;
+```
+to `false`. The cached file will be stored as `route.cache` in `C:\xampp\htdocs\Arctos\storage\framework`. Every url request made in the browser now goes through the dispatcher to see if it will match any route. Based on the result the router will return either an object, http 403 or http 404 response.
+
+##### Example
+Say you want to show the privacy page if you navigate to `http://arctos.localhost/privacy`. A route should be defined in the routes.php files as followed:
 ```php
 array('GET', '/privacy', 'PrivacyController/index'),
 ```
-If the url matches the route conditions http method `GET` and url path `/privacy` it will call the `\Arctos\app\Controllers\PrivacyController` class and the method `index`.
-The method could look like below and would return an array with a new view 
-```php
-'../src/views/docs/privacy_'.strtolower(Config::APP_LANG).'.view.php'
-```
+The route is send to the router dispatcher
+If the url matches the route conditions http method `GET` and url path `/privacy` it will call the `\App\Controllers\PrivacyController` class and the method `index`.
 ```php
 public function index()
 {
@@ -63,8 +79,14 @@ public function index()
   }
 }
 ```
+
+The `index` method would return an array with a new view 
+```php
+'../src/views/docs/privacy_'.strtolower(Config::APP_LANG).'.view.php'
+```
+
 ## Logger class
-Logger class can be used to Log user and/or application action by simply calling:
+Logger class can be used to log user and/or application action by simply calling:
 ```php
 /**
  * Custom log to file function
@@ -80,12 +102,18 @@ Logger class can be used to Log user and/or application action by simply calling
 Logger::logToFile(__FILE__, 0, $msg);
 ```
 ## Language class
-The language class is used to get the language file (as configured in \Arctos\config\config.php) from the folder `\Arctos\src\lang`
+The language class is used to get the language file (as configured in '\Arctos\config\config.php') from the folder `\Arctos\src\lang`
+
+## Helper class
+Provides an class with static methods which can be used throughout the application.
+
 ## Api service
 The ApiService class can be used if the application makes use of an external API.
-Inside the class are some configuration option to enable a connection to the API.
+Inside the class are configuration option to enable a connection to the API.
+
 ## Session manager
 The session manager provides secure sessions for the application.
+
 ## File manager
 The file manager enables user to create packages for their CSS and JS files. Which can be used in views as followed:
 ```php
@@ -100,7 +128,6 @@ Class to catch simple and fatal php errors and log them to file. If
 \Config::DEBUG = false 
 ```
 errors are not displayed to the browser but written to a log file.
-
 
 # IIS7 config
 - Create new folder in `%SystemDrive%\inetpub\wwwroot` named **Arctos**
@@ -181,7 +208,6 @@ errors are not displayed to the browser but written to a log file.
 - Set **DEBUG** to `false` on production env to disable error messages being displayed in the application
 - If **DEBUG** is `false`, error messages are writen to error logs located at: `%SystemDrive%\inetpub\wwwroot\arctos\storage\logs\2018\Errors`
 - Enter Database credentials under **DB_HOST**, **DB_USER**, **DB_PASS**, **DB_NAME**
-- Enter WEB services url under **WS_GATEWAY_URL**
 
 ## SSO config
 - If application needs to use LDAP authentication set **LDAP_ENABLED** to `true`

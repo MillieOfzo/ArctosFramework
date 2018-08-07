@@ -84,7 +84,8 @@ Class ApiService
 	 * Default: false
      * @param bool
      */	
-	const API_TOKEN_REFRESH = false; 	
+	const API_TOKEN_REFRESH = false; 
+	
     /**
      * Array to hold token variables
 	 *
@@ -92,6 +93,20 @@ Class ApiService
      */	
 	protected $token = [];
 
+	/**
+     * Basic auth username variable
+	 *
+     * @param string
+     */
+	protected $user = '';
+	
+	/**
+     * Basic auth password variable
+	 *
+     * @param string
+     */	
+	protected $pass = '';
+	
     /**
      * Array to hold return message variables
 	 *
