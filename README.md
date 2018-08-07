@@ -15,7 +15,7 @@ Flexible and lightweight framework
 
 # Classes
 Multiple classes are integrated in this framework. Designed to be flexible and easy to use or extend.
-## Authentication class
+### Authentication class
 The authentication class is designed to check if an user is authenticated. Sub functions include
 
 - Check if user is admin
@@ -23,20 +23,20 @@ The authentication class is designed to check if an user is authenticated. Sub f
 - Check if application is being brute forced
 - Get current authenticated user id
 
-## CSRF class
+### CSRF class
 The Cross-Site Request Forgery class prevents csrf by attaching an 32bit string to each form. Which will be validated server side.
 
-## LDAP class
+### LDAP class
 The LDAP class provides Single Sign On capabilities. Read [SSO](#single-sign-on) instructions on how to enable and configure SSO.
 
-## Mailer class
+### Mailer class
 The mailer class is an wrapper over [PHPMailer](https://github.com/PHPMailer/PHPMailer). This enables easy creation and sending of application mails. Custom email templates can be created or edited in the folder `C:\xampp\htdocs\Arctos\app\mail`
 
-## Router class
+### Router class
 The router class is the main component of the application and uses [FastRoute](https://github.com/nikic/FastRoute). This class regulates all http requests to their respective controller and through the default index.php page located in `C:\xampp\htdocs\Arctos\public\index.php`. 
 Routes are defined in the file `C:\xampp\htdocs\Arctos\routes\routes.php`.  
 
-### Initialize 
+#### Initialize 
 The router class is initialized by the framework bootstrap file.
 ```php
 /**
@@ -47,14 +47,14 @@ $obj = $router->route($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 ```
 `$_SERVER['REQUEST_METHOD']` Is the url method (GET, POST etc) used in the request and `$_SERVER['REQUEST_URI']` is the url request
 
-### Collector and dispatcher
+#### Collector and dispatcher
 All stored routes in `routes.php` are collected by the collector and added as a route to the dispatcher. It is possible to cache the routes by setting `$cacheDisabled` to `false`
 ```php
 private static $cacheDisabled = true;
 ```
 The cached file will be stored as `route.cache` in `C:\xampp\htdocs\Arctos\storage\framework`. Every url request made in the browser now goes through the dispatcher to see if it will match any route. Based on the result the router will return either an object, http 403 or http 404 response.
 
-### Example
+#### Example
 Say you want to show the privacy page if you navigate to `http://arctos.localhost/privacy`. A route should be defined in the routes.php files as followed:
 ```php
 array('GET', '/privacy', 'PrivacyController/index'),
@@ -90,7 +90,7 @@ The `index` method would return an array with a new view
 '../src/views/docs/privacy_'.strtolower(Config::APP_LANG).'.view.php'
 ```
 
-## Logger class
+### Logger class
 Logger class can be used to log user and/or application action by simply calling:
 ```php
 /**
@@ -106,20 +106,20 @@ Logger class can be used to log user and/or application action by simply calling
  */
 Logger::logToFile($file, $level, $msg);
 ```
-## Language class
+### Language class
 The language class is used to get the language file (as configured in '\Arctos\config\config.php') from the folder `\Arctos\src\lang`
 
-## Helper class
+### Helper class
 Provides an class with static methods which can be used throughout the application.
 
-## Api service
+### Api service
 The ApiService class can be used if the application makes use of an external API.
 Inside the class are configuration option to enable a connection to the API.
 
-## Session manager
+### Session manager
 The session manager provides secure sessions for the application.
 
-## File manager
+### File manager
 The file manager enables user to create packages for their CSS and JS files. Which can be used in views as followed:
 ```php
 // $arr_js is set in the \config\bootstrap.php file
@@ -127,7 +127,7 @@ foreach($arr_js as $js){
     echo '<script src="'.$js.'"></script>';
 }
 ```
-## Error manager
+### Error manager
 Class to catch simple and fatal php errors and log them to file. If `DEBUG` is `false` errors are not displayed to the browser but written to a log file located in `\Arctos\storage\logs`.
 ```php
 \Config::DEBUG = false 
