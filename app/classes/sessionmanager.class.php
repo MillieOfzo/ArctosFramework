@@ -10,6 +10,8 @@
  
 namespace App\Classes;
 
+use \Config;
+
 class SessionManager
 {
 
@@ -30,7 +32,7 @@ class SessionManager
         session_name($name . '_Session');
 
         // Set SSL level
-        $https = isset($secure) ? $secure : isset($_SERVER['HTTPS']);
+        $https = ($secure == true && isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? $secure : false;
 
         // Set session cookie options
         session_set_cookie_params($limit, $path, $domain, $https, true);
@@ -44,7 +46,9 @@ class SessionManager
             {
                 // Reset session data and regenerate id
                 $_SESSION = array();
-                $_SESSION['IPaddress'] = $_SERVER['REMOTE_ADDR'];
+                $_SESSION['LANGUAGE'] = Config::APP_LANG;
+                $_SESSION['IP_ADDRESS'] = $_SERVER['REMOTE_ADDR'];
+				$_SESSION['API_TOKEN'] = null;
                 //$_SESSION['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
 				$_SESSION['_token'] = Csrf::genCsrfToken();
 
@@ -67,6 +71,32 @@ class SessionManager
         }
     }
 	
+	public function sessionDestroy()
+	{
+        // If we want to keep some session information such as shopping cart contents,
+        // we only remove the user's data from the session without unsetting remaining
+        // session variables and without destroying the session.
+        unset($_SESSION[Config::SES_NAME]);
+        unset($_SESSION['_token']);
+
+        // Otherwise, we unset all of the session variables.
+        $_SESSION = array();
+
+        // If it's desired to kill the session, also delete the session cookie.
+        // Note: This will destroy the session, and not just the session data!
+        if (ini_get("session.use_cookies"))
+        {
+            $params = session_get_cookie_params();
+            setcookie(session_name() , '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+            //setcookie('sWebCookie' , '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+        }
+
+        // Finally, destroy the session.
+        session_destroy();
+		// Redirect user to login page
+		Helper::redirect('/');
+	}
+	
 	/**
 	 * This function checks to make sure a session exists and is coming from the proper host. On new visits and hacking
 	 * attempts this function will return false.
@@ -75,11 +105,11 @@ class SessionManager
 	 */
     protected function preventHijacking()
     {
-        //if (!isset($_SESSION['IPaddress']) || !isset($_SESSION['userAgent']))
-        if (!isset($_SESSION['IPaddress']) )
+        //if (!isset($_SESSION['IP_ADDRESS']) || !isset($_SESSION['userAgent']))
+        if (!isset($_SESSION['IP_ADDRESS']) )
 			return false;
 
-        if ($_SESSION['IPaddress'] != $_SERVER['REMOTE_ADDR'])
+        if ($_SESSION['IP_ADDRESS'] != $_SERVER['REMOTE_ADDR'])
 			return false;
 
         //if ($_SESSION['userAgent'] != $_SERVER['HTTP_USER_AGENT'])
@@ -156,5 +186,6 @@ class SessionManager
 
         return true;
     }
+
 }
 

@@ -29,7 +29,7 @@
 			<p data-i18n="[html]error_page.404.msg">
             Sorry, but the page you are looking for has note been found. Try checking the URL for error, then hit the refresh button on your browser or try found something else in our app.
 			</p>
-            <a href="/" class='btn btn-primary' data-i18n="[html]error_page.return_btn">Return to safety</a>
+            <a href="/" class='btn btn-accent' data-i18n="[html]error_page.return_btn">Return to safety</a>
         </div>
     </div>
 

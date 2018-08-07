@@ -3,6 +3,17 @@
 		"select": "Select...",
 		"input": "Fill in..."
 	},
+	"cookie":{
+		"msg": "We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.",
+		"msg_link": "More info"
+	},
+	"buttons":{
+		"update":"Update",
+		"save":"Save",
+		"new":"Create",		
+		"search":"Search",
+		"go_back":"Go back"					 
+	},	
 	"layout":{
 		"topnav":{
 			"placeholder":"Search for location",
@@ -42,9 +53,9 @@
 			"msg":"The server found something unexpected that could not complete the request. We apologize, you can go back to the main page"	
 		},
 		"maintenance":{
-			"label":"Maintenance busy",
-			"msg":"Wait for or check out status with the admins"			
-		}		
+			"label":"Under construction",
+			"msg":"This page is currently undergoing scheduled maintenance. You will soon be able to get started. Thank you for your patience"			
+		}
 	},	
 	"loginscreen":{
 		"welcome": "Welcome to",
@@ -118,6 +129,10 @@
 				"label":"Reset token request failed",
 				"msg":"Refresh the page and try again"
 			},
+			"notsend":{
+				"label":"No connection available to the mail server",
+				"msg":"Please contact the Titanium helpdesk"
+			},
 			"inv":{
 				"label":"Token is invalid",
 				"msg":"Refresh the page and request a new token"
@@ -149,6 +164,9 @@
 	"user":{
 		"title":"User",
 		"edit":{
+			"tooltip":{
+				"password_reset":"Password reset"
+			},
 			"title":"Edit user",
 			"button":"Update",
 			"input":{

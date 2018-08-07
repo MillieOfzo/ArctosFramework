@@ -27,13 +27,12 @@ class Logger
 
         $date = date("Y-m-d");
         $path = $_SERVER['DOCUMENT_ROOT'];
-        $path .= '/Storage/Logs/' . date("Y") . '/';
+        $path .= '/storage/logs/' . date("Y") . '/';
 
         // If path doesnt exist create folder
         if (!file_exists($path))
         {
-            mkdir($path);
-            mkdir($path . '/Errors');
+            mkdir($path . '/Errors', 0777, true);
         }
 
         $filename = $path . $date . '.log';
@@ -58,8 +57,13 @@ class Logger
         $str = "[{$datum}] [{$level}] [{$user}] [{$env}] [{$file}] {$msg}" . PHP_EOL;
         // Schrijf string naar file
         file_put_contents($filename, $str . $fileContent);
-
     }
-
+	
+	public static function logError($exception)
+    {
+        $msg = 'Regel: ' . $exception->getLine() . ' Bestand: ' . $exception->getFile() . ' Error: ' . $exception->getMessage();
+        self::logToFile(__FILE__, 1, $msg);
+        return false;
+    }
 }
 

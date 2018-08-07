@@ -39,14 +39,12 @@ $(document).ready(function () {
 		}, "slow");
 	}); 
 
-	var url = window.location;
+	var url = window.location.pathname;
+	var url_id = 'ul.nav a[href="'+ url +'"]';
 	// Will only work if string in href matches with location
-	$('ul.nav a[href="'+ url +'"]').parent().addClass('active');
-	
-	// Will also work for relative and absolute hrefs
-	$('ul.nav a').filter(function() {
-		return this.href == url;
-	}).parent().addClass('active');	
+	$(url_id).parent().addClass('active');
+	$(url_id).parent().parent().closest('li').addClass('active');	
+	$(url_id).closest('ul').addClass('in');
 		
 	// Set lang code for i18next
 	var lang_code = $('html').attr('lang');
@@ -58,13 +56,20 @@ $(document).ready(function () {
 		lng: lang_code
 	}, function (t){
 		$('#i18container').i18n();
-		$('[data-toggle="tooltip"]').tooltip();
+
+		// Allow translation in tooltip
+		$('[data-toggle="tooltip"]').tooltip({
+            container: "body"
+        });
 
         // Init select2 dropdown with autocomplete and i18n support
         $(".select2").select2({
             placeholder: i18n.t('placeholders.select'),
             allowClear: true
         });
+		// Translate cookie msg
+		$('#cookiemsg').html(i18n.t('cookie.msg'));
+		$('#cookiemsglink').html(i18n.t('cookie.msg_link'));
 	});
 
     // Add body-small class if window less than 768px

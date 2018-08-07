@@ -22,7 +22,7 @@ class UserModel
         }
         catch(Exception $ex)
         {
-            return self::logError($ex);
+            return Logger::logError($ex);
         }
     }
 
@@ -35,7 +35,7 @@ class UserModel
         }
         catch(Exception $ex)
         {
-            return self::logError($ex);
+            return Logger::logError($ex);
         }
     }
 
@@ -48,7 +48,7 @@ class UserModel
         }
         catch(Exception $ex)
         {
-            return self::logError($ex);
+            return Logger::logError($ex);
         }
     }
 
@@ -70,10 +70,22 @@ class UserModel
         }
         catch(Exception $ex)
         {
-            return self::logError($ex);
+            return Logger::logError($ex);
         }
     }
 
+	public function getUserRole($id)
+    {
+        try
+        {
+            return $this->conn->getOne("SELECT role_name FROM app_role WHERE id = (SELECT user_role FROM app_users WHERE user_id = ?i);", $id);
+        }
+        catch(Exception $ex)
+        {
+            return Logger::logError($ex);
+        }
+    }
+	
     public function updateUserLastAccess($user_id)
     {
         try
@@ -83,15 +95,9 @@ class UserModel
         }
         catch(Exception $ex)
         {
-            return self::logError($ex);
+            return Logger::logError($ex);
         }
     }
 
-    private static function logError($exception)
-    {
-        $msg = 'Regel: ' . $exception->getLine() . ' Bestand: ' . $exception->getFile() . ' Error: ' . $exception->getMessage();
-        Logger::logToFile(__FILE__, 1, $msg);
-        return false;
-    }
 }
 

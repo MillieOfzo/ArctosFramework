@@ -25,7 +25,45 @@
 			</div>
 		</div>
 		<div class="row">
+		
 			<div class="col-lg-6">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5><span data-i18n="[html]users.new.title">New user</span> <small></small></h5>
+					</div>
+					<div class="ibox-content">
+						<div class="row">
+							<form id="NewWerkbonForm" name="new_wb">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="control-label" for="first-name"><span data-i18n="[html]users.new.input.1">User name</span><font color="red">*</font></label>
+										<input class="form-control" data-i18n="[placeholder]placeholders.input" name="new_user_name" type="text">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="control-label" for="first-name"><span data-i18n="[html]users.new.input.2">User last name</span><font color="red">*</font></label>
+										<input class="form-control" data-i18n="[placeholder]placeholders.input" name="new_user_last_name" type="text">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="control-label" for="first-name"><span data-i18n="[html]users.new.input.3">User email</span><font color="red">*</font></label>
+										<input class="form-control" data-i18n="[placeholder]placeholders.input" name="new_user_email" type="text" >
+									</div>
+								</div>
+
+								<div class="col-md-12">
+									<div class="form-group">
+										<button class="btn btn-primary" name="save_button"><i class='fa fa-save fa-fw'></i> <span data-i18n="[html]users.ne.button">Create</span></button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6" style="display:none;" id="menu-editor">
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
 						<h5><span data-i18n="[html]users.edit.title">Edit user</span> <small></small></h5>
@@ -80,43 +118,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-6">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-						<h5><span data-i18n="[html]users.new.title">New user</span> <small></small></h5>
-					</div>
-					<div class="ibox-content">
-						<div class="row">
-							<form id="NewWerkbonForm" name="new_wb">
-								<div class="col-md-6">
-									<div class="form-group">
-										<label class="control-label" for="first-name"><span data-i18n="[html]users.new.input.1">User name</span><font color="red">*</font></label>
-										<input class="form-control" data-i18n="[placeholder]placeholders.input" name="new_user_name" type="text">
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label class="control-label" for="first-name"><span data-i18n="[html]users.new.input.2">User last name</span><font color="red">*</font></label>
-										<input class="form-control" data-i18n="[placeholder]placeholders.input" name="new_user_last_name" type="text">
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label class="control-label" for="first-name"><span data-i18n="[html]users.new.input.3">User email</span><font color="red">*</font></label>
-										<input class="form-control" data-i18n="[placeholder]placeholders.input" name="new_user_email" type="text" >
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<div class="form-group">
-										<button class="btn btn-primary" name="save_button"><i class='fa fa-save fa-fw'></i> <span data-i18n="[html]users.ne.button">Create</span></button>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
+			
 		</div>
 	</div>
 	
@@ -134,7 +136,7 @@
 	?>	
     <script>
     $(document).ready(function() {
-		
+		var menuEditor = $("#menu-editor");
     	$('.datatable').on('click', '#delete', function() {
     		var id = $(this).attr('value');
     		var user_email = '<b>'+$(this).attr('rel')+'</b>';
@@ -176,8 +178,13 @@
             $('input[name="user_name"]').val(data[1]);
             $('input[name="user_last_name"]').val(data[2]);
             $('input[name="user_email"]').val(data[3]);
-			$('select[name="user_role"]').select2("val", data[8]);
-			$('select[name="user_status"]').select2("val", data[9] );
+			$('select[name="user_role"]').select2({ width: '100%' });
+            $('select[name="user_role"]').val(data[9]);
+            $('select[name="user_role"]').trigger('change');
+			$('select[name="user_status"]').select2({ width: '100%' });
+            $('select[name="user_status"]').val(data[10]);
+            $('select[name="user_status"]').trigger('change');
+			menuEditor.fadeIn();
         });		
 		
     	$.extend(true, $.fn.dataTable.defaults, {
@@ -298,6 +305,7 @@
     				table_active.ajax.reload(null, false);
 					fv.resetForm();
 					$('form').find("input[type=text], textarea, select").val("");
+					menuEditor.fadeOut();
     			},
     			error: function(xhr, status, error) {
     				var json = $.parseJSON(xhr.responseText);

@@ -1,6 +1,6 @@
 <div class="middle-box animated fadeInDown" style="max-width: 800px; padding-bottom: 50px; color:#949ba2;">
 
-    <div id="page-wrapper" class="statement">
+    <div id="page-wrapper statement" class="">
 		
 		<h2>END USER LICENSE AGREEMENT</h2>
 		<p>This End-User License Agreement (the &ldquo;EULA&rdquo;) is a <strong>legal agreement</strong> between the individual or legal entity that intents to download and/or actually downloads and uses the Software and ASB Monitoring BV (the &ldquo;Company&rdquo;), the author of the software (the &ldquo;Software&rdquo;), which may include associated media, printed materials, and &ldquo;online&rdquo; or electronic documentation.</p>

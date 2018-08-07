@@ -13,7 +13,12 @@
 
 class Config
 {
-	 
+	/**
+     * Name of the application
+     * @var string
+     */
+    const APP_COPYRIGHT = ''; 
+	
     /**
      * Name of the application
      * @var string
@@ -38,7 +43,7 @@ class Config
      * Application version number
      * @var string
      */	
-    const APP_VER = '1.0.4';
+    const APP_VER = '1.0.6';
 	
     /**
      * Application enviroment e.g OTAP, TESTING, LIVE etc
@@ -80,6 +85,13 @@ class Config
      * @var bool
      */		
     const DEBUG = true;
+
+    /**
+     * Enable or disable maintenance
+     * Default: false
+     * @var bool
+     */		
+    const MAINTENANCE = false;
 	
     /**
      * DATABASE config items
@@ -90,35 +102,45 @@ class Config
     const DB_NAME = '';
 
     /**
-     * FRAMEWORK config items to showcase the used framework
-	 * the application is build on
-     */
-    public static function getFrameWorkName()
-    {
-        $array = self::getFrameWorkCompose();
-
-        return $array['framework'];
-    }
-
-    public static function getFrameWorkVersion()
-    {
-        $array = self::getFrameWorkCompose();
-
-        return $array['version'];
-    }
-
-    public static function getFrameWorkCopyright()
-    {
-        $array = self::getFrameWorkCompose();
-
-        return $array['copyright'];
-    }
-
-    private static function getFrameWorkCompose()
-    {
-        $content = file_get_contents('../composer.json');
-        return json_decode($content, true);
-
-    }
+     * Enable LDAP authentication
+	 * Default: false
+     * @var bool
+     */	
+	const LDAP_ENABLED 	= false;
+	
+	/**
+     * LDAP host.
+	 * Enter static array with multiple IPs of host or
+	 * enter domain name string e.g: ldap.asb.nl
+	 * Default: array()
+     * @var array|string
+     */	
+	const LDAP_DOMAIN 	= array();
+	
+	/**
+     * LDAP connection port
+	 * Default: 389
+     * @var integer
+     */	
+	const LDAP_PORT 	= 389;
+	
+	/**
+     * LDAP connection ping timeout
+	 * Default: 1 second
+     * @var integer
+     */	
+	const LDAP_TIMEOUT 	= 1;	
+	
+	/**
+     * LDAP authentication user
+     * @var string
+     */	
+	const LDAP_USERNM 	= '';
+	
+	/**
+     * LDAP authentication user password
+     * @var string
+     */		
+	const LDAP_PASSWD 	= '';	
 }
 

@@ -22,7 +22,7 @@ class TicketModel
         }
         catch(Exception $ex)
         {
-            return self::logError($ex);
+            return Logger::logError($ex);
         }
     }
 
@@ -35,7 +35,7 @@ class TicketModel
         }
         catch(Exception $ex)
         {
-            return self::logError($ex);
+            return Logger::logError($ex);
         }
     }
 
@@ -48,7 +48,7 @@ class TicketModel
         }
         catch(Exception $ex)
         {
-            return self::logError($ex);
+            return Logger::logError($ex);
         }
     }
 
@@ -60,15 +60,9 @@ class TicketModel
         }
         catch(Exception $ex)
         {
-            return self::logError($ex);
+            return Logger::logError($ex);
         }
     }
 
-    private static function logError($exception)
-    {
-        $msg = 'Regel: ' . $exception->getLine() . ' Bestand: ' . $exception->getFile() . ' Error: ' . $exception->getMessage();
-        Logger::logToFile(__FILE__, 1, $msg);
-        return false;
-    }
 }
 

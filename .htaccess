@@ -11,7 +11,7 @@ ErrorDocument 500 /500
 RewriteEngine On
 
 ## Prevent http access to following folders
-RewriteRule ^(app|config|routes|storage|tests|vendor)(/.*|)$ - [NC,F]
+RewriteRule ^(app|config|routes|storage|vendor)(/.*|)$ - [NC,F]
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f

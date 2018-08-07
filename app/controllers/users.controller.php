@@ -5,26 +5,23 @@ use \Config;
 use \SafeMySQL;
 use App\Models\UserModel;
 use App\Classes\Logger;
-use App\Classes\Language;
 use App\Classes\Helper;
 use App\Classes\Auth;
 use App\Classes\Mailer;
 use App\Classes\SSP;
 
-class UsersController
+class UsersController extends BaseController
 {
-
     private $user;
     private $conn;
-    private $lang;
     private $auth_user;
     private $purifier;
 
     function __construct()
     {
+		parent::__construct();
         $this->user = new UserModel;
 		$this->conn = new SafeMySQL;
-        $this->lang = (new Language)->getLanguageFile();
 		$this->auth_user = htmlentities($_SESSION[Config::SES_NAME]['user_email'], ENT_QUOTES, 'UTF-8');
         $this->purifier = new \HTMLPurifier(\HTMLPurifier_Config::createDefault());
     }
@@ -276,6 +273,10 @@ class UsersController
             array(
                 'db' => "user_status",
                 'dt' => 9
+            ),
+            array(
+                'db' => "user_status",
+                'dt' => 10
             )			
         );
         

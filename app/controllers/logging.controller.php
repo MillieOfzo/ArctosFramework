@@ -73,7 +73,7 @@ class LoggingController
 
 		$file_content = '<pre style="height: 520px; overflow: auto;">';
 			foreach($file as $text) {
-				$file_content .= $text;
+				$file_content .= strip_tags($text);
 			}  
 		$file_content .= "</pre>";	
 		

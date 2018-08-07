@@ -11,6 +11,13 @@ namespace App\Classes;
 
 class Helper
 {
+	public static function purifyInput($value)
+	{
+		$purifier = new \HTMLPurifier(\HTMLPurifier_Config::createDefault());
+		return $purifier->purify($value);
+		
+	}	
+	
 	public static function getUrlProtocol()
 	{
 		$protocol = isset($_SERVER['HTTPS']) && strcasecmp('off', $_SERVER['HTTPS']) !== 0 ? "https" : "http";

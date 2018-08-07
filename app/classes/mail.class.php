@@ -10,7 +10,6 @@
 namespace App\Classes;
 
 use \Config;
-use App\Classes\Language;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
@@ -18,7 +17,7 @@ class Mailer
 {
     /**
      * Enable or disable the use of phpmailer smtp functions
-     * Default: false
+     * Default: true
      * @param bool
      */	
 	public static $enable_smtp = true;
@@ -192,11 +191,19 @@ class Mailer
      */
 	public static function send($subject ='', $mail_body ='', $to = array(), $cc = array(), $attachment = '')
 	{
+		$smtp = new SMTP();
 		$mail = new PHPMailer(true);
 		
         // SMTP server settings
 		if(self::$enable_smtp)
 		{
+			// Check if there is an SMTP connection possible
+			if(!$smtp->connect(self::$smtp_host, self::$smtp_port, 10))
+			{
+				Logger::logToFile(__FILE__, 0, 'No connection with SMTP server');			
+				return 0;
+			}
+			
 			if(self::$enable_smtp_debug)
 			{
 				$mail->SMTPDebug = self::$smtp_debug_lvl;
