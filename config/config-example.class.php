@@ -85,6 +85,13 @@ class Config
      * @var bool
      */		
     const DEBUG = true;
+
+    /**
+     * Enable or disable maintenance
+     * Default: false
+     * @var bool
+     */		
+    const MAINTENANCE = false;
 	
     /**
      * DATABASE config items

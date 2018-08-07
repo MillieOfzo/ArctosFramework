@@ -31,7 +31,7 @@
             The server encountered something unexpected that didn't allow it to complete the request. We apologize.
             You can go back to main page: 
 			</p>
-			<br/><a href="/" class='btn btn-primary' data-i18n="[html]error_page.return_btn">Return to safety</a>
+			<br/><a href="/" class='btn btn-accent' data-i18n="[html]error_page.return_btn">Return to safety</a>
         </div>
     </div>
 

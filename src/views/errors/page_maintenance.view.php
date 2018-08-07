@@ -20,29 +20,15 @@
 </head>
 
 <body class="<?= strtolower(\Config::APP_THEME);?>-bg" id="i18container">
-	<?php
-		$img_arr = array(
-			'<i class="fa fa-fire"></i>', 
-			'<i class="fa fa-code"></i>', 
-			'<i class="fa fa-power-off"></i>', 
-			'<i class="fa fa-puzzel-piece"></i>', 
-			'<i class="fa fa-bomb"></i>', 
-			'1337',
-			'LIT'
-			);
-		function getRandomArr($ar){
-			$num = array_rand($ar);
-			return $ar[$num];
-		}
-	?>
     <div class="middle-box text-center animated fadeInDown">
-        <h1 style="color: #ECC37C;"><?= getRandomArr($img_arr);?></h1>
-        <h3 class="font-bold" data-i18n="[html]error_page.maintenance.label">Maintenance bezig</h3>
+        <img src="/public/img/support-maintenance.png" style="width:100%;"/>
+        <h3 class="font-bold" data-i18n="[html]error_page.maintenance.label">Under construction</h3>
 
         <div class="error-desc">
-		   <p data-i18n="[html]error_page.maintenance.msg">Wacht uit of vraag status na bij de admins.
+		   <p data-i18n="[html]error_page.maintenance.msg">
+		   This page is currently undergoing scheduled maintenance. You will soon be able to get started. Thank you for your patience
 			</p>	
-			<a href="/" class='btn btn-primary' data-i18n="[html]error_page.return_btn">Return to safety</a>
+			<a href="/" class='btn btn-accent' data-i18n="[html]buttons.go_back">Return to safety</a>
         </div>
     </div>
 

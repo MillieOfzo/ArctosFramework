@@ -27,7 +27,10 @@
 </head>
 
 <?php
-if (\App\Classes\Auth::checkAuth()){
+if(\Config::MAINTENANCE) {
+	include '../src/views/errors/page_maintenance.view.php';
+	die();	
+} elseif (\App\Classes\Auth::checkAuth()){
 ?>
 	<body class="mini-navbar" id="i18container">
 	

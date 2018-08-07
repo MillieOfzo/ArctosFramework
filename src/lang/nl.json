@@ -7,6 +7,13 @@
 		"msg": "Wij gebruiken cookies om uw ervaring te verbeteren. Door deze site te blijven bezoeken, gaat u akkoord met ons gebruik van cookies.",
 		"msg_link": "Meer informatie"
 	},
+	"buttons":{
+		"update":"Update",
+		"save":"Opslaan",
+		"new":"Aanmaken",		
+		"search":"Zoeken",	
+		"go_back":"Ga terug"
+	},	
 	"layout":{
 		"topnav":{
 			"placeholder":"Zoek naar locatie",
@@ -35,19 +42,19 @@
 		"return_btn":"Ga terug",
 		"403":{
 			"label":"Toegang geweigerd",
-			"msg":"Admin rechten zijn verplicht voor toegang. Neem contact op met de admins!"			
+			"msg":"Beheerdersrechten zijn verplicht voor toegang. Neem contact op met de beheerders!"			
 		},
 		"404":{
 			"label":"Pagina niet gevonden",
-			"msg":"Sorry, maar de pagina die je zoekt kan niet gevonden worden. Controleer de URL op errors, refresh de pagina"			
+			"msg": "Sorry, maar de pagina die u zoekt kan niet gevonden worden. Controleer de URL op fouten, ververs de pagina"
 		},
 		"500":{
-			"label":"Interne server error",
-			"msg":"De server heeft iets onverwachts aangetroffen waardoor het verzoek niet kon worden voltooid. Wij verontschuldigen ons. U kunt teruggaan naar de hoofdpagina:"			
+			"label":"Interne Server Fout",
+			"msg ":" De server heeft iets onverwachts gevonden waardoor het verzoek niet kon worden voltooid. Onze excuses, u kunt teruggaan naar de hoofdpagina "
 		},
 		"maintenance":{
-			"label":"Maintenance bezig",
-			"msg":"Wacht uit of vraag status na bij de admins"			
+			"label":"In opbouw",
+			"msg":"Deze pagina ondergaat momenteel gepland onderhoud. U zal binnenkort aan de slag kunnen. Bedankt voor uw geduld"			
 		}		
 	},	
 	"loginscreen":{

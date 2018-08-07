@@ -27,9 +27,9 @@
 
         <div class="error-desc">
            <p data-i18n="[html]error_page.403.msg">
-			Admin rechten zijn verplicht voor toegang. Neem contact op met de admins.
+			Administrator rights are mandatory for access. Contact the managers!
             </p>
-			<a href="/" class='btn btn-primary' data-i18n="[html]error_page.return_btn">Return to safety</a>
+			<a href="/" class='btn btn-accent' data-i18n="[html]error_page.return_btn">Return to safety</a>
         </div>
     </div>
 
