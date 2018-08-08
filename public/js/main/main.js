@@ -6,8 +6,6 @@
 
 $(document).ready(function () {
 
-
-
     $('.autocomplete-append').autocomplete({
         serviceUrl: '/autocomplete',
         max: 10,
@@ -76,13 +74,13 @@ $(document).ready(function () {
     if ($(this).width() < 769) {
         $('body').addClass('body-small'),
             $('body').removeClass('mini-navbar'),
-            $('#menu_bar').removeClass('hidden'),
+           //$('#menu_bar').removeClass('hidden'),
             $('#user_span').addClass('hidden'),
             $('#log_out_span').addClass('hidden')
     } else {
         $('body').addClass('mini-navbar'),
             $('body').removeClass('body-small'),
-            $('#menu_bar').addClass('hidden'),
+            //$('#menu_bar').addClass('hidden'),
             $('#user_span').removeClass('hidden'),
             $('#log_out_span').removeClass('hidden')
     }
@@ -244,6 +242,38 @@ $(document).ready(function () {
     })
 });
 
+var lang_code = $('html').attr('lang').toLowerCase() + '_' + $('html').attr('lang').toUpperCase();
+
+var ajaxObj = {
+	options: {
+		url: null,
+		dataType: 'json'
+	},
+	delay: function(refresh_time) {
+		return refresh_time;
+	},
+	errorCount: 0,
+	errorThreshold: 5,
+	ticker: null,
+	updatetime: null,
+	refresh: function(function_name, refresh_time) {
+		if (ajaxObj.errorCount < ajaxObj.errorThreshold) { // Gets triggered for all objects!?
+			ajaxObj.ticker = setTimeout(function_name, ajaxObj.delay(refresh_time));
+			//swal.close();
+		}
+	},
+	fail: function(jqXHR, textStatus, errorThrown) {
+		//console.log(errorThrown);
+		
+		swal({
+			title: textStatus,
+			html: errorThrown,
+			type: "error"
+		});
+		ajaxObj.errorCount++;
+	}
+};
+
 window.paceOptions = {
     ajax: false,
     restartOnRequestAfter: false,
@@ -254,13 +284,13 @@ $(window).bind("resize", function () {
     if ($(this).width() < 769) {
         $('body').addClass('body-small'),
             $('body').removeClass('mini-navbar'),
-            $('#menu_bar').removeClass('hidden'),
+            //$('#menu_bar').removeClass('hidden'),
             $('#user_span').addClass('hidden'),
             $('#log_out_span').addClass('hidden')
     } else {
         $('body').addClass('mini-navbar'),
             $('body').removeClass('body-small'),
-            $('#menu_bar').addClass('hidden'),
+            //$('#menu_bar').addClass('hidden'),
             $('#user_span').removeClass('hidden'),
             $('#log_out_span').removeClass('hidden')
     }

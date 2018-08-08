@@ -9,8 +9,44 @@
  
 namespace App\Classes;
 
+use \Config;
+use \SafeMySQL;
+
 class Helper
 {
+	public static function getUserStatusSelect()
+	{
+		$conn = new SafeMySQL;
+		$select ='<option></option>';
+		foreach($conn->getAll("SELECT * FROM app_user_status") as $status)
+		{
+			$select .= '<option value="'.$status['id'].'">'.$status['status_name'].'</option>';
+		}
+		return $select;
+	}
+	
+	public static function getUserRoleSelect()
+	{
+		$conn = new SafeMySQL;
+		$select ='<option></option>';
+		foreach($conn->getAll("SELECT * FROM app_role") as $role)
+		{
+			$select .= '<option value="'.$role['id'].'">'.$role['role_name'].'</option>';
+		}
+		return $select;
+	}	
+	
+	public static function getLanguageSelect()
+	{
+		$conn = new SafeMySQL;
+		$select ='<option></option>';
+		foreach($conn->getAll("SELECT * FROM app_languages") as $language)
+		{
+			$select .= '<option value="'.$language['language_locale'].'">'.$language['language_name'].'</option>';
+		}
+		return $select;
+	}	
+	
 	public static function purifyInput($value)
 	{
 		$purifier = new \HTMLPurifier(\HTMLPurifier_Config::createDefault());

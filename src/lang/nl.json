@@ -21,21 +21,33 @@
 		},
 		"sidebar":{
 			"title":{
-			"1":"Home",
-			"2":"Tickets",
-			"3":"Tools",
-			"4":"Gebruiker",
-			"5":"Gebruikers",
-			"6":"Logging",
-			"7":"Instellingen"
+				"1":"Home",
+				"2":"Tickets",
+				"3":"Tools",
+				"4":"Gebruiker",
+				"5":"Gebruikers",
+				"6":"Logging",
+				"7":"Instellingen"
 			}
 		}
 	},
 	"swal":{
+		"title":{
+			"success":"Succes",
+			"error":"Er ging iets mis",
+			"warning":"Let op"
+		},
 		"confirm":{
+			"text":"__placeholder__ wordt permanent verwijderd!",
 			"title":"Weet je het zeker?",
-			"confirmbutton":"Ja, ik weet het zeker",
+			"confirmbutton":"Ja, dat weet ik zeker",
 			"cancelbutton":"Annuleer"
+		},
+		"error":{
+			"text":"Probeer opnieuw"
+		},
+		"no_result":{
+			"text":"Geen resultaat"
 		}
 	},
 	"error_page":{
@@ -172,7 +184,8 @@
 			"input":{
 				"1":"Gebruikersnaam",
 				"2":"Gebruiker achternaam",
-				"3":"Gebruiker email"
+				"3":"Gebruiker email",
+				"4":"Taal"
 			}
 		},		
 		"acc_update":{
@@ -206,7 +219,8 @@
 				"2":"Gebruikers achternaam",
 				"3":"Gebruikers email",
 				"4":"Gebruikers rol",
-				"5":"Gebruikers status"
+				"5":"Gebruikers status",
+				"6":"Gebruikers taal"
 			},
 			"msg":{
 				"del":{
@@ -229,7 +243,8 @@
 			"input":{
 				"1":"Gebruiker naam",
 				"2":"Gebruikers achternaam",
-				"3":"Gebruikers email"
+				"3":"Gebruikers email",
+				"4":"Gebruikers taal"
 			},
 			"msg":{
 				"login_email":{

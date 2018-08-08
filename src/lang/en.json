@@ -21,21 +21,33 @@
 		},
 		"sidebar":{
 			"title":{
-			"1":"Home",
-			"2":"Tickets",
-			"3":"Tools",
-			"4":"Gebruiker",
-			"5":"Gebruikers",
-			"6":"Logging",
-			"7":"Instellingen"
+				"1":"Home",
+				"2":"Tickets",
+				"3":"Tools",
+				"4":"Gebruiker",
+				"5":"Gebruikers",
+				"6":"Logging",
+				"7":"Instellingen"
 			}
 		}
 	},
 	"swal":{
+		"title":{
+			"success":"Success",
+			"error":"Something went wrong",
+			"warning":"Beware"
+		},
 		"confirm":{
+			"text":"__placeholder__ is permanently deleted!",
 			"title":"Are you sure?",
-			"confirmbutton":"Yes, i am sure",
+			"confirmbutton":"Yes, I know that for sure",
 			"cancelbutton":"Cancel"
+		},
+		"error":{
+			"text":"Try again"
+		},
+		"no_result":{
+			"text":"No results"
 		}
 	},
 	"error_page":{
@@ -172,7 +184,8 @@
 			"input":{
 				"1":"User name",
 				"2":"User last name",
-				"3":"User email"
+				"3":"User email",
+				"4":"Language"
 			}
 		},		
 		"acc_update":{
@@ -206,7 +219,8 @@
 				"2":"User last name",
 				"3":"User email",
 				"4":"Users role",
-				"5":"Users status"
+				"5":"Users status",
+				"6":"Users language"
 			},
 			"msg":{
 				"del":{
@@ -229,7 +243,8 @@
 			"input":{
 				"1":"User name",
 				"2":"User last name",
-				"3":"User email"
+				"3":"User email",
+				"4":"User language"
 			},
 			"msg":{
 				"login_email":{

@@ -10,13 +10,11 @@ use App\Classes\Auth;
 class UserController extends BaseController
 {
     private $user;
-    private $purifier;
 
     function __construct()
     {
 		parent::__construct();
         $this->user = new UserModel;
-        $this->purifier = new \HTMLPurifier(\HTMLPurifier_Config::createDefault());
     }
 
     public function index()
@@ -26,7 +24,7 @@ class UserController extends BaseController
 
     public function updateUser()
     {
-        $cleaned_user_id = $this->purifier->purify($_POST['user_id']);
+        $cleaned_user_id = Helper::purifyInput($_POST['user_id']);
 
         if (Auth::checkCsrfToken($_POST['csrf'])) {
             $query_data = array(
@@ -34,25 +32,23 @@ class UserController extends BaseController
                 'user_last_name' => $_POST['user_last_name'],
                 'user_email' => $_POST['user_email']
             );
-
+            if (isset($_POST['user_language']) && !empty($_POST['user_language'])) {
+                $query_data['user_language'] = $_POST['user_language'];
+            }
             if ($this->user->update( $query_data, $cleaned_user_id)) {
                 // Log to file
                 $msg = "User " . $_POST['user_email'] . " updatet by " . Auth::getAuthUser();
                 $err_lvl = 0;
 
-                $res['title'] = $this->lang->users->edit->msg->suc->label;
-                $res['text'] = $this->lang->users->edit->msg->suc->msg;
-                $res['type'] = 'success';
+				$this->res = $this->returnMsg($this->lang->swal->title->success, '', 'success');
             }
         } else {
-            $res['title'] = $this->lang->users->edit->msg->err->label;
-            $res['text'] = $this->lang->users->edit->msg->err->msg;
-            $res['type'] = 'error';
+			$this->res = $this->returnMsg($this->lang->swal->title->error, $this->lang->users->edit->msg->err->msg . $send, 'error'); 
         }
 
         Logger::logToFile(__FILE__, $err_lvl, $msg);
 
-        Helper::jsonArr($res);
+        Helper::jsonArr($this->res);
     }
 
     public function getUserInfo()
@@ -71,6 +67,7 @@ class UserController extends BaseController
         $res = array(
             'user_status'       => $status,
             'user_id' 	        => $user_row['user_id'],
+            'user_language' 	=> $user_row['user_language'],
             'user_name' 	    => $user_row['user_name'],
             'user_last_name' 	=> $user_row['user_last_name'],
             'user_email' 	    => $user_row['user_email'],
@@ -85,7 +82,7 @@ class UserController extends BaseController
     {
 
         $password_post = $_POST['password'];
-        $cleaned_user_id = $this->purifier->purify(Auth::getAuthUser());
+        $cleaned_user_id = Helper::purifyInput(Auth::getAuthUser());
 
         if (Auth::checkCsrfToken($_POST['csrf']) && !empty($password_post))
         {
@@ -106,37 +103,29 @@ class UserController extends BaseController
                     if ($this->user->update($query_params, $cleaned_user_id))
                     {
                         Logger::logToFile(__FILE__, 0, "Password user: " . $row['user_email'] . " changed");
-
-                        $res['label'] = $this->lang->user->acc_update->msg->suc->label;
-                        $res['text'] = $this->lang->user->acc_update->msg->suc->msg;
-                        $res['type'] = 'success';
+						$this->res = $this->returnMsg($this->lang->swal->title->success, '', 'success');
 
                         // Update session with new user status
                         $_SESSION[Config::SES_NAME]['user_new'] = $query_params['user_new'];
 
-                        Helper::jsonArr($res);
+                        Helper::jsonArr($this->res);
                     }
                 }
                 catch(Exception $ex)
                 {
                     Logger::logToFile(__FILE__, 1, 'Regel: ' . $ex->getLine() . ' Bestand: ' . $ex->getFile() . ' Error: ' . $ex->getMessage());
+					$this->res = $this->returnMsg($this->lang->swal->title->error, $this->lang->users->edit->msg->err->msg, 'error'); 
 
-                    $res['label'] = $this->lang->user->acc_update->msg->err->label;
-                    $res['text'] = $this->lang->user->acc_update->msg->err->msg;
-                    $res['type'] = 'error';
-
-                    Helper::jsonArr($res);
+                    Helper::jsonArr($this->res);
                 }
 
             }
         }
         else
         {
-            $res['label'] = $this->lang->user->acc_update->msg->err->label;
-            $res['text'] = $this->lang->user->acc_update->msg->err->msg;
-            $res['type'] = 'error';
+            $this->res = $this->returnMsg($this->lang->swal->title->error, $this->lang->users->edit->msg->err->msg, 'error'); 
 
-            Helper::jsonArr($res);
+            Helper::jsonArr($this->res);
         }
     }
 }

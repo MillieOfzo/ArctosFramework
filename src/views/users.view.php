@@ -33,7 +33,7 @@
 					</div>
 					<div class="ibox-content">
 						<div class="row">
-							<form id="NewWerkbonForm" name="new_wb">
+							<form id="new_user" name="new_user">
 								<div class="col-md-6">
 									<div class="form-group">
 										<label class="control-label" for="first-name"><span data-i18n="[html]users.new.input.1">User name</span><font color="red">*</font></label>
@@ -52,7 +52,14 @@
 										<input class="form-control" data-i18n="[placeholder]placeholders.input" name="new_user_email" type="text" >
 									</div>
 								</div>
-
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="control-label" for="first-name"><span data-i18n="[html]users.new.input.4">User language</span></label>
+										<select class="select2 form-control" name="language">
+											<?= \App\Classes\Helper::getLanguageSelect();?>
+										</select>
+									</div>
+								</div>
 								<div class="col-md-12">
 									<div class="form-group">
 										<button class="btn btn-primary" name="save_button"><i class='fa fa-save fa-fw'></i> <span data-i18n="[html]users.ne.button">Create</span></button>
@@ -91,9 +98,17 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label class="control-label"><span>User role</span data-i18n="[html]users.edit.input.4"><font color="red">*</font></label>
+										<label class="control-label"><span data-i18n="[html]users.edit.input.6">User language</span></label>
+										<select class="select2 form-control" name="user_language">
+											<?= \App\Classes\Helper::getLanguageSelect();?>
+										</select>
+									</div>
+								</div>								
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="control-label"><span data-i18n="[html]users.edit.input.6">User role</span><font color="red">*</font></label>
 										<select class="select2 form-control" name="user_role">
-											<?= $obj['response']['role_select'];?>
+											<?= \App\Classes\Helper::getUserRoleSelect();?>
 										</select>
 									</div>
 								</div>
@@ -101,7 +116,7 @@
 									<div class="form-group">
 										<label class="control-label"><span data-i18n="[html]users.edit.input.5">User status</span><font color="red">*</font></label>
 										<select class="select2 form-control" name="user_status">
-											<?= $obj['response']['status_select'];?>
+											<?= \App\Classes\Helper::getUserStatusSelect();?>
 										</select>
 									</div>
 								</div>
@@ -137,55 +152,6 @@
     <script>
     $(document).ready(function() {
 		var menuEditor = $("#menu-editor");
-    	$('.datatable').on('click', '#delete', function() {
-    		var id = $(this).attr('value');
-    		var user_email = '<b>'+$(this).attr('rel')+'</b>';
-    		var csrf_token = $('input[name="csrf"]').attr('value');
-    		swal({
-    			html: true,
-    			title: i18n.t('swal.confirm.title'),
-    			text: i18n.t('users.swal.confirm.msg', { placeholder: user_email}),
-    			type: "warning",
-    			showCancelButton: true,
-				cancelButtonText: i18n.t('swal.confirm.cancelbutton'),
-    			confirmButtonColor: "#DD6B55",
-    			confirmButtonText: i18n.t('swal.confirm.confirmbutton'),
-    			closeOnConfirm: false
-    		}, function() {
-    			$.ajax({
-    				type: "post",
-    				url: "/users/delete",
-    				data: {
-    					user_id: id,
-    					csrf: csrf_token
-    				},
-    				success: function(data) {
-    					swal({
-    						html: true,
-                            title: data.label,
-                            text: data.text,
-                            type: data.type
-    					});
-    					table_active.ajax.reload(null, false);
-    				}
-    			});
-    		});
-    	});
-
-        $(".datatable").on('click', '#edit', function() {
-            var data = table_active.row($(this).parents('tr')).data();
-            $('input[name="user_id"]').val(data[0]);
-            $('input[name="user_name"]').val(data[1]);
-            $('input[name="user_last_name"]').val(data[2]);
-            $('input[name="user_email"]').val(data[3]);
-			$('select[name="user_role"]').select2({ width: '100%' });
-            $('select[name="user_role"]').val(data[9]);
-            $('select[name="user_role"]').trigger('change');
-			$('select[name="user_status"]').select2({ width: '100%' });
-            $('select[name="user_status"]').val(data[10]);
-            $('select[name="user_status"]').trigger('change');
-			menuEditor.fadeIn();
-        });		
 		
     	$.extend(true, $.fn.dataTable.defaults, {
     		language: {
@@ -218,8 +184,6 @@
 				}
 			}
     	});
-    	var interval;
-		var lang_code = $('html').attr('lang').toLowerCase() + '_' + $('html').attr('lang').toUpperCase();
 
 		function init_lang()
         {
@@ -239,6 +203,46 @@
                 init_lang();
     		}
     	});
+		
+    	$('.datatable').on('click', '#delete', function() {
+    		var id = $(this).attr('value');
+		
+			var url = '/users/delete';
+			var res = {
+				title : i18n.t('swal.confirm.title'),
+				text : i18n.t('swal.confirm.text', { placeholder: '<b>'+$(this).attr('rel')+'</b>'}),
+				type : 'warning'
+			};			
+			var data = {
+				user_id : id,
+				csrf : $('input[name="csrf"]').attr('value')
+			};
+
+			onClickResponse(url,res,data);			
+			
+    	});
+
+        $(".datatable").on('click', '#edit', function() {
+            var data = table_active.row($(this).parents('tr')).data();
+            $('input[name="user_id"]').val(data[0]);
+            $('input[name="user_name"]').val(data[1]);
+            $('input[name="user_last_name"]').val(data[2]);
+            $('input[name="user_email"]').val(data[3]);
+			
+			$('select[name="user_role"]').select2({ width: '100%' });
+            $('select[name="user_role"]').val(data[8]);
+            $('select[name="user_role"]').trigger('change');
+			
+			$('select[name="user_status"]').select2({ width: '100%' });
+            $('select[name="user_status"]').val(data[9]);
+            $('select[name="user_status"]').trigger('change');
+			
+			$('select[name="user_language"]').select2({ width: '100%' });
+            $('select[name="user_language"]').val(data[10]);
+            $('select[name="user_language"]').trigger('change');	
+		
+			menuEditor.fadeIn();
+        });		
 		
     	$('#update_user').formValidation({
     		framework: 'bootstrap',
@@ -291,35 +295,25 @@
     		e.preventDefault();
     		var $form = $(e.target),
     			fv = $form.data('formValidation');
-    		$.ajax({
-    			type: "POST",
-    			url: "/users/update",
-    			data: $('form[name="update_user"]').serialize(),
-    			success: function(data) {
-    				swal({
-    					html: true,
-    					title: data.label,
-    					text: data.text,
-    					type: data.type
-    				});
-    				table_active.ajax.reload(null, false);
-					fv.resetForm();
-					$('form').find("input[type=text], textarea, select").val("");
-					menuEditor.fadeOut();
-    			},
-    			error: function(xhr, status, error) {
-    				var json = $.parseJSON(xhr.responseText);
-    				console.log(json);
-    				swal({
-    					html: true,
-    					title: json.title,
-    					text: json.msg,
-    					type: "error"
-    				});
-    			}
-    		});
+				
+			$.ajaxq ('users',{
+				type: "POST",
+    			url: '/users/update',
+    			data: $('form[name="update_user"]').serialize()
+			}).done(function(data){
+				swal({
+    				title: data.title,
+    				html: data.text,
+    				type: data.type
+    			});
+				table_active.ajax.reload(null, false);
+                fv.resetForm();
+				$('form').find("input[type=text], textarea, select").val("");
+				menuEditor.fadeOut();
+			}).fail(ajaxObj.fail);				
+
     	});
-    	$('#NewWerkbonForm').formValidation({
+    	$('#new_user').formValidation({
     		framework: 'bootstrap',
     		icon: {
     			valid: 'glyphicon glyphicon-ok',
@@ -358,32 +352,50 @@
     		e.preventDefault();
     		var $form = $(e.target),
     			fv = $form.data('formValidation');
-    		$.ajax({
-    			type: "POST",
-    			url: "/users/new",
-    			data: $('form[name="new_wb"]').serialize(),
-    			success: function(data) {
-    				swal({
-    					html: true,
-                        title: data.label,
-                        text: data.text,
-                        type: data.type
-    				});
-    				table_active.ajax.reload(null, false);
-					fv.resetForm();
-					$('form').find("input[type=text], textarea, select").val("");
-    			},
-    			error: function(xhr, status, error) {
-    				var json = $.parseJSON(xhr.responseText);
-    				//console.log(json);
-    				swal({
-    					html: true,
-    					title: json.title,
-    					text: json.msg,
-    					type: "error"
-    				});
-    			}
-    		});
+			$.ajaxq ('users',{
+				type: "POST",
+    			url: '/users/new',
+    			data: $('form[name="new_user"]').serialize()
+			}).done(function(data){
+				swal({
+    				title: data.title,
+    				html: data.text,
+    				type: data.type
+    			});
+				table_active.ajax.reload(null, false);
+                fv.resetForm();
+				$('form').find("input[type=text], textarea, select").val("");
+			}).fail(ajaxObj.fail);
     	});
     });
+	
+	function onClickResponse(url, res, data_set)
+	{
+		swal({
+    		title: res['title'],
+    		html: res['text'],
+    		type: res['type'],
+			reverseButtons: true,
+    		showCancelButton: true,
+			cancelButtonText: i18n.t('swal.confirm.cancelbutton'),
+    		confirmButtonColor: "#DD6B55",
+    		confirmButtonText: i18n.t('swal.confirm.confirmbutton')
+    		//closeOnConfirm: false
+    	}).then((result) => {
+			if (result.value) {
+				$.ajaxq ('users',{
+					type: 'POST',
+					url: url,
+					data: data_set
+				}).done(function(data){
+					swal({
+						title: data.title,
+						html: data.text,
+						type: data.type
+					});
+				}).fail(ajaxObj.fail);
+				location.reload();
+			}
+    	});
+	}	
 	</script>	

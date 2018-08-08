@@ -1,8 +1,8 @@
-
-<div class="row border-bottom">
+<div class="row">
     <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 hidden" href="#" id="menu_bar"><i class="stroke-hamburgermenu"></i> </a>
+        
+		<div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2" href="#" id="menu_bar"><i class="stroke-hamburgermenu"></i> </a>
 
             <div class="navbar-form-custom" >
                 <div class="form-group">
@@ -19,7 +19,6 @@
                     <i class="fa fa-sign-out"></i> <span data-i18n="[html]layout.topnav.logout" id="log_out_span"> Log out </span>
                 </a>
             </li>
-
         </ul>
 
     </nav>

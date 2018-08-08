@@ -25,7 +25,6 @@ class FileManager
             '/public/css/formvalidation/dist/css/formValidation.min.css',
             '/public/css/dataTables/datatables.min.css',
             '/public/css/dataTables/datatables_responsive.min.css',
-            '/public/css/sweetalert/sweetalert.css',
             '/public/css/select2/dist/css/select2.min.css',
             '/public/css/datepicker/datepicker3.css',
             '/public/css/main/style_'.strtolower(Config::APP_THEME).'.css',
@@ -48,10 +47,11 @@ class FileManager
             '/public/js/formvalidation/dist/js/formValidation.min.js',
             '/public/js/formvalidation/dist/js/framework/bootstrap.min.js',
             '/public/js/formvalidation/dist/js/language/' . strtolower(Config::APP_LANG) . '_' . strtoupper(Config::APP_LANG) . '.js',
-            '/public/js/sweetalert/sweetalert.min.js',
+            '/public/js/sweetalert2/sweetalert2.all.js',
             '/public/js/zxcvbn/zxcvbn.js',
             '/public/js/select2/dist/js/select2.js',
             '/public/js/autocomplete/dist/jquery.autocomplete.min.js',
+            '/public/js/ajaxqueue/jquery.ajaxq-0.0.1.js',			
         );
         return $jsArr;
     }

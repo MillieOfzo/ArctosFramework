@@ -59,7 +59,7 @@ class Router
 	 * Default: true;
      * @param bool
      */	
-    private static $cacheDisabled = false;
+    private static $cacheDisabled = true;
 
     /**
      * Route the request to the registered class and method

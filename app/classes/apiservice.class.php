@@ -272,6 +272,8 @@ Class ApiService
     /**
      * Returns response message array
      * 
+     * @param bool $status True or false	 
+     * @param string $msg Response message
      * @return array
      */	
 	protected function setMsg($status, $msg = '')

@@ -68,6 +68,12 @@ class Config
     const LOGO_NAME = 'logo_light.png';
 	
     /**
+     * Specify the name of the image to be used as logo in the minified sidebar header
+     * @var string
+     */	
+    const LOGO_SIDEBAR = 'logo_light.png';
+	
+    /**
      * Specify the name of the image to be used as favicon
      * @var string
      */		

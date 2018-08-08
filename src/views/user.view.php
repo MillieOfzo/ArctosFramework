@@ -63,11 +63,19 @@
                                 Update user
                             </h3>
                             <form class="m-t" id="update_user" name="update_user" >
-
-                                <div class="form-group">
-                                    <label data-i18n="[html]user.edit.input.3">Email address:</label>
-                                    <input type="email" class="form-control" name="user_email" required="" value="" data-i18n="[placeholder]loginscreen.placeholder.email">
-                                </div>
+								<div class="row">
+									<div class="form-group col-md-6">
+										<label data-i18n="[html]user.edit.input.3">Email address:</label>
+										<input type="email" class="form-control" name="user_email" required="" value="" data-i18n="[placeholder]loginscreen.placeholder.email">
+									</div>
+									<div class="form-group col-md-6">
+										<label data-i18n="[html]user.edit.input.4">Language:</label>
+										<select class="select2 form-control" name="user_language">
+											<?= \App\Classes\Helper::getLanguageSelect();?>
+										</select>
+									</div>									
+								</div>
+								
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <label data-i18n="[html]user.edit.input.1">First name:</label>
@@ -78,6 +86,7 @@
                                         <input type="text" name="user_last_name" data-i18n="[placeholder]placeholders.input" class="form-control" data-name="Zipcode">
                                     </div>
                                 </div>
+								
                                 <input type="text" name="user_id" hidden>
                                 <button type="submit" class="btn btn-primary " name="update" data-i18n="[html]user.edit.button">Update</button>
 
@@ -101,7 +110,7 @@ foreach($arr_js as $js){
 <script>
     $(document).ready(function () {
 		
-        getUserInfo();
+        getUserInfo('/user/info');
 
         $('#update_user').formValidation({
             framework: 'bootstrap',
@@ -142,45 +151,38 @@ foreach($arr_js as $js){
             e.preventDefault();
             var $form = $(e.target),
                 fv = $form.data('formValidation');
-            $.ajax({
-                type: "POST",
-                url: "/user/update",
-                data: $('form[name="update_user"]').serialize(),
-                success: function(data) {
-                    swal({
-                        html: true,
-                        title: data.title,
-                        text: data.text,
-                        type: data.type
-                    });
-                    getUserInfo();
-                },
-                error: function(xhr, status, error) {
-                    var json = $.parseJSON(xhr.responseText);
-                    getUserInfo();
-                    swal({
-                        html: true,
-                        title: json.title,
-                        text: json.msg,
-                        type: "error"
-                    });
-                }
-            });
+			$.ajaxq ('users',{
+				type: "POST",
+    			url: '/user/update',
+    			data: $('form[name="update_user"]').serialize()
+			}).done(function(data){
+				swal({
+    				title: data.title,
+    				html: data.text,
+    				type: data.type
+    			});
+			}).fail(ajaxObj.fail);				
+
         });
 
     });
 
-    function getUserInfo(){
-        $.ajax({
-            type: 'GET',
-            url: '/user/info',
-            success: function(data) {
-                $.each( data, function( key, value ) {
-                    $('#'+key).html(value);
-                    $('input[name="'+key+'"').val(value);
-                });
-            }
-        });
+    function getUserInfo(url)
+	{
+		$.ajaxq ('user',{
+			url: url,
+		}).done(function(data){
+			$.each( data, function( key, value ) {
+                $('#'+key).html(value);
+				if(key == 'user_language')
+				{
+					$('select[name="'+key+'"]').val(value);
+					$('select[name="'+key+'"]').trigger('change');						
+				}				
+                $('input[name="'+key+'"').val(value);
+            });
+		}).fail(ajaxObj.fail);
+		
     }
 
 </script>

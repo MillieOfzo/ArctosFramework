@@ -15,7 +15,6 @@ class UsersController extends BaseController
     private $user;
     private $conn;
     private $auth_user;
-    private $purifier;
 
     function __construct()
     {
@@ -23,42 +22,23 @@ class UsersController extends BaseController
         $this->user = new UserModel;
 		$this->conn = new SafeMySQL;
 		$this->auth_user = htmlentities($_SESSION[Config::SES_NAME]['user_email'], ENT_QUOTES, 'UTF-8');
-        $this->purifier = new \HTMLPurifier(\HTMLPurifier_Config::createDefault());
     }
 
     public function index()
     {
-		
-		$status_select ='<option></option>';
-		foreach($this->conn->getAll("SELECT * FROM app_user_status") as $status)
-		{
-			$status_select .= '<option value="'.$status['id'].'">'.$status['status_name'].'</option>';
-		}
 
-		$role_select ='<option></option>';
-		foreach($this->conn->getAll("SELECT * FROM app_role") as $role)
-		{
-			$role_select .= '<option value="'.$role['id'].'">'.$role['role_name'].'</option>';
-		}
-		
-		return array(
-			'status_select' => $status_select,
-			'role_select' => $role_select
-		); 
     }
 
     public function newUser()
     {
-        $cleaned_email = $this->purifier->purify($_POST['new_user_email']);
+        $cleaned_email = Helper::purifyInput($_POST['new_user_email']);
 
         $user_row = $this->user->getUserRow($cleaned_email);
 
         // Check if mail exsists
         if ($user_row['user_email']) {
-            $response_array['type']  = 'warning';
-            $response_array['title'] = 'Let op';
-            $response_array['body']  = '<b>' . $_POST['new_user_email'] . '</b> bestaat al, kies een ander email adres';
-            Helper::jsonArr($response_array);
+			$this->res 		= $this->returnMsg($this->lang->swal->title->warning, '<b>' . $_POST['new_user_email'] . '</b> already exists', 'warning');
+            Helper::jsonArr($this->res);
         }
 
         if (Auth::checkCsrfToken($_POST['csrf'])) {
@@ -73,7 +53,9 @@ class UsersController extends BaseController
                 'user_email' => $_POST['new_user_email'],
                 'user_password' => $hash
             );
-
+            if (isset($_POST['user_language']) && !empty($_POST['user_language'])) {
+                $query_data['user_language'] = $_POST['user_language'];
+            }
             if($this->user->create($query_data))
             {
                 $email_values = array(
@@ -95,30 +77,24 @@ class UsersController extends BaseController
                 // Log to file
                 $msg     = "Nieuwe user " . $_POST['new_user_email'] . " aangemaakt door " . $this->auth_user;
                 $err_lvl = 0;
-
-                $res['label'] = $this->lang->users->new->msg->suc->label;
-                $res['text'] = $this->lang->users->new->msg->suc->msg  .'<br>'. $send;
-                $res['type'] = 'success';
+				$this->res 		= $this->returnMsg($this->lang->swal->title->success, $send, 'success');
             }
 
             
         } else {
             $msg     = "New user " . $_POST['new_user_email'] . " not created ";
             $err_lvl = 2;
-            $res['label'] = $this->lang->user->acc_update->msg->err->label;
-            $res['text'] = $this->lang->user->acc_update->msg->err->msg . $send;
-            $res['type'] = 'error';
-            
+			$this->res 		= $this->returnMsg($this->lang->swal->title->error, $this->lang->users->edit->msg->err->msg . $send, 'error');           
         }
         
         Logger::logToFile(__FILE__, $err_lvl, $msg);
 
-        Helper::jsonArr($res);
+        Helper::jsonArr($this->res);
     }
     
     public function updateUser()
     {
-        $cleaned_user_id = $this->purifier->purify($_POST['user_id']);
+        $cleaned_user_id = Helper::purifyInput($_POST['user_id']);
 
         if (Auth::checkCsrfToken($_POST['csrf'])) {
             $query_data = array(
@@ -132,30 +108,29 @@ class UsersController extends BaseController
             if (isset($_POST['user_role']) && !empty($_POST['user_role'])) {
                 $query_data['user_role'] = $_POST['user_role'];
             }
-
+            if (isset($_POST['user_language']) && !empty($_POST['user_language'])) {
+                $query_data['user_language'] = $_POST['user_language'];
+            }
+			
             if ($this->user->update( $query_data, $cleaned_user_id)) {
                 // Log to file
                 $msg = "User " . $_POST['user_email'] . " updatet by " . $this->auth_user;
                 $err_lvl = 0;
-
-                $res['label'] = $this->lang->users->edit->msg->suc->label;
-                $res['text'] = $this->lang->users->edit->msg->suc->msg;
-                $res['type'] = 'success';
+				
+				$this->res 		= $this->returnMsg($this->lang->swal->title->success, '', 'success');
             }
         } else {
-            $res['label'] = $this->lang->users->edit->msg->err->label;
-            $res['text'] = $this->lang->users->edit->msg->err->msg;
-            $res['type'] = 'error';
+			$this->res 		= $this->returnMsg($this->lang->swal->title->error, $this->lang->users->edit->msg->err->msg, 'error');
         }
         
         Logger::logToFile(__FILE__, $err_lvl, $msg);
 
-        Helper::jsonArr($res);
+        Helper::jsonArr($this->res);
     }
     
     public function deleteUser()
     {
-        $cleaned_user_id = $this->purifier->purify($_POST['user_id']);
+        $cleaned_user_id = Helper::purifyInput($_POST['user_id']);
 
         $user_row = $this->user->getUserRow($cleaned_user_id);
 
@@ -166,22 +141,18 @@ class UsersController extends BaseController
             // Log to file
             $msg     = "User " . $user_row['user_email'] . " removed by " . $this->auth_user;
             $err_lvl = 0;
+			$this->res 		= $this->returnMsg($this->lang->swal->title->success, '', 'success');
 
-            $res['label'] = $this->lang->users->edit->msg->del->label;
-            $res['text'] = $this->lang->users->edit->msg->del->msg;
-            $res['type'] = 'success';
             
         } else {
             $msg          = "User " . $user_row['user_email'] . " NOT removed";
             $err_lvl      = 2;
-            $res['label'] = $this->lang->users->edit->msg->err->label;
-            $res['text'] = $this->lang->users->edit->msg->err->msg;
-            $res['type'] = 'error';
+            $this->res 		= $this->returnMsg($this->lang->swal->title->error, $this->lang->users->edit->msg->err->msg, 'error'); 
         }
         
         Logger::logToFile(__FILE__, $err_lvl, $msg);
 
-        Helper::jsonArr($res);
+        Helper::jsonArr($this->res);
     }	
 	
 	public function getTableUsers()
@@ -275,7 +246,7 @@ class UsersController extends BaseController
                 'dt' => 9
             ),
             array(
-                'db' => "user_status",
+                'db' => "user_language",
                 'dt' => 10
             )			
         );

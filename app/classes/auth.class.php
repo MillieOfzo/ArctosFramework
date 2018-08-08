@@ -15,26 +15,31 @@ use \SafeMySQL;
 
 class Auth
 {
-
-    function __construct()
-    {
-
-    }
 	
 	/**
-	* Get the user_id of the currently logged in user
-	* @return int $auth_user User id of authenticated user
-	*/
+	 * Get the user_id of the currently logged in user
+	 * @return int $auth_user User id of authenticated user
+	 */
     public static function getAuthUser()
     {
         $auth_user = (isset($_SESSION[Config::SES_NAME])) ? htmlentities($_SESSION[Config::SES_NAME]['user_id'], ENT_QUOTES, 'UTF-8') : '---';
         return (int) $auth_user;
     }
-
+	
 	/**
-	* Check if there is a session active
-	* @return bool true if there is a session active else return false
-	*/	
+	 * Get user language if available in session, else use the application default language
+	 * @return string $lang language locale code
+	 */
+	public static function getAuthUserLanguage()
+	{
+        $lang = (isset($_SESSION[Config::SES_NAME]['user_language'])) ? htmlentities($_SESSION[Config::SES_NAME]['user_language'], ENT_QUOTES, 'UTF-8') : Config::APP_LANG;
+        return $lang;		
+	}	
+	
+	/**
+	 * Check if there is a session active
+	 * @return bool true if there is a session active else return false
+	 */	
     public static function checkAuth()
     {
 		// If LDAP auth is enabled and there is not yet created a user session
@@ -57,9 +62,9 @@ class Auth
     }
 
 	/**
-	* Check if there the currently logged in user is admin
-	* @return bool true if there is a session active else return false
-	*/		
+	 * Check if there the currently logged in user is admin
+	 * @return bool true if there is a session active else return false
+	 */		
     public static function checkAuthUserIsAdmin()
     {
         $conn = new SafeMySQL;
@@ -78,11 +83,11 @@ class Auth
     }
 
 	/**
-	* Brute force prevention
-	*
-	* @param int $user_id Accepts user is as integer
-	* @return bool true if there are more than 5 failed login attempts else return false
-	*/		
+	 * Brute force prevention
+	 *
+	 * @param int $user_id Accepts user is as integer
+	 * @return bool true if there are more than 5 failed login attempts else return false
+	 */		
 	public static function checkBrute($user_id)
     {
         $conn = new SafeMySQL;
@@ -108,11 +113,11 @@ class Auth
     }	
 
 	/**
-	* Check if the csrf token is valid
-	*
-	* @param string $token 
-	* @return bool true if the $token hash equals the token hash in the active session else return false
-	*/	
+	 * Check if the csrf token is valid
+	 *
+	 * @param string $token 
+	 * @return bool true if the $token hash equals the token hash in the active session else return false
+	 */	
     public static function checkCsrfToken($token)
     {
         if(Csrf::checkCsrfToken($token))
@@ -128,11 +133,11 @@ class Auth
     }
 
 	/**
-	* Check if the csrf token is valid
-	*
-	* @param int $length Defines the length of the for loop. Per loop 3 words are chosen. Default length is 2 which equals 6 words 
-	* @return string $seed Return the password seed based on length. Default returns 6 words as string
-	*/	
+	 * Check if the csrf token is valid
+	 *
+	 * @param int $length Defines the length of the for loop. Per loop 3 words are chosen. Default length is 2 which equals 6 words 
+	 * @return string $seed Return the password seed based on length. Default returns 6 words as string
+	 */	
     public static function genPassSeed($length = 2)
     {
         $path = '../storage/framework/seed_words.conf';

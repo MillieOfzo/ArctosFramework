@@ -1,5 +1,5 @@
 <div class="middle-box animated fadeInDown" style="max-width: 800px; padding-bottom: 50px; color:#949ba2;">
-
+	<?php $current_url = sprintf('%s://%s', isset($_SERVER['HTTPS']) ? 'https' : 'http', $_SERVER['HTTP_HOST']);?>
     <div id="page-wrapper statement" class="">
         <h2>COOKIE VERKLARING</h2>
         <p class="c-white">
@@ -7,7 +7,7 @@
             <strong>1. Het gebruik van cookies</strong>
         </p>
         <p>
-            <a href="https://titanium.asb.nl/">https://titanium.asb.nl</a>
+            <a href="<?=  $current_url;?>"><?=  $current_url;?></a>
             maakt gebruik van cookies. Een cookie is een eenvoudig klein bestandje dat
             met pagina’s van deze website en/of Flash-applicaties wordt meegestuurd en
             door je browser op je harde schrijf van je computer, mobiele telefoon,
@@ -162,7 +162,7 @@
         </p>
         <p>
             In blogartikelen kan gebruik worden gemaakt van content die op andere sites
-            wordt gehost en op    <a href="https://titanium.asb.nl/">https://titanium.asb.nl</a> wordt
+            wordt gehost en op    <a href="<?=  $current_url;?>"><?=  $current_url;?></a> wordt
             ontsloten door middel van bepaalde codes (embedded content). Denk hierbij
             aan bijvoorbeeld YouTube video's. Deze codes maken vaak gebruik van
             cookies. Wij hebben echter geen controle op wat deze derde partijen met hun

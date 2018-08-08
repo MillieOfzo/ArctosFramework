@@ -6,7 +6,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="<?= Config::APP_LANG;?>">
+<html lang="<?= \App\Classes\Auth::getAuthUserLanguage();?>">
 <head>
 
 	<title><?= Config::APP_TITLE;?> | <?= $title[1];?></title>
