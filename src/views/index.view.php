@@ -17,7 +17,7 @@
 					<div class="form-group">
 						<input type="password" class="form-control" placeholder="Password" name="password" required="" data-i18n="[placeholder]loginscreen.placeholder.password">
 					</div>
-					<button type="submit" class="btn btn-primary block full-width m-b" name="login" value="Login" data-i18n="[html]loginscreen.login">Login</button>
+					<button type="submit" class="btn btn-accent block full-width m-b" name="login" value="Login" data-i18n="[html]loginscreen.login">Login</button>
 	
 					<a class="link showform" id="password"><small data-i18n="[html]loginscreen.forget">Forgot password?</small></a>
 
@@ -28,7 +28,7 @@
 						<div class="form-group">
 							<input type="email" class="form-control" placeholder="Email" name="email" required="" data-i18n="[placeholder]loginscreen.placeholder.email">
 						</div>			
-						<button type="submit" name="request" value="request" class="btn btn-primary block full-width m-b" data-i18n="[html]loginscreen.request">Request </button>
+						<button type="submit" name="request" value="request" class="btn btn-accent block full-width m-b" data-i18n="[html]loginscreen.request">Request </button>
 	
 						<a class="link showform" id="password" data-i18n="[html]loginscreen.login">Login</a>
 					</form>

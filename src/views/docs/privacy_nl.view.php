@@ -330,7 +330,7 @@
             Versie 1.00-2018-5
         </p>
 		<br>
-        <a href="/" class='btn btn-primary' data-i18n="[html]error_page.return_btn">Go back</a>
+        <a href="/" class='btn btn-accent' data-i18n="[html]error_page.return_btn">Go back</a>
     </div>
 
 </div>

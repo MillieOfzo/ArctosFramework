@@ -115,7 +115,7 @@
 		<p>Version 2017103EN</p>
 
         <br>
-        <a href="/" class='btn btn-primary' data-i18n="[html]error_page.return_btn">Go back</a>
+        <a href="/" class='btn btn-accent' data-i18n="[html]error_page.return_btn">Go back</a>
     </div>
 
 </div>
