@@ -46,6 +46,24 @@ class Helper
 		}
 		return $select;
 	}	
+
+    /**
+     * in_array() does not work on multidimensional arrays. Custom recursive function
+     *
+     * @param value $needle
+     * @param array $haystack
+     * @param bool  $strict
+     * @return bool
+     */
+    public static function in_array_r($needle, $haystack, $strict = false) 
+	{
+        foreach ($haystack as $item) {
+            if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && self::in_array_r($needle, $item, $strict))) {
+                return true;
+            }
+        }
+        return false;
+    }
 	
 	public static function purifyInput($value)
 	{

@@ -144,7 +144,7 @@ class Mailer
 		$lang = (new Language)->getLanguageFile();
 		
         $header_arr = array(
-            'header_logo' => Helper::getUrlProtocol() . '://' . $_SERVER['HTTP_HOST'] . '/public/img/' . Config::LOGO_NAME,
+            //'header_logo' => Helper::getUrlProtocol() . '://' . $_SERVER['HTTP_HOST'] . '/public/img/' . Config::LOGO_NAME,
             'header_link' => Helper::getUrlProtocol() . '://' . $_SERVER['HTTP_HOST'],
             'header_title' => Config::APP_TITLE,
             //'header_text' => $lang->loginscreen->text
@@ -246,6 +246,7 @@ class Mailer
         // Content
         $mail->isHTML(true);
         $mail->Subject = $subject;
+		$mail->addEmbeddedImage($_SERVER['DOCUMENT_ROOT'] . '/public/img/' . Config::LOGO_NAME, 'header_logo', Config::LOGO_NAME);
         $mail->Body = $mail_body;	
         //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 

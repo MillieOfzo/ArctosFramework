@@ -18,7 +18,7 @@ class Language
      */
     public function getLanguageFile()
     {
-        return json_decode(file_get_contents($this->file_location . Config::APP_LANG . '.json'));
+        return json_decode(file_get_contents($this->file_location . Auth::getAuthUserLanguage() . '.json'));
     }
 
     /**

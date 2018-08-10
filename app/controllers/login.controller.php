@@ -252,10 +252,11 @@ class LoginController extends BaseController
                     $token_hash = hash('sha256', $token_hash . $salt);
                 }
 
-
                 $email_values = array(
                     'user_name' => $row['user_name'] . " " . $row['user_last_name'],
-                    'recover_link' => '<a class="link" href="http://' . $_SERVER['HTTP_HOST'] . '/login/gentoken/' . $token . '/' . $_SESSION['_token'] . '/' . $row['user_id'] . '">Recover token</a>'
+                    'recover_link' => '<a style="color:#eda02b; text-decoration:none;" href="http://' . $_SERVER['HTTP_HOST'] . '/login/gentoken/' . $token . '/' . $_SESSION['_token'] . '/' . $row['user_id'] . '">Recover token</a>',
+					'app_name' => Config::APP_TITLE . ' team',
+                    'contact_mail' => '<a style="color:#eda02b; text-decoration:none;" href="mailto:' . Config::APP_EMAIL .'" target="_blank">' . Config::APP_EMAIL . '</a>',					
                 );
 
                 $mail_body = Mailer::build('gen_token', $email_values);
@@ -363,8 +364,10 @@ class LoginController extends BaseController
 
                 $email_values = array(
                     'user_name' => $row['user_name'] . " " . $row['user_last_name'],
-                    'link' => '<a class="link" href="http://' . $_SERVER['HTTP_HOST'] . '">'.Config::APP_TITLE.'</a>',
+                    'link' => '<a style="color:#eda02b; text-decoration:none;" href="http://' . $_SERVER['HTTP_HOST'] . '">'.Config::APP_TITLE.'</a>',
                     'gen_password' => $gen_password,
+					'app_name' => Config::APP_TITLE . ' team',
+                    'contact_mail' => '<a style="color:#eda02b; text-decoration:none;" href="mailto:'.Config::APP_EMAIL.'" target="_blank">'.Config::APP_EMAIL.'</a>',
                 );
                 
                 $mail_body = Mailer::build('password_reset', $email_values);

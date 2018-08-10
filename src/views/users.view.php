@@ -222,6 +222,24 @@
 			
     	});
 
+        $('.datatable').on('click', '#password_reset', function(){
+			var id = $(this).attr('value');
+			var name = $(this).attr('rel');
+
+			var url = '/users/password/reset';
+			var res = {
+				title : i18n.t('swal.confirm.title'),
+				text : 'Reset password for <b>'+name+'</b>',
+				type : 'info'
+			};			
+			var data = {
+				user_id : id,
+				csrf : $('input[name="csrf"]').attr('value')
+			};
+
+			onClickResponse(url,res,data);
+        });		
+		
         $(".datatable").on('click', '#edit', function() {
             var data = table_active.row($(this).parents('tr')).data();
             $('input[name="user_id"]').val(data[0]);
@@ -394,7 +412,7 @@
 						type: data.type
 					});
 				}).fail(ajaxObj.fail);
-				location.reload();
+				//location.reload();
 			}
     	});
 	}	

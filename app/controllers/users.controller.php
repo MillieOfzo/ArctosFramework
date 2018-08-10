@@ -60,9 +60,10 @@ class UsersController extends BaseController
             {
                 $email_values = array(
                     'user_name' => $_POST['new_user_name'] . " " . $_POST['new_user_last_name'],
-                    'app_name' => Config::APP_TITLE,
-                    'login_link' => '<a class="link" href="http://' . $_SERVER['HTTP_HOST'] . '">' . Config::APP_TITLE . '</a>',
-                    'gen_password' => $gen_password
+                    'login_link' => '<a style="color:#eda02b; text-decoration:none;" href="http://' . $_SERVER['HTTP_HOST'] . '">' . Config::APP_TITLE . '</a>',
+                    'gen_password' => $gen_password,
+					'app_name' => Config::APP_TITLE . ' team',
+                    'contact_mail' => '<a style="color:#eda02b; text-decoration:none;" href="mailto:'.Config::APP_EMAIL.'" target="_blank">'.Config::APP_EMAIL.'</a>',
                 );
 
                 $mail_body = Mailer::build('new_user', $email_values);
@@ -155,6 +156,77 @@ class UsersController extends BaseController
         Helper::jsonArr($this->res);
     }	
 	
+	public function resetUserPass()
+	{
+        $cleaned_user_id = Helper::purifyInput($_POST['user_id']);
+
+        if (Auth::checkCsrfToken($_POST['csrf']))
+        {
+            $row = $this->user->getUserRow($cleaned_user_id);
+
+            if ($row)
+            {
+                // Generate random password seed
+                $gen_password = Auth::genPassSeed(2);
+                $hash = password_hash($gen_password, PASSWORD_ARGON2I);
+
+                $row = $this->user->getUserRow($cleaned_user_id);
+
+                $query_params = array(
+                    'user_password' => $hash,
+                    'user_new' => 1
+                );
+
+                $email_values = array(
+                    'user_name' => $row['user_name'] . " " . $row['user_last_name'],
+					'user_name_authenticator' => htmlentities($_SESSION[Config::SES_NAME]['user_email'], ENT_QUOTES, 'UTF-8'),
+                    'link' => '<a style="color:#eda02b; text-decoration:none;" href="http://' . $_SERVER['HTTP_HOST'] . '">'.Config::APP_TITLE.'</a>',
+                    'gen_password' => $gen_password,
+					'app_name' => Config::APP_TITLE . ' team',
+                    'contact_mail' => '<a style="color:#eda02b; text-decoration:none;" href="mailto:'.Config::APP_EMAIL.'" target="_blank">'.Config::APP_EMAIL.'</a>',
+                );
+                
+                $mail_body = Mailer::build('password_reset_request', $email_values);
+				$send_mail = Mailer::send(Config::APP_TITLE . ' ' . $this->lang->send_mail->password_request->subject, $mail_body, array($row['user_email']));
+				
+                if($send_mail == 0)
+				{
+                    $this->res 	= $this->returnMsg( $this->lang->loginmsg->tok->notsend->label, $this->lang->loginmsg->tok->notsend->msg, 'danger');			
+				}         
+				
+				if($send_mail)
+				{
+					if ($this->user->update($query_params, $cleaned_user_id))
+					{	
+						Logger::logToFile(__FILE__, 0, "Password reset. Mail send to user: " . $row['user_email']);
+						$this->res 	= $this->returnMsg( $this->lang->loginmsg->res->suc->label, $this->lang->loginmsg->res->suc->msg );
+					}
+					else
+					{
+						Logger::logToFile(__FILE__, 0, "Password not updated for user: " . $row['user_email']);
+						$this->res 	= $this->returnMsg( $this->lang->loginmsg->res->err->label, $this->lang->loginmsg->res->err->msg, 'danger');
+					}				
+				}
+				else 
+				{
+					Logger::logToFile(__FILE__, 0, 'Message could not be sent.');
+					$this->res 	= $this->returnMsg( $this->lang->loginmsg->res->notsend->label, $this->lang->loginmsg->res->notsend->msg, 'danger');
+				}
+            }
+            else
+            {
+                $this->res 	= $this->returnMsg( $this->lang->loginmsg->tok->inv->label, $this->lang->loginmsg->tok->inv->msg, 'danger');
+
+            }
+        }
+        else
+        {
+			// CRSF token invalid but ask user to request a new token
+			$this->res 	= $this->returnMsg( $this->lang->loginmsg->res->err->label, $this->lang->loginmsg->res->err->msg, 'danger');
+        }
+		Helper::jsonArr($this->res);
+	}
+	
 	public function getTableUsers()
     {
 
@@ -228,12 +300,12 @@ class UsersController extends BaseController
                 'dt' => 7,
                 'formatter' => function($d, $row)
                 {
-                    $edit = "<a class='label label-success' id='edit' value='" . $row[0] . "' rel='" . $row[2] . "' >" . $this->lang->users->actions->edit . "</a>";
+                    $edit = "<a class='btn btn-success btn-xs' id='edit' value='" . $row[0] . "' rel='" . $row[2] . "' >" . $this->lang->users->actions->edit . "</a>";
+					$edit .= " <a class='btn btn-success btn-xs' id='password_reset' value='" . $row[0] . "' rel='" . $row[2] . "' >" . $this->lang->users->actions->password . "</a>";					
                     if($d != Auth::getAuthUser())
                     {
-                        $edit .= " <a class='label label-danger' id='delete' value='" . $row[0] . "' rel='" . $row[2] . "' >" . $this->lang->users->actions->delete . "</a>";
+                        $edit .= " <a class='btn btn-danger btn-xs' id='delete' value='" . $row[0] . "' rel='" . $row[2] . "' >" . $this->lang->users->actions->delete . "</a>";
                     }
-
                     return $edit;
                 }
             ),

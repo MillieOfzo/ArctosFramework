@@ -109,6 +109,7 @@ class Routes
                 array('POST', '/users/new', 'UsersController/newUser'),
                 array('POST', '/users/update', 'UsersController/updateUser'),
                 array('POST', '/users/delete', 'UsersController/deleteUser'),
+                array('POST', '/users/password/reset', 'UsersController/resetUserPass'),
 				// Logging
 				array('GET', '/logging', 'LoggingController/index'),
 				array('POST', '/logging/file/', 'LoggingController/getLogFile'),

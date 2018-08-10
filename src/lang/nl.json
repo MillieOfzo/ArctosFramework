@@ -101,6 +101,9 @@
 		},
 		"new_password":{
 			"subject":" password reset (2/2)"
+		},
+		"password_request":{
+			"subject":" password reset"
 		}		
 	},
 	"loginmsg":{
@@ -269,7 +272,8 @@
 		},
 		"actions":{
 			"edit":"Aanpassen",
-			"delete":"Verwijderen"
+			"delete":"Verwijderen",
+			"password":"Wachtwoord reset"
 		},
 		"table":{
 			"th1":"Gebruikers ID",
