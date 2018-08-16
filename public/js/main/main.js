@@ -244,6 +244,14 @@ $(document).ready(function () {
 
 var lang_code = $('html').attr('lang').toLowerCase() + '_' + $('html').attr('lang').toUpperCase();
 
+// Set sweetalert toast notification
+const toast = swal.mixin({
+	toast: true,
+	position: 'bottom-end',
+	showConfirmButton: false,
+	timer: 3000
+});
+
 var ajaxObj = {
 	options: {
 		url: null,

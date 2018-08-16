@@ -72,6 +72,16 @@ if(\Config::MAINTENANCE) {
         include '../src/views/modals/new_user.modal.php';
         echo "<script>$('#myModal').modal('show');</script>";
     }
+	if(isset($_SESSION[\Config::SES_NAME]) && !isset($_SESSION[Config::SES_NAME]['loggedin'])) {
+
+		echo "<script>
+			toast({
+				type: 'success',
+				title: 'Signed in successfully'
+			})
+		</script>";			
+		$_SESSION[Config::SES_NAME]['loggedin'] = 1;
+	}	
     ?>
 <?php 
 } else {

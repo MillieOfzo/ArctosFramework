@@ -62,7 +62,7 @@ class Routes
                 array('GET', '/logout/{id:[0-9A-Za-z]+}', 'LoginController/processLogout'),
 				
 				// Autocomplete
-                array('GET', '/autocomplete', 'IndexController/getAutoComplete'),
+                array('GET', '/autocomplete', 'AutocompleteController/get'),
 				
 				// Home
 				array('GET', '/home', 'HomeController/index'),

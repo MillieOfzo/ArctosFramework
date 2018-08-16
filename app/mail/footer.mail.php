@@ -5,7 +5,7 @@
     </tr>
     <tr>
         <td valign="top" style="padding-top:20px; border-top:1px solid #ddd">
-            <p class="footer-customer" style="margin:0; float:left; font-size:14px; color:#ababab"> <span>{{footer_year}} &copy; ASB Security</span></p>
+            <p class="footer-customer" style="margin:0; float:left; font-size:14px; color:#ababab"> <span>{{footer_year}} &copy; {{copyright}}</span></p>
             <ul class="footer-social" style="list-style-type:none; float:right; color:#ababab; margin:0; padding:0; text-align:right; font-size:14px">
                 <li style="display:inline-block; padding-left:15px">{{footer_date}}
                 </li>

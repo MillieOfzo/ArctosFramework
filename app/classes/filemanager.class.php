@@ -21,12 +21,12 @@ class FileManager
             '/public/css/bootstrap/bootstrap.min.css',
             '/public/css/fonts/font-awesome/css/font-awesome.css',
             '/public/css/stroke-icons/stroke-style.css',
-            '/public/css/main/animate.css',
             '/public/css/formvalidation/dist/css/formValidation.min.css',
             '/public/css/dataTables/datatables.min.css',
             '/public/css/dataTables/datatables_responsive.min.css',
             '/public/css/select2/dist/css/select2.min.css',
             '/public/css/datepicker/datepicker3.css',
+			'/public/css/main/animate.css',
             '/public/css/main/style_'.strtolower(Config::APP_THEME).'.css',
         );
 
@@ -41,17 +41,17 @@ class FileManager
             '/public/js/metisMenu/jquery.metisMenu.js',
             '/public/js/slimscroll/jquery.slimscroll.min.js',
             '/public/js/i18next/i18next.min.js',
-            '/public/js/main/main.js',
 			'/public/js/pace/pace.min.js',
 			'/public/js/moment/moment.js',
             '/public/js/formvalidation/dist/js/formValidation.min.js',
             '/public/js/formvalidation/dist/js/framework/bootstrap.min.js',
-            '/public/js/formvalidation/dist/js/language/' . strtolower(Config::APP_LANG) . '_' . strtoupper(Config::APP_LANG) . '.js',
-            '/public/js/sweetalert2/sweetalert2.all.js',
+            '/public/js/formvalidation/dist/js/language/' . strtolower(Auth::getAuthUserLanguage()) . '_' . strtoupper(Auth::getAuthUserLanguage()) . '.js',
+            '/public/js/sweetalert2/sweetalert2.all.min.js',
             '/public/js/zxcvbn/zxcvbn.js',
             '/public/js/select2/dist/js/select2.js',
             '/public/js/autocomplete/dist/jquery.autocomplete.min.js',
-            '/public/js/ajaxqueue/jquery.ajaxq-0.0.1.js',			
+            '/public/js/ajaxqueue/jquery.ajaxq-0.0.1.js',	
+			'/public/js/main/main.js',			
         );
         return $jsArr;
     }

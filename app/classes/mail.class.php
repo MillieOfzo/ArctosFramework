@@ -158,7 +158,8 @@ class Mailer
 
         $footer_arr = array(
             'footer_date' => date('D d/m/Y H:i:s'),
-            'footer_year' => date('Y')
+            'footer_year' => date('Y'),
+			'copyright' => Framework::getFrameWorkCopyright(),
         );
 
         $footer = file_get_contents('../app/mail/footer.mail.php');

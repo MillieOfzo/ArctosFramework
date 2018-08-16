@@ -17,18 +17,6 @@ class IndexController
     {
 
     }
-
-    /**
-     * Autocomplete function
-     *
-     * Attached to topnav.layout.php
-     * Called in main.js
-     */
-    public static function getAutoComplete()
-    {
-
-
-    }	
 	
 }
 
