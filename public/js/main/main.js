@@ -275,7 +275,7 @@ var ajaxObj = {
 		
 		swal({
 			title: textStatus,
-			html: errorThrown,
+			html: 'Check the error logs',
 			type: "error"
 		});
 		ajaxObj.errorCount++;

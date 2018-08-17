@@ -28,47 +28,54 @@ class SessionManager
      */
     public function sessionStart($name, $limit = 0, $path = '/', $domain = null, $secure = null)
     {
-        // Set the cookie name
-        session_name($name . '_Session');
-
-        // Set SSL level
-        $https = ($secure == true && isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? $secure : false;
-
-        // Set session cookie options
-        session_set_cookie_params($limit, $path, $domain, $https, true);
-        session_start();
-
-        // Make sure the session hasn't expired, and destroy it if it has
-        if ($this->validateSession())
-        {
-            // Check to see if the session is new or a hijacking attempt
-            if (!$this->preventHijacking())
-            {
-                // Reset session data and regenerate id
-                $_SESSION = array();
-                $_SESSION['LANGUAGE'] = Config::APP_LANG;
-                $_SESSION['IP_ADDRESS'] = $_SERVER['REMOTE_ADDR'];
-				$_SESSION['API_TOKEN'] = null;
-                //$_SESSION['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
-				$_SESSION['_token'] = Csrf::genCsrfToken();
-
-                $this->regenerateSession();
-
-                // Give a 5% chance of the session id changing on any request
-                
-            }
-            elseif (rand(1, 100) <= 5)
-            {
-                $this->regenerateSession();
-            }
-        }
-        else
-        {
-            $_SESSION = array();
-            session_destroy();
-            session_start();
-
-        }
+		if (session_status() !== PHP_SESSION_ACTIVE) {
+	
+			// Set the cookie name
+			session_name($name . '_Session');
+	
+			// Set SSL level
+			$https = ($secure == true && isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? $secure : false;
+	
+			// Set session cookie options
+			session_set_cookie_params($limit, $path, $domain, $https, true);
+			session_start();
+	
+			// Make sure the session hasn't expired, and destroy it if it has
+			if ($this->validateSession())
+			{
+				// Check to see if the session is new or a hijacking attempt
+				if (!$this->preventHijacking())
+				{
+					// Reset session data and regenerate id
+					$_SESSION = array();
+					$_SESSION['LANGUAGE'] = Config::APP_LANG;
+					$_SESSION['IP_ADDRESS'] = $this->getUserIP();
+					$_SESSION['API_TOKEN'] = null;
+					//$_SESSION['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
+					$_SESSION['_token'] = Csrf::genCsrfToken();
+	
+					$this->regenerateSession();
+	
+					// Give a 5% chance of the session id changing on any request
+					
+				}
+				elseif (rand(1, 100) <= 5)
+				{
+					$this->regenerateSession();
+				}
+			}
+			else
+			{
+				$_SESSION = array();
+				session_destroy();
+				session_start();
+	
+			}
+		}
+		else
+		{
+			$this->sessionDestroy();
+		}
     }
 	
 	public function sessionDestroy()
@@ -88,7 +95,6 @@ class SessionManager
         {
             $params = session_get_cookie_params();
             setcookie(session_name() , '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
-            //setcookie('sWebCookie' , '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
         }
 
         // Finally, destroy the session.
@@ -109,7 +115,7 @@ class SessionManager
         if (!isset($_SESSION['IP_ADDRESS']) )
 			return false;
 
-        if ($_SESSION['IP_ADDRESS'] != $_SERVER['REMOTE_ADDR'])
+        if ($_SESSION['IP_ADDRESS'] != $this->getUserIP())
 			return false;
 
         //if ($_SESSION['userAgent'] != $_SERVER['HTTP_USER_AGENT'])
@@ -186,6 +192,23 @@ class SessionManager
 
         return true;
     }
-
+	
+	/**
+	 * Fetch IP address from where the request originated
+	 * @return string
+	 */
+	protected function getUserIP() {
+		if( array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER) && !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
+			if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',')>0) {
+				$addr = explode(",",$_SERVER['HTTP_X_FORWARDED_FOR']);
+				return filter_var(trim($addr[0]), FILTER_VALIDATE_IP);
+			} else {
+				return $_SERVER['HTTP_X_FORWARDED_FOR'];
+			}
+		}
+		else {
+			return $_SERVER['REMOTE_ADDR'];
+		}
+	}
 }
 

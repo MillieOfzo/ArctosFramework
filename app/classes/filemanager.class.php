@@ -41,7 +41,6 @@ class FileManager
             '/public/js/metisMenu/jquery.metisMenu.js',
             '/public/js/slimscroll/jquery.slimscroll.min.js',
             '/public/js/i18next/i18next.min.js',
-			'/public/js/pace/pace.min.js',
 			'/public/js/moment/moment.js',
             '/public/js/formvalidation/dist/js/formValidation.min.js',
             '/public/js/formvalidation/dist/js/framework/bootstrap.min.js',
@@ -51,7 +50,8 @@ class FileManager
             '/public/js/select2/dist/js/select2.js',
             '/public/js/autocomplete/dist/jquery.autocomplete.min.js',
             '/public/js/ajaxqueue/jquery.ajaxq-0.0.1.js',	
-			'/public/js/main/main.js',			
+			'/public/js/main/main.js',
+			'/public/js/pace/pace.min.js',			
         );
         return $jsArr;
     }
