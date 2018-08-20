@@ -123,6 +123,7 @@ class ComposerStaticInitf8e6a24d0be0178bdc460f96133ac62f
         'App\\Controllers\\TicketsController' => __DIR__ . '/../..' . '/app/controllers/tickets.controller.php',
         'App\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/controllers/user.controller.php',
         'App\\Controllers\\UsersController' => __DIR__ . '/../..' . '/app/controllers/users.controller.php',
+        'App\\Models\\BaseModel' => __DIR__ . '/../..' . '/app/models/base.model.php',
         'App\\Models\\HomeModel' => __DIR__ . '/../..' . '/app/models/home.model.php',
         'App\\Models\\IndexModel' => __DIR__ . '/../..' . '/app/models/index.model.php',
         'App\\Models\\LoggingModel' => __DIR__ . '/../..' . '/app/models/logging.model.php',

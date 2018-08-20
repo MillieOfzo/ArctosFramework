@@ -79,7 +79,10 @@
 			"password":"password"
 		},		
 		"request": "Request",
-		"forget": "Forgot your password"
+		"forget": "Forgot your password",
+		"register": "Register",
+		"privacy": "Privacy statement",	
+		"terms": "Terms and Conditions"
 	},
 	"password_modal":{
 		"welcome": "Welcome to",

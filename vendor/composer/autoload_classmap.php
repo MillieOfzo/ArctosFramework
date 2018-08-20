@@ -34,6 +34,7 @@ return array(
     'App\\Controllers\\TicketsController' => $baseDir . '/app/controllers/tickets.controller.php',
     'App\\Controllers\\UserController' => $baseDir . '/app/controllers/user.controller.php',
     'App\\Controllers\\UsersController' => $baseDir . '/app/controllers/users.controller.php',
+    'App\\Models\\BaseModel' => $baseDir . '/app/models/base.model.php',
     'App\\Models\\HomeModel' => $baseDir . '/app/models/home.model.php',
     'App\\Models\\IndexModel' => $baseDir . '/app/models/index.model.php',
     'App\\Models\\LoggingModel' => $baseDir . '/app/models/logging.model.php',

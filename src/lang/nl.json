@@ -78,8 +78,11 @@
 			"email":"email",
 			"password":"wachtwoord"
 		},		
-		"request": "Request",
-		"forget": "Wachtwoord vergeten"
+		"request": "Verzoek",
+		"forget": "Je wachtwoord vergeten",
+		"register": "Registreren",
+		"privacy": "Privacy verklaring",
+		"terms": "Algemene voorwaarden"
 	},
 	"password_modal":{
 		"welcome": "Welkom bij",
