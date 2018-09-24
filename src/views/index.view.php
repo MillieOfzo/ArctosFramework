@@ -55,5 +55,15 @@
         foreach($arr_js as $js) {
             echo '<script src="' . $js . '"></script>';
         }
+		if(isset($_GET['exp']))
+		{
+			echo "<script>
+				toast({
+					type: 'warning',
+					title: 'User session has expired',
+					timer: 5000
+				})
+			</script>";	
+		}	
         ?>
 	</body>

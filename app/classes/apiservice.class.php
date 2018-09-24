@@ -84,7 +84,14 @@ Class ApiService
 	 * Default: false
      * @param bool
      */	
-	const API_TOKEN_REFRESH = false; 
+	const API_TOKEN_REFRESH = false; 	
+	
+    /**
+     * Expiration time in seconds
+	 *
+     * @param integer
+     */	
+	protected $token_expiration = 600;
 	
     /**
      * Array to hold token variables
@@ -94,14 +101,14 @@ Class ApiService
 	protected $token = [];
 
 	/**
-     * Basic auth username variable
+     * username variable
 	 *
      * @param string
      */
 	protected $user = '';
 	
 	/**
-     * Basic auth password variable
+     * username variable
 	 *
      * @param string
      */	
@@ -200,9 +207,10 @@ Class ApiService
 		} catch (RequestException $e) {
 			return ApiException::failedRequest($e);
 		};
-				
+	
 		$response = \GuzzleHttp\json_decode((string) $response->getBody(), true);
-		if(@array_key_exists ('errorCode',$response))
+
+		if(@array_key_exists ('errorCode', $response))
 		{
 			return $this->setMsg(false, $response['message']);
 		}		
@@ -210,7 +218,8 @@ Class ApiService
 		
 		$this->token = array(
 			'token'		=>	$response['token'],
-			'expires'	=>	$token_expires,
+			'expires'	=>	$this->currentTimeStamp() + $this->token_expiration, // There is an token expiration if the last usage is 10 minutes ago
+			'expires_at'	=>	$token_expires,
 		);	
 		
 		$_SESSION['API_TOKEN'] = $this->token;
@@ -231,11 +240,17 @@ Class ApiService
 			{
 				Logger::logToFile(__FILE__, 0, "User token has expired");
 				$session = new SessionManager();
-				$session->sessionDestroy();				
+				$session->sessionDestroy('/?exp');
 			}
-			// Function to refresh token if expired
-			$this->acquireAccessToken();			
+			else
+			{
+				// Function to refresh token if expired
+				$this->acquireAccessToken();
+			}
 		};
+		
+		$this->updateTimeStamp();
+		
 		return \GuzzleHttp\Psr7\modify_request($request, [
 			'set_headers' => [
 				'Authorization' => 'Bearer '. (string) $this->getToken(),
@@ -253,12 +268,24 @@ Class ApiService
      */	
 	protected function hasValidToken()
 	{
-		$date = new \DateTime();
-		$timestamp = $date->getTimestamp();
-
-		return ( !self::API_FORCE_TOKEN && $timestamp > $_SESSION['API_TOKEN']['expires'] ) ? false : true;
+		if(self::API_FORCE_TOKEN)
+		{
+			return false;
+		}
+		return ( $this->currentTimeStamp() > $_SESSION['API_TOKEN']['expires'] || $this->currentTimeStamp() > $_SESSION['API_TOKEN']['expires_at']) ? false : true;
 	}
 
+	protected function updateTimeStamp()
+	{
+		$_SESSION['API_TOKEN']['expires'] = $this->currentTimeStamp() + $this->token_expiration;
+	}
+	
+	protected function currentTimeStamp()
+	{
+		$date = new \DateTime();
+		return $date->getTimestamp();
+	}	
+	
     /**
      * Returns current session token array
      * 
@@ -272,8 +299,6 @@ Class ApiService
     /**
      * Returns response message array
      * 
-     * @param bool $status True or false	 
-     * @param string $msg Response message
      * @return array
      */	
 	protected function setMsg($status, $msg = '')

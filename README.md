@@ -29,7 +29,7 @@ The Cross-Site Request Forgery class prevents csrf by attaching an 32bit string 
 The LDAP class provides Single Sign On capabilities. Read [SSO](#single-sign-on) instructions on how to enable and configure SSO.
 
 ### Mailer class
-The mailer class is an wrapper over [PHPMailer](https://github.com/PHPMailer/PHPMailer). This enables easy creation and sending of application mails. Custom email templates can be created or edited in the folder `C:\xampp\htdocs\Arctos\app\mail`
+The mailer class is an wrapper over [PHPMailer](https://github.com/PHPMailer/PHPMailer). This enables easy creation and sending of application mails. Custom email templates can be created or edited in the folder `C:\xampp\htdocs\Arctos\app\mail`. Email settings or SMTP settings like SMTP authentication can be configured in `C:\xampp\htdocs\Hera\app\classes\mail.class.php`
 
 ### Router class
 The router class is the main component of the application and uses [FastRoute](https://github.com/nikic/FastRoute). This class regulates all http requests to their respective controller and through the default index.php page located in `C:\xampp\htdocs\Arctos\public\index.php`. 
@@ -107,6 +107,10 @@ Logger::logToFile($file, $level, $msg);
 ```
 ### Language class
 The language class is used to get the language file (as configured in '\Arctos\config\config.php') from the folder `\Arctos\src\lang`
+Current languages supported are:
+- Dutch
+- English
+- Portuguese
 
 ### Helper class
 Provides an class with static methods which can be used throughout the application.

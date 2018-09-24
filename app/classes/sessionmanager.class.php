@@ -78,10 +78,15 @@ class SessionManager
 		}
     }
 	
-	public function sessionDestroy()
+	/**
+	 * Destroy the current active session
+	 *
+	 * @param string $route Redirect to this route after destruction
+	 */
+	public function sessionDestroy($route = '/')
 	{
         // If we want to keep some session information such as shopping cart contents,
-        // we only remove the user's data from the session without unsetting remaining
+        // we only remove the user's data from the session without un-setting remaining
         // session variables and without destroying the session.
         unset($_SESSION[Config::SES_NAME]);
         unset($_SESSION['_token']);
@@ -100,7 +105,7 @@ class SessionManager
         // Finally, destroy the session.
         session_destroy();
 		// Redirect user to login page
-		Helper::redirect('/');
+		Helper::redirect($route);		
 	}
 	
 	/**
